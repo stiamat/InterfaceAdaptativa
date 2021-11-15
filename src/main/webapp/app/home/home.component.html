@@ -1,0 +1,119 @@
+<div class="row justify-content-center trasition2s">
+
+
+    <div class="col-md-6 w-100 d-inline-block">
+        <div id="novoporaqui" class="novo">
+           <div class="d-flex justify-content-center align-content-center
+                align-content-center">
+                <h3 class="font-weight-bold" style="color:white; margin-top: 100px;">Novo por Aqui</h3>
+            </div>
+
+            <div class="d-flex justify-content-center align-content-center
+                align-content-center">
+                <h4 style="color:white">Venha fazer parte deste estudo!</h4>
+            </div>
+
+            <div class="d-flex justify-content-center align-content-center
+                align-content-center">
+                <div class="col-md-6 mt-3 text-center">
+                    <button type="button" (click)="register()" class="btn font-weight-bold buttonEntrar" style="border: 3px solid">Cadastrar</button>
+                </div>
+            </div> 
+        </div>
+        
+
+        <div class="imageFloat">
+            &nbsp;
+        </div>
+        <div class="circleFloat" id="circleFloat">
+            &nbsp;
+        </div>
+        
+    </div>
+    <div class="col-md-6 w-100">
+        <form id="login" class="loginAtivo" (submit)="login()">
+            <div class="d-flex justify-content-center align-content-center
+                align-content-center login">
+                <h2 class="font-weight-bold">Login</h2>
+            </div>
+
+            <div class="d-flex justify-content-center align-content-center
+                align-content-center">
+                <div class="col-md-6 mt-3">
+                    <input type="email" class="form-control inputLogin"
+                        id="emailInputid" placeholder="email" [(ngModel)]="input" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center align-content-center
+                align-content-center">
+                <div class="col-md-6 mt-3">
+                    <input type="password" class="form-control inputLogin"
+                        id="passwordInputid" placeholder="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center align-content-center
+                align-content-center">
+                <div class="col-md-5 mt-3 text-center">
+                    <button type="submit" class="btn font-weight-bold buttonEntrar">Entrar</button>
+                </div>
+            </div>
+        </form>
+        
+
+        <div class="justify-content-center align-content-center
+            align-content-center mobile">
+            <div class="col-2 mt-3 text-center">
+                <button class="registerButton" mat-mini-fab type="button" (click)="changeInput()">
+                    <mat-icon><span class="material-icons flex" style="padding: -3px">person_add</span></mat-icon>
+                </button>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+
+    <!-- <div class="col-md-3">
+        <span class="hipster img-fluid rounded"></span>
+    </div> -->
+    <!-- <div class="col-md-9">
+        <h1 class="display-4">Welcome, Java Hipster!</h1>
+
+        <p class="lead">This is your homepage</p>
+
+        <div [ngSwitch]="isAuthenticated()">
+            <div class="alert alert-success" *ngSwitchCase="true">
+                <span id="home-logged-message" *ngIf="account">You are logged in as user "{{ account.login }}".</span>
+            </div>
+
+            <div class="alert alert-warning" *ngSwitchCase="false">
+                <span>If you want to </span>
+                <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+            </div>
+
+            <div class="alert alert-warning" *ngSwitchCase="false">
+                <span>You don't have an account yet?</span>&nbsp;
+                <a class="alert-link" routerLink="account/register">Register a new account</a>
+            </div>
+        </div>
+
+        <p>
+            If you have any question on JHipster:
+        </p>
+
+        <ul>
+            <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">JHipster homepage</a></li>
+            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster on Stack Overflow</a></li>
+            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">JHipster bug tracker</a></li>
+            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">JHipster public chat room</a></li>
+            <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">follow @jhipster on Twitter</a></li>
+        </ul>
+
+        <p>
+            <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
+        </p>
+    </div> -->
+</div>

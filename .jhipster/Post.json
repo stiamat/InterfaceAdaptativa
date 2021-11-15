@@ -1,0 +1,41 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "user",
+      "otherEntityName": "user",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "login",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "post"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "body",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "active",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "likes",
+      "fieldType": "Long"
+    }
+  ],
+  "changelogDate": "20210909193028",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "post",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": true,
+  "pagination": "infinite-scroll"
+}

@@ -1,0 +1,41 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.ufes.interfaceadaptativa"
+    },
+    "jhipsterVersion": "6.10.5",
+    "applicationType": "monolith",
+    "baseName": "InterfaceAdaptativa",
+    "packageName": "com.ufes.interfaceadaptativa",
+    "packageFolder": "com/ufes/interfaceadaptativa",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "ODc5MDU1NDYyODVlODBiOTFhMjlkYjEyOGM1NWMxMDRkM2RkNGVlNjk5ZDRiZWUxMjNiNmJkYzlkMWJiYTMzYWViNmI2NjU0ZjJiNTY3YWYxNDgyZGQ2Yzc5NTZhN2NjMDAwN2FmYjVmNjZmMWEzMjFjZGJkYzQ4YmJhNWRhMjU=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "creationTimestamp": 1624710551769,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": [],
+    "lastLiquibaseTimestamp": 1631215828000
+  }
+}

@@ -1,0 +1,264 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+
+.mobile{
+  display: none;
+}
+
+.login{
+  margin-top: 15rem;
+}
+
+.buttonEntrar{
+  background-color: #536DFE;
+  color: white;
+  width: 90%;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+}
+
+.buttonEntrar:hover, .buttonEntrar:focus{
+  background-color: #536DFE;
+  width: 100%;
+}
+
+.circleFloat{
+  width: 100rem;
+  height: 100rem;
+  border-radius: 50%;
+  background-color: #536DFE; 
+  position: fixed; 
+  top: -500px; 
+  left: -800px; 
+  z-index: -1;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+}
+
+.imageFloat{
+  background-image:url('../../content/images/undraw_Login_re_4vu2.svg'); 
+  height: 40rem;
+  width: 47rem;
+  background-position: center; background-repeat: no-repeat;
+  background-size: contain;
+  position: fixed;
+  top: 20rem;
+  left: -6rem;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+}
+
+.inputLogin{
+  background-color: #E6E6E6 !important;
+  color: #727272 !important;
+  border-radius: 2rem !important;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #A0A0A0;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #A0A0A0;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #A0A0A0;
+}
+
+.hipster {
+  display: inline-block;
+  width: 347px;
+  height: 497px;
+  background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
+  background-size: contain;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (-moz-min-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+  .hipster {
+    background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
+    background-size: contain;
+  }
+}
+
+@media screen and (max-width: 1300px){
+  .circleFloat{
+    width: 90rem;
+    height: 90rem;
+    border-radius: 50%;
+    background-color: #536DFE; 
+    position: fixed; 
+    top: -500px; 
+    left: -800px; 
+    z-index: -1;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  }
+  
+  .imageFloat{
+    background-image:url('../../content/images/undraw_Login_re_4vu2.svg'); 
+    height: 30rem;
+    width: 40rem;
+    background-position: center; background-repeat: no-repeat;
+    background-size: contain;
+    position: fixed;
+    top: 20rem;
+    left: -6rem;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  }
+}
+
+@media screen and (max-width: 900px){
+  .circleFloat{
+    width: 85rem;
+    height: 85rem;
+    border-radius: 50%;
+    background-color: #536DFE; 
+    position: fixed; 
+    top: -500px; 
+    left: -800px; 
+    z-index: -1;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  }
+  
+  .imageFloat{
+    background-image:url('../../content/images/undraw_Login_re_4vu2.svg'); 
+    height: 25rem;
+    width: 35rem;
+    background-position: center; background-repeat: no-repeat;
+    background-size: contain;
+    position: fixed;
+    top: 20rem;
+    left: -6rem;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  }
+}
+
+@media screen and (max-width: 767px){
+
+  .mobile{
+    display: flex;
+  }
+  
+  .trasition2s{
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  }
+
+  .novo{
+    display: none;
+    transition: display 2s;
+  }
+  .novoAtivo{
+    text-align: center;
+    display: inline-block;
+  }
+  
+  .registerButton,.registerButton:focus{
+    box-shadow: none !important;
+    background-color: #536DFE !important;
+    border: 3px solid white;
+    color: white !important;
+    outline: none !important;
+  }
+
+  .loginAtivo{
+    margin-top: 12rem;
+  }
+  .loginDesativado{
+    display: none;
+  }
+
+  .circleFloat{
+    width: 50rem;
+    height: 50rem;
+    border-radius: 50%;
+    background-color: #536DFE; 
+    position: fixed; 
+    top: -400px; 
+    left: -700px; 
+    z-index: -1;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  }
+
+  .addCircleFloat{
+    top: -200px; 
+    left: -400px;
+    animation-name: moveIn;
+    animation-duration: 2s;
+  }
+
+  .removeCircleFloat{
+    top: -400px; 
+    left: -700px;
+    animation-name: moveOut;
+    animation-duration: 2s;
+  }
+
+  .addOpacity{
+    opacity: 1;
+    animation-name: opacityIn;
+    animation-duration: 2s;
+  }
+  .removeOpacity{
+    opacity: 0;
+    animation-name: opacityOut;
+    animation-duration: 2s;
+  }
+
+  
+  .imageFloat{
+    background-image: none; 
+    height: none;
+    width: none;
+    background-position: none; 
+    background-repeat: none;
+    background-size: none;
+    position: none;
+    top: none;
+    left: none;
+  }
+
+}
+
+@keyframes moveIn {
+  from {
+    top: -400px; 
+    left: -700px;
+  }
+  to {
+    top: -200px; 
+    left: -400px;
+  }
+}
+
+@keyframes moveOut {
+  from {
+    top: -200px; 
+    left: -400px;
+  }
+  to {
+    top: -400px; 
+    left: -700px;
+  }
+}
+
+@keyframes opacityIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes opacityOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+

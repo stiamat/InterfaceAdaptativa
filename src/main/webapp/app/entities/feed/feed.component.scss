@@ -1,0 +1,117 @@
+.feed {
+  background-color: #e6e6e6;
+  min-height: 1000px;
+  font-family: 'Poppins';
+
+  .menu-padrao-area {
+    left: 16.5%;
+    position: fixed;
+  }
+
+  .linkMenu {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 10px;
+    color: black;
+    border-left: 3px solid black;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  }
+
+  .linkMenu:hover,
+  .linkMenu:focus {
+    color: #536dfe;
+    border-left: 10px solid #536dfe;
+  }
+
+  .reloadbutton {
+    width: 80%;
+    height: 10px;
+    border-radius: 20px;
+    background-color: #536dfe;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  }
+
+  .reloadbutton:hover,
+  .reloadbutton:focus {
+    width: 20%;
+  }
+  .footer {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .post_body {
+    padding: 10px !important;
+    font-family: 'Poppins';
+    font-size: 15px;
+  }
+
+  .post_head {
+    width: 100%;
+  }
+}
+
+.loading {
+  background: linear-gradient(-45deg, #ff6584, #536dfe, #4ea685);
+  background-size: 400% 400%;
+
+  animation: gradient 2s ease infinite;
+  -webkit-animation: gradient 2s ease infinite;
+  -moz-animation: gradient 2s ease infinite;
+  -o-animation: gradient 2s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #536dfe;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #fff;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 2px;
+}
+
+@media screen and (max-width: 990px) {
+  .feed {
+    .menu-padrao-area {
+      left: 12.5%;
+    }
+    .post_head {
+      width: 100px;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .feed {
+    .menu-padrao-area {
+      display: none;
+    }
+    .post_head {
+      width: 100px;
+    }
+
+    .post_body {
+      width: 340px;
+    }
+  }
+}
+
+.mat-card {
+  border-radius: 25px !important;
+}
