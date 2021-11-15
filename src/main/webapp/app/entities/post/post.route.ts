@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import {
+  Resolve,
+  ActivatedRouteSnapshot,
+  Routes,
+  Router,
+} from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
@@ -16,7 +21,9 @@ import { PostUpdateComponent } from './post-update.component';
 export class PostResolve implements Resolve<IPost> {
   constructor(private service: PostService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IPost> | Observable<never> {
+  resolve(
+    route: ActivatedRouteSnapshot
+  ): Observable<IPost> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
@@ -36,7 +43,7 @@ export class PostResolve implements Resolve<IPost> {
 
 export const postRoute: Routes = [
   {
-    path: 'post',
+    path: '',
     component: PostComponent,
     data: {
       authorities: [Authority.USER],
@@ -45,7 +52,7 @@ export const postRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: 'post/:id/view',
+    path: ':id/view',
     component: PostDetailComponent,
     resolve: {
       post: PostResolve,
@@ -57,7 +64,7 @@ export const postRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: 'post/new',
+    path: 'new',
     component: PostUpdateComponent,
     resolve: {
       post: PostResolve,
@@ -69,7 +76,7 @@ export const postRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: 'post/:id/edit',
+    path: ':id/edit',
     component: PostUpdateComponent,
     resolve: {
       post: PostResolve,

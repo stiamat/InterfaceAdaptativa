@@ -3,6 +3,7 @@ package com.ufes.interfaceadaptativa.web.rest;
 import com.ufes.interfaceadaptativa.InterfaceAdaptativaApp;
 import com.ufes.interfaceadaptativa.domain.Post;
 import com.ufes.interfaceadaptativa.domain.User;
+import com.ufes.interfaceadaptativa.domain.Post;
 import com.ufes.interfaceadaptativa.repository.PostRepository;
 import com.ufes.interfaceadaptativa.service.PostService;
 import com.ufes.interfaceadaptativa.service.dto.PostDTO;
@@ -12,9 +13,14 @@ import com.ufes.interfaceadaptativa.service.PostQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,18 +30,22 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.ufes.interfaceadaptativa.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.ufes.interfaceadaptativa.domain.enumeration.TipoPost;
 /**
  * Integration tests for the {@link PostResource} REST controller.
  */
 @SpringBootTest(classes = InterfaceAdaptativaApp.class)
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class PostResourceIT {
@@ -54,11 +64,23 @@ public class PostResourceIT {
     private static final Long UPDATED_LIKES = 2L;
     private static final Long SMALLER_LIKES = 1L - 1L;
 
+    private static final String DEFAULT_LINK = "AAAAAAAAAA";
+    private static final String UPDATED_LINK = "BBBBBBBBBB";
+
+    private static final TipoPost DEFAULT_TIPO_POST = TipoPost.NORMAL;
+    private static final TipoPost UPDATED_TIPO_POST = TipoPost.RECOMENDACAO;
+
     @Autowired
     private PostRepository postRepository;
 
+    @Mock
+    private PostRepository postRepositoryMock;
+
     @Autowired
     private PostMapper postMapper;
+
+    @Mock
+    private PostService postServiceMock;
 
     @Autowired
     private PostService postService;
@@ -85,7 +107,9 @@ public class PostResourceIT {
             .body(DEFAULT_BODY)
             .date(DEFAULT_DATE)
             .active(DEFAULT_ACTIVE)
-            .likes(DEFAULT_LIKES);
+            .likes(DEFAULT_LIKES)
+            .link(DEFAULT_LINK)
+            .tipoPost(DEFAULT_TIPO_POST);
         return post;
     }
     /**
@@ -99,7 +123,9 @@ public class PostResourceIT {
             .body(UPDATED_BODY)
             .date(UPDATED_DATE)
             .active(UPDATED_ACTIVE)
-            .likes(UPDATED_LIKES);
+            .likes(UPDATED_LIKES)
+            .link(UPDATED_LINK)
+            .tipoPost(UPDATED_TIPO_POST);
         return post;
     }
 
@@ -127,6 +153,8 @@ public class PostResourceIT {
         assertThat(testPost.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testPost.isActive()).isEqualTo(DEFAULT_ACTIVE);
         assertThat(testPost.getLikes()).isEqualTo(DEFAULT_LIKES);
+        assertThat(testPost.getLink()).isEqualTo(DEFAULT_LINK);
+        assertThat(testPost.getTipoPost()).isEqualTo(DEFAULT_TIPO_POST);
     }
 
     @Test
@@ -164,9 +192,31 @@ public class PostResourceIT {
             .andExpect(jsonPath("$.[*].body").value(hasItem(DEFAULT_BODY)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(sameInstant(DEFAULT_DATE))))
             .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())))
-            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())));
+            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())))
+            .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK)))
+            .andExpect(jsonPath("$.[*].tipoPost").value(hasItem(DEFAULT_TIPO_POST.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllPostsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(postServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPostMockMvc.perform(get("/api/posts?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(postServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllPostsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(postServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPostMockMvc.perform(get("/api/posts?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(postServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getPost() throws Exception {
@@ -181,7 +231,9 @@ public class PostResourceIT {
             .andExpect(jsonPath("$.body").value(DEFAULT_BODY))
             .andExpect(jsonPath("$.date").value(sameInstant(DEFAULT_DATE)))
             .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()))
-            .andExpect(jsonPath("$.likes").value(DEFAULT_LIKES.intValue()));
+            .andExpect(jsonPath("$.likes").value(DEFAULT_LIKES.intValue()))
+            .andExpect(jsonPath("$.link").value(DEFAULT_LINK))
+            .andExpect(jsonPath("$.tipoPost").value(DEFAULT_TIPO_POST.toString()));
     }
 
 
@@ -546,6 +598,136 @@ public class PostResourceIT {
 
     @Test
     @Transactional
+    public void getAllPostsByLinkIsEqualToSomething() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where link equals to DEFAULT_LINK
+        defaultPostShouldBeFound("link.equals=" + DEFAULT_LINK);
+
+        // Get all the postList where link equals to UPDATED_LINK
+        defaultPostShouldNotBeFound("link.equals=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPostsByLinkIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where link not equals to DEFAULT_LINK
+        defaultPostShouldNotBeFound("link.notEquals=" + DEFAULT_LINK);
+
+        // Get all the postList where link not equals to UPDATED_LINK
+        defaultPostShouldBeFound("link.notEquals=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPostsByLinkIsInShouldWork() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where link in DEFAULT_LINK or UPDATED_LINK
+        defaultPostShouldBeFound("link.in=" + DEFAULT_LINK + "," + UPDATED_LINK);
+
+        // Get all the postList where link equals to UPDATED_LINK
+        defaultPostShouldNotBeFound("link.in=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPostsByLinkIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where link is not null
+        defaultPostShouldBeFound("link.specified=true");
+
+        // Get all the postList where link is null
+        defaultPostShouldNotBeFound("link.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllPostsByLinkContainsSomething() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where link contains DEFAULT_LINK
+        defaultPostShouldBeFound("link.contains=" + DEFAULT_LINK);
+
+        // Get all the postList where link contains UPDATED_LINK
+        defaultPostShouldNotBeFound("link.contains=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPostsByLinkNotContainsSomething() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where link does not contain DEFAULT_LINK
+        defaultPostShouldNotBeFound("link.doesNotContain=" + DEFAULT_LINK);
+
+        // Get all the postList where link does not contain UPDATED_LINK
+        defaultPostShouldBeFound("link.doesNotContain=" + UPDATED_LINK);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPostsByTipoPostIsEqualToSomething() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where tipoPost equals to DEFAULT_TIPO_POST
+        defaultPostShouldBeFound("tipoPost.equals=" + DEFAULT_TIPO_POST);
+
+        // Get all the postList where tipoPost equals to UPDATED_TIPO_POST
+        defaultPostShouldNotBeFound("tipoPost.equals=" + UPDATED_TIPO_POST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPostsByTipoPostIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where tipoPost not equals to DEFAULT_TIPO_POST
+        defaultPostShouldNotBeFound("tipoPost.notEquals=" + DEFAULT_TIPO_POST);
+
+        // Get all the postList where tipoPost not equals to UPDATED_TIPO_POST
+        defaultPostShouldBeFound("tipoPost.notEquals=" + UPDATED_TIPO_POST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPostsByTipoPostIsInShouldWork() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where tipoPost in DEFAULT_TIPO_POST or UPDATED_TIPO_POST
+        defaultPostShouldBeFound("tipoPost.in=" + DEFAULT_TIPO_POST + "," + UPDATED_TIPO_POST);
+
+        // Get all the postList where tipoPost equals to UPDATED_TIPO_POST
+        defaultPostShouldNotBeFound("tipoPost.in=" + UPDATED_TIPO_POST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPostsByTipoPostIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+
+        // Get all the postList where tipoPost is not null
+        defaultPostShouldBeFound("tipoPost.specified=true");
+
+        // Get all the postList where tipoPost is null
+        defaultPostShouldNotBeFound("tipoPost.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllPostsByUserIsEqualToSomething() throws Exception {
         // Initialize the database
         postRepository.saveAndFlush(post);
@@ -563,6 +745,46 @@ public class PostResourceIT {
         defaultPostShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
+
+    @Test
+    @Transactional
+    public void getAllPostsByLikeDeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+        User likeDe = UserResourceIT.createEntity(em);
+        em.persist(likeDe);
+        em.flush();
+        post.addLikeDe(likeDe);
+        postRepository.saveAndFlush(post);
+        Long likeDeId = likeDe.getId();
+
+        // Get all the postList where likeDe equals to likeDeId
+        defaultPostShouldBeFound("likeDeId.equals=" + likeDeId);
+
+        // Get all the postList where likeDe equals to likeDeId + 1
+        defaultPostShouldNotBeFound("likeDeId.equals=" + (likeDeId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPostsByComentarioDeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        postRepository.saveAndFlush(post);
+        Post comentarioDe = PostResourceIT.createEntity(em);
+        em.persist(comentarioDe);
+        em.flush();
+        post.setComentarioDe(comentarioDe);
+        postRepository.saveAndFlush(post);
+        Long comentarioDeId = comentarioDe.getId();
+
+        // Get all the postList where comentarioDe equals to comentarioDeId
+        defaultPostShouldBeFound("comentarioDeId.equals=" + comentarioDeId);
+
+        // Get all the postList where comentarioDe equals to comentarioDeId + 1
+        defaultPostShouldNotBeFound("comentarioDeId.equals=" + (comentarioDeId + 1));
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -574,7 +796,9 @@ public class PostResourceIT {
             .andExpect(jsonPath("$.[*].body").value(hasItem(DEFAULT_BODY)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(sameInstant(DEFAULT_DATE))))
             .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())))
-            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())));
+            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())))
+            .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK)))
+            .andExpect(jsonPath("$.[*].tipoPost").value(hasItem(DEFAULT_TIPO_POST.toString())));
 
         // Check, that the count call also returns 1
         restPostMockMvc.perform(get("/api/posts/count?sort=id,desc&" + filter))
@@ -624,7 +848,9 @@ public class PostResourceIT {
             .body(UPDATED_BODY)
             .date(UPDATED_DATE)
             .active(UPDATED_ACTIVE)
-            .likes(UPDATED_LIKES);
+            .likes(UPDATED_LIKES)
+            .link(UPDATED_LINK)
+            .tipoPost(UPDATED_TIPO_POST);
         PostDTO postDTO = postMapper.toDto(updatedPost);
 
         restPostMockMvc.perform(put("/api/posts")
@@ -640,6 +866,8 @@ public class PostResourceIT {
         assertThat(testPost.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testPost.isActive()).isEqualTo(UPDATED_ACTIVE);
         assertThat(testPost.getLikes()).isEqualTo(UPDATED_LIKES);
+        assertThat(testPost.getLink()).isEqualTo(UPDATED_LINK);
+        assertThat(testPost.getTipoPost()).isEqualTo(UPDATED_TIPO_POST);
     }
 
     @Test

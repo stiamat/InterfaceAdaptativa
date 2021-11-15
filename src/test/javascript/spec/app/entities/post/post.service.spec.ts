@@ -1,9 +1,13 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { PostService } from 'app/entities/post/post.service';
 import { IPost, Post } from 'app/shared/model/post.model';
+import { TipoPost } from 'app/shared/model/enumerations/tipo-post.model';
 
 describe('Service Tests', () => {
   describe('Post Service', () => {
@@ -24,7 +28,15 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Post(0, 'AAAAAAA', currentDate, false, 0);
+      elemDefault = new Post(
+        0,
+        'AAAAAAA',
+        currentDate,
+        false,
+        0,
+        'AAAAAAA',
+        TipoPost.NORMAL
+      );
     });
 
     describe('Service methods', () => {
@@ -59,7 +71,9 @@ describe('Service Tests', () => {
           returnedFromService
         );
 
-        service.create(new Post()).subscribe(resp => (expectedResult = resp.body));
+        service
+          .create(new Post())
+          .subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
@@ -73,6 +87,8 @@ describe('Service Tests', () => {
             date: currentDate.format(DATE_TIME_FORMAT),
             active: true,
             likes: 1,
+            link: 'BBBBBB',
+            tipoPost: 'BBBBBB',
           },
           elemDefault
         );
@@ -84,7 +100,9 @@ describe('Service Tests', () => {
           returnedFromService
         );
 
-        service.update(expected).subscribe(resp => (expectedResult = resp.body));
+        service
+          .update(expected)
+          .subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
@@ -98,6 +116,8 @@ describe('Service Tests', () => {
             date: currentDate.format(DATE_TIME_FORMAT),
             active: true,
             likes: 1,
+            link: 'BBBBBB',
+            tipoPost: 'BBBBBB',
           },
           elemDefault
         );

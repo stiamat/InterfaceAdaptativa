@@ -10,7 +10,9 @@ describe('Component Tests', () => {
   describe('Post Management Detail Component', () => {
     let comp: PostDetailComponent;
     let fixture: ComponentFixture<PostDetailComponent>;
-    const route = ({ data: of({ post: new Post(123) }) } as any) as ActivatedRoute;
+    const route = ({
+      data: of({ post: new Post(123) }),
+    } as any) as ActivatedRoute;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

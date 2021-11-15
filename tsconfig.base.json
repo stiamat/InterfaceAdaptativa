@@ -7,7 +7,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strict": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "suppressImplicitAnyIndexErrors": true,
     "skipLibCheck": true,
@@ -24,7 +24,7 @@
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
-    "fullTemplateTypeCheck": true,
+    "fullTemplateTypeCheck": false,
     "strictTemplates": true,
     "preserveWhitespaces": true
   }

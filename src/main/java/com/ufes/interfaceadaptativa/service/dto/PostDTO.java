@@ -2,6 +2,9 @@ package com.ufes.interfaceadaptativa.service.dto;
 
 import java.time.ZonedDateTime;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import com.ufes.interfaceadaptativa.domain.enumeration.TipoPost;
 
 /**
  * A DTO for the {@link com.ufes.interfaceadaptativa.domain.Post} entity.
@@ -18,10 +21,17 @@ public class PostDTO implements Serializable {
 
     private Long likes;
 
+    private String link;
+
+    private TipoPost tipoPost;
+
 
     private Long userId;
 
     private String userLogin;
+    private Set<UserDTO> likeDes = new HashSet<>();
+
+    private Long comentarioDeId;
     
     public Long getId() {
         return id;
@@ -63,6 +73,22 @@ public class PostDTO implements Serializable {
         this.likes = likes;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public TipoPost getTipoPost() {
+        return tipoPost;
+    }
+
+    public void setTipoPost(TipoPost tipoPost) {
+        this.tipoPost = tipoPost;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -77,6 +103,22 @@ public class PostDTO implements Serializable {
 
     public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
+    }
+
+    public Set<UserDTO> getLikeDes() {
+        return likeDes;
+    }
+
+    public void setLikeDes(Set<UserDTO> users) {
+        this.likeDes = users;
+    }
+
+    public Long getComentarioDeId() {
+        return comentarioDeId;
+    }
+
+    public void setComentarioDeId(Long postId) {
+        this.comentarioDeId = postId;
     }
 
     @Override
@@ -105,8 +147,12 @@ public class PostDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", active='" + isActive() + "'" +
             ", likes=" + getLikes() +
+            ", link='" + getLink() + "'" +
+            ", tipoPost='" + getTipoPost() + "'" +
             ", userId=" + getUserId() +
             ", userLogin='" + getUserLogin() + "'" +
+            ", likeDes='" + getLikeDes() + "'" +
+            ", comentarioDeId=" + getComentarioDeId() +
             "}";
     }
 }

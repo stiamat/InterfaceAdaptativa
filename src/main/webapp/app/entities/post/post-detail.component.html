@@ -24,9 +24,29 @@
                 <dd>
                     <span>{{ post.likes }}</span>
                 </dd>
+                <dt><span>Link</span></dt>
+                <dd>
+                    <span>{{ post.link }}</span>
+                </dd>
+                <dt><span>Tipo Post</span></dt>
+                <dd>
+                    <span>{{ post.tipoPost }}</span>
+                </dd>
                 <dt><span>User</span></dt>
                 <dd>
                     {{ post.userLogin }}
+                </dd>
+                <dt><span>Like De</span></dt>
+                <dd>
+                    <span *ngFor="let likeDe of post.likeDes; let last = last">
+                        {{ likeDe.login }}{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
+                <dt><span>Comentario De</span></dt>
+                <dd>
+                    <div *ngIf="post.comentarioDeId">
+                        <a [routerLink]="['/post', post.comentarioDeId, 'view']">{{ post.comentarioDeId }}</a>
+                    </div>
                 </dd>
             </dl>
 

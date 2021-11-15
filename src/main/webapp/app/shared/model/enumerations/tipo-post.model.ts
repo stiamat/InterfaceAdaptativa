@@ -1,0 +1,9 @@
+export const enum TipoPost {
+  NORMAL = 'NORMAL',
+
+  RECOMENDACAO = 'RECOMENDACAO',
+
+  ARTIGO = 'ARTIGO',
+
+  CONFERENCIA = 'CONFERENCIA',
+}

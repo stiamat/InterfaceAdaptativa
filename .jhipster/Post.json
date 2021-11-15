@@ -9,6 +9,21 @@
       "otherEntityField": "login",
       "ownerSide": true,
       "otherEntityRelationshipName": "post"
+    },
+    {
+      "relationshipName": "likeDe",
+      "otherEntityName": "user",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "login",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "post"
+    },
+    {
+      "relationshipName": "comentarioDe",
+      "otherEntityName": "post",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "post"
     }
   ],
   "fields": [
@@ -27,6 +42,15 @@
     {
       "fieldName": "likes",
       "fieldType": "Long"
+    },
+    {
+      "fieldName": "link",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tipoPost",
+      "fieldType": "TipoPost",
+      "fieldValues": "NORMAL,RECOMENDACAO,ARTIGO,CONFERENCIA"
     }
   ],
   "changelogDate": "20210909193028",

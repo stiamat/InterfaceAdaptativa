@@ -41,11 +41,17 @@ export class PostService {
     const options = createRequestOption(req);
     return this.http
       .get<IPost[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+      .pipe(
+        map((res: EntityArrayResponseType) =>
+          this.convertDateArrayFromServer(res)
+        )
+      );
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
-    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http.delete(`${this.resourceUrl}/${id}`, {
+      observe: 'response',
+    });
   }
 
   protected convertDateFromClient(post: IPost): IPost {
@@ -62,7 +68,9 @@ export class PostService {
     return res;
   }
 
-  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+  protected convertDateArrayFromServer(
+    res: EntityArrayResponseType
+  ): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((post: IPost) => {
         post.date = post.date ? moment(post.date) : undefined;

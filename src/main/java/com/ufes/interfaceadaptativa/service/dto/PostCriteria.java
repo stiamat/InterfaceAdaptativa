@@ -3,6 +3,7 @@ package com.ufes.interfaceadaptativa.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 import io.github.jhipster.service.Criteria;
+import com.ufes.interfaceadaptativa.domain.enumeration.TipoPost;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
@@ -22,6 +23,24 @@ import io.github.jhipster.service.filter.ZonedDateTimeFilter;
  * fix type specific filters.
  */
 public class PostCriteria implements Serializable, Criteria {
+    /**
+     * Class for filtering TipoPost
+     */
+    public static class TipoPostFilter extends Filter<TipoPost> {
+
+        public TipoPostFilter() {
+        }
+
+        public TipoPostFilter(TipoPostFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public TipoPostFilter copy() {
+            return new TipoPostFilter(this);
+        }
+
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +54,15 @@ public class PostCriteria implements Serializable, Criteria {
 
     private LongFilter likes;
 
+    private StringFilter link;
+
+    private TipoPostFilter tipoPost;
+
     private LongFilter userId;
+
+    private LongFilter likeDeId;
+
+    private LongFilter comentarioDeId;
 
     public PostCriteria() {
     }
@@ -46,7 +73,11 @@ public class PostCriteria implements Serializable, Criteria {
         this.date = other.date == null ? null : other.date.copy();
         this.active = other.active == null ? null : other.active.copy();
         this.likes = other.likes == null ? null : other.likes.copy();
+        this.link = other.link == null ? null : other.link.copy();
+        this.tipoPost = other.tipoPost == null ? null : other.tipoPost.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
+        this.likeDeId = other.likeDeId == null ? null : other.likeDeId.copy();
+        this.comentarioDeId = other.comentarioDeId == null ? null : other.comentarioDeId.copy();
     }
 
     @Override
@@ -94,12 +125,44 @@ public class PostCriteria implements Serializable, Criteria {
         this.likes = likes;
     }
 
+    public StringFilter getLink() {
+        return link;
+    }
+
+    public void setLink(StringFilter link) {
+        this.link = link;
+    }
+
+    public TipoPostFilter getTipoPost() {
+        return tipoPost;
+    }
+
+    public void setTipoPost(TipoPostFilter tipoPost) {
+        this.tipoPost = tipoPost;
+    }
+
     public LongFilter getUserId() {
         return userId;
     }
 
     public void setUserId(LongFilter userId) {
         this.userId = userId;
+    }
+
+    public LongFilter getLikeDeId() {
+        return likeDeId;
+    }
+
+    public void setLikeDeId(LongFilter likeDeId) {
+        this.likeDeId = likeDeId;
+    }
+
+    public LongFilter getComentarioDeId() {
+        return comentarioDeId;
+    }
+
+    public void setComentarioDeId(LongFilter comentarioDeId) {
+        this.comentarioDeId = comentarioDeId;
     }
 
 
@@ -118,7 +181,11 @@ public class PostCriteria implements Serializable, Criteria {
             Objects.equals(date, that.date) &&
             Objects.equals(active, that.active) &&
             Objects.equals(likes, that.likes) &&
-            Objects.equals(userId, that.userId);
+            Objects.equals(link, that.link) &&
+            Objects.equals(tipoPost, that.tipoPost) &&
+            Objects.equals(userId, that.userId) &&
+            Objects.equals(likeDeId, that.likeDeId) &&
+            Objects.equals(comentarioDeId, that.comentarioDeId);
     }
 
     @Override
@@ -129,7 +196,11 @@ public class PostCriteria implements Serializable, Criteria {
         date,
         active,
         likes,
-        userId
+        link,
+        tipoPost,
+        userId,
+        likeDeId,
+        comentarioDeId
         );
     }
 
@@ -142,7 +213,11 @@ public class PostCriteria implements Serializable, Criteria {
                 (date != null ? "date=" + date + ", " : "") +
                 (active != null ? "active=" + active + ", " : "") +
                 (likes != null ? "likes=" + likes + ", " : "") +
+                (link != null ? "link=" + link + ", " : "") +
+                (tipoPost != null ? "tipoPost=" + tipoPost + ", " : "") +
                 (userId != null ? "userId=" + userId + ", " : "") +
+                (likeDeId != null ? "likeDeId=" + likeDeId + ", " : "") +
+                (comentarioDeId != null ? "comentarioDeId=" + comentarioDeId + ", " : "") +
             "}";
     }
 

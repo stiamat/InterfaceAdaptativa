@@ -14,5 +14,23 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
+        <addForeignKeyConstraint baseColumnNames="post_id"
+                                 baseTableName="post_like_de"
+                                 constraintName="fk_post_like_de_post_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="post"/>
+
+        <addForeignKeyConstraint baseColumnNames="like_de_id"
+                                 baseTableName="post_like_de"
+                                 constraintName="fk_post_like_de_like_de_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
+        <addForeignKeyConstraint baseColumnNames="comentario_de_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post_comentario_de_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="post"/>
+
     </changeSet>
 </databaseChangeLog>

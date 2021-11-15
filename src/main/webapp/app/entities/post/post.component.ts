@@ -46,7 +46,9 @@ export class PostComponent implements OnInit, OnDestroy {
         size: this.itemsPerPage,
         sort: this.sort(),
       })
-      .subscribe((res: HttpResponse<IPost[]>) => this.paginatePosts(res.body, res.headers));
+      .subscribe((res: HttpResponse<IPost[]>) =>
+        this.paginatePosts(res.body, res.headers)
+      );
   }
 
   reset(): void {
@@ -77,11 +79,17 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInPosts(): void {
-    this.eventSubscriber = this.eventManager.subscribe('postListModification', () => this.reset());
+    this.eventSubscriber = this.eventManager.subscribe(
+      'postListModification',
+      () => this.reset()
+    );
   }
 
   delete(post: IPost): void {
-    const modalRef = this.modalService.open(PostDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(PostDeleteDialogComponent, {
+      size: 'lg',
+      backdrop: 'static',
+    });
     modalRef.componentInstance.post = post;
   }
 

@@ -11,7 +11,11 @@ import { PostService } from './post.service';
 export class PostDeleteDialogComponent {
   post?: IPost;
 
-  constructor(protected postService: PostService, public activeModal: NgbActiveModal, protected eventManager: JhiEventManager) {}
+  constructor(
+    protected postService: PostService,
+    public activeModal: NgbActiveModal,
+    protected eventManager: JhiEventManager
+  ) {}
 
   cancel(): void {
     this.activeModal.dismiss();

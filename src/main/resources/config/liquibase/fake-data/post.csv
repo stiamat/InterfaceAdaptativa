@@ -1,11 +1,11 @@
-id;body;date;active;likes
-1;Saint Helena Pound mesh;2021-09-09T04:44:56;true;52091
-2;Orchestrator;2021-09-08T19:59:58;false;40822
-3;deposit Incredible Wooden Hat;2021-09-09T00:10:20;true;33141
-4;24/7 transform;2021-09-09T04:50:04;true;33360
-5;magenta Guadeloupe orchid;2021-09-09T05:28:51;true;23477
-6;revolutionize mobile;2021-09-09T09:55:00;true;22662
-7;Fully-configurable methodologies;2021-09-09T06:12:34;true;11074
-8;Common compress backing up;2021-09-09T12:26:11;false;64368
-9;Up-sized enterprise;2021-09-09T09:52:08;true;36331
-10;Home Loan Account mint green Licensed Soft Shoes;2021-09-08T20:17:00;true;20383
+id;body;date;active;likes;link;tipo_post
+1;Saint Helena Pound mesh;2021-09-09T04:44:56;true;52091;Orchestrator;RECOMENDACAO
+2;Buckinghamshire;2021-09-09T01:05:46;false;44200;Tools;RECOMENDACAO
+3;magenta Guadeloupe orchid;2021-09-09T05:28:51;true;23477;revolutionize mobile;RECOMENDACAO
+4;Designer bypassing;2021-09-09T01:48:37;false;8934;solution-oriented Incredible Cotton Tuna Illinois;ARTIGO
+5;mint green Licensed Soft Shoes;2021-09-08T20:17:00;true;20383;Investor help-desk;ARTIGO
+6;Steel Digitized;2021-09-09T02:49:31;true;59466;innovative generate Ergonomic Cotton Computer;RECOMENDACAO
+7;Paradigm connecting calculate;2021-09-09T10:52:53;false;27341;synthesize;RECOMENDACAO
+8;redefine program;2021-09-09T11:06:32;true;67903;initiatives matrix;CONFERENCIA
+9;local area network copy;2021-09-08T23:20:31;true;1335;Gateway olive;NORMAL
+10;applications holistic relationships;2021-09-08T23:38:43;false;56675;payment Enterprise-wide;NORMAL

@@ -27,7 +27,10 @@
                     <th scope="col"  jhiSortBy="date"><span>Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="active"><span>Active</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="likes"><span>Likes</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="link"><span>Link</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="tipoPost"><span>Tipo Post</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="userLogin"><span>User</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="comentarioDeId"><span>Comentario De</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -38,8 +41,15 @@
                     <td>{{ post.date | date:'medium' }}</td>
                     <td>{{ post.active }}</td>
                     <td>{{ post.likes }}</td>
+                    <td>{{ post.link }}</td>
+                    <td>{{ post.tipoPost }}</td>
                     <td>
                         {{ post.userLogin }}
+                    </td>
+                    <td>
+                        <div *ngIf="post.comentarioDeId">
+                            <a [routerLink]="['/post', post.comentarioDeId , 'view']" >{{ post.comentarioDeId }}</a>
+                        </div>
                     </td>
                     <td class="text-right">
                         <div class="btn-group">

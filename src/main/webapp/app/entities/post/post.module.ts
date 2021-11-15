@@ -8,11 +8,14 @@ import { PostUpdateComponent } from './post-update.component';
 import { PostDeleteDialogComponent } from './post-delete-dialog.component';
 import { postRoute } from './post.route';
 
-const ENTITY_STATE = [... postRoute]
-
 @NgModule({
-  imports: [InterfaceAdaptativaSharedModule, RouterModule.forChild(ENTITY_STATE)],
-  declarations: [PostComponent, PostDetailComponent, PostUpdateComponent, PostDeleteDialogComponent],
-  entryComponents: [PostComponent, PostDetailComponent, PostUpdateComponent, PostDeleteDialogComponent],
+  imports: [InterfaceAdaptativaSharedModule, RouterModule.forChild(postRoute)],
+  declarations: [
+    PostComponent,
+    PostDetailComponent,
+    PostUpdateComponent,
+    PostDeleteDialogComponent,
+  ],
+  entryComponents: [PostDeleteDialogComponent],
 })
 export class InterfaceAdaptativaPostModule {}

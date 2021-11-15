@@ -37,10 +37,41 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" for="field_link">Link</label>
+                    <input type="text" class="form-control" name="link" id="field_link"
+                           formControlName="link"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tipoPost">Tipo Post</label>
+                    <select class="form-control" name="tipoPost" formControlName="tipoPost" id="field_tipoPost">
+                        <option value="NORMAL">NORMAL</option>
+                        <option value="RECOMENDACAO">RECOMENDACAO</option>
+                        <option value="ARTIGO">ARTIGO</option>
+                        <option value="CONFERENCIA">CONFERENCIA</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" for="field_user">User</label>
                     <select class="form-control" id="field_user" name="user" formControlName="userId">
                         <option [ngValue]="null"></option>
                         <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="field_likeDes">Like De</label>
+                    <select class="form-control" id="field_likeDes" multiple name="likeDes" formControlName="likeDes">
+                        <option [ngValue]="getSelected(editForm.get('likeDes')!.value, userOption)" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_comentarioDe">Comentario De</label>
+                    <select class="form-control" id="field_comentarioDe" name="comentarioDe" formControlName="comentarioDeId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="postOption.id" *ngFor="let postOption of posts; trackBy: trackById">{{ postOption.id }}</option>
                     </select>
                 </div>
             </div>

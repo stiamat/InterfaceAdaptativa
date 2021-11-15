@@ -12,6 +12,8 @@ import { PostService } from './post.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 
+type SelectableEntity = IUser | IPost;
+
 @Component({
   selector: 'jhi-post-update',
   templateUrl: './post-update.component.html',
@@ -19,6 +21,7 @@ import { UserService } from 'app/core/user/user.service';
 export class PostUpdateComponent implements OnInit {
   isSaving = false;
   users: IUser[] = [];
+  posts: IPost[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -26,7 +29,11 @@ export class PostUpdateComponent implements OnInit {
     date: [],
     active: [],
     likes: [],
+    link: [],
+    tipoPost: [],
     userId: [],
+    likeDes: [],
+    comentarioDeId: [],
   });
 
   constructor(
@@ -45,7 +52,17 @@ export class PostUpdateComponent implements OnInit {
 
       this.updateForm(post);
 
-      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
+      this.userService
+        .query()
+        .subscribe(
+          (res: HttpResponse<IUser[]>) => (this.users = res.body || [])
+        );
+
+      this.postService
+        .query()
+        .subscribe(
+          (res: HttpResponse<IPost[]>) => (this.posts = res.body || [])
+        );
     });
   }
 
@@ -56,7 +73,11 @@ export class PostUpdateComponent implements OnInit {
       date: post.date ? post.date.format(DATE_TIME_FORMAT) : null,
       active: post.active,
       likes: post.likes,
+      link: post.link,
+      tipoPost: post.tipoPost,
       userId: post.userId,
+      likeDes: post.likeDes,
+      comentarioDeId: post.comentarioDeId,
     });
   }
 
@@ -79,14 +100,22 @@ export class PostUpdateComponent implements OnInit {
       ...new Post(),
       id: this.editForm.get(['id'])!.value,
       body: this.editForm.get(['body'])!.value,
-      date: this.editForm.get(['date'])!.value ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
+      date: this.editForm.get(['date'])!.value
+        ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT)
+        : undefined,
       active: this.editForm.get(['active'])!.value,
       likes: this.editForm.get(['likes'])!.value,
+      link: this.editForm.get(['link'])!.value,
+      tipoPost: this.editForm.get(['tipoPost'])!.value,
       userId: this.editForm.get(['userId'])!.value,
+      likeDes: this.editForm.get(['likeDes'])!.value,
+      comentarioDeId: this.editForm.get(['comentarioDeId'])!.value,
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPost>>): void {
+  protected subscribeToSaveResponse(
+    result: Observable<HttpResponse<IPost>>
+  ): void {
     result.subscribe(
       () => this.onSaveSuccess(),
       () => this.onSaveError()
@@ -102,7 +131,18 @@ export class PostUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: IUser): any {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  getSelected(selectedVals: IUser[], option: IUser): IUser {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

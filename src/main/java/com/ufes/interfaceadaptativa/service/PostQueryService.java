@@ -103,10 +103,24 @@ public class PostQueryService extends QueryService<Post> {
             if (criteria.getLikes() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLikes(), Post_.likes));
             }
+//            if (criteria.getLink() != null) {
+//                specification = specification.and(buildStringSpecification(criteria.getLink(), Post_.link));
+//            }
+//            if (criteria.getTipoPost() != null) {
+//                specification = specification.and(buildSpecification(criteria.getTipoPost(), Post_.tipoPost));
+//            }
             if (criteria.getUserId() != null) {
                 specification = specification.and(buildSpecification(criteria.getUserId(),
                     root -> root.join(Post_.user, JoinType.LEFT).get(User_.id)));
             }
+//            if (criteria.getLikeDeId() != null) {
+//                specification = specification.and(buildSpecification(criteria.getLikeDeId(),
+//                    root -> root.join(Post_.likeDes, JoinType.LEFT).get(User_.id)));
+//            }
+//            if (criteria.getComentarioDeId() != null) {
+//                specification = specification.and(buildSpecification(criteria.getComentarioDeId(),
+//                    root -> root.join(Post_.comentarioDe, JoinType.LEFT).get(Post_.id)));
+//            }
         }
         return specification;
     }
