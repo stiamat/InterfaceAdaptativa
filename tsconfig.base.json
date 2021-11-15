@@ -6,7 +6,7 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strict": true,
+    "strict": false,
     "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "suppressImplicitAnyIndexErrors": true,
@@ -23,9 +23,9 @@
     "forceConsistentCasingInFileNames": true
   },
   "angularCompilerOptions": {
-    "strictInjectionParameters": true,
+    "strictInjectionParameters": false,
     "fullTemplateTypeCheck": false,
-    "strictTemplates": true,
+    "strictTemplates": false,
     "preserveWhitespaces": true
   }
 }

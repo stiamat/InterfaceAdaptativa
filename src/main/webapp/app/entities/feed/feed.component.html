@@ -1,24 +1,17 @@
 <div class="row justify-content-center feed">
-  <div class="col-md-2 col-lg-2 menu-padrao-area">
+  <aside class="menu-padrao-area">
     <div
       style="
         float: right;
-        width: 70%;
+        width: 100%;
         height: 150px;
         margin-top: 10px;
         margin-bottom: 10px;
       "
     ></div>
     <div
-      class="mt-2 pt-1"
-      style="
-        float: right;
-        width: 70%;
-        border-radius: 25px;
-        height: 400px;
-        background-color: #fff;
-        box-shadow: 3px 3px 10px #00000066;
-      "
+      class="mt-2 pt-1 card"
+      style="float: right; width: 100%; height: 400px; background-color: #fff"
     >
       <div
         id="imagem"
@@ -46,17 +39,11 @@
         <a class="linkMenu" (click)="logout()" href=""> Sair </a>
       </div>
     </div>
-  </div>
+  </aside>
+
   <div class="col-sm-12 col-md-5 col-lg-4 p-0 mt-3" sytle="min-height=1000px">
     <div id="inputFeed">
-      <mat-card
-        style="
-          min-height: 130px;
-          text-align: center;
-          box-shadow: 3px 3px 10px #00000066;
-        "
-        class="d-flex"
-      >
+      <mat-card class="d-flex card">
         <div
           class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-inline-block"
           style="text-align: left"
@@ -77,11 +64,19 @@
             (ngModelChange)="checkinput($event)"
           ></textarea>
 
-          <mat-progress-bar
+          <!-- <mat-progress-bar
             mode="determinate"
             [value]="input?.length"
             style="margin-top: -12px; background-color: #ffffff00"
-          ></mat-progress-bar>
+          ></mat-progress-bar> -->
+
+          <mat-progress-spinner
+            class="input-progression"
+            [color]="'primary'"
+            [mode]="'determinate'"
+            [value]="input?.length"
+          >
+          </mat-progress-spinner>
 
           <button
             mat-mini-fab
@@ -156,124 +151,87 @@
 
     <div *ngIf="!loading">
       <div id="padraoFeed" *ngFor="let post of feed">
-        <mat-card
-          style="
-            min-height: 130px;
-            text-align: center;
-            box-shadow: 3px 3px 10px #00000066;
-          "
-          class="d-flex mb-2"
-        >
-          <div
-            class="col-sm-2 col-md-3 col-lg-2 justify-content-center p-0 d-inline-block post_head"
-          >
-            <div
-              id="imagem"
-              style="
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                display: inline-flex;
-              "
-            >
-              <img
-                src="../../../content/images/undraw_female_avatar_w3jk.svg"
-                alt="avatar female"
-                width="50"
-                height="50"
-                style="vertical-align: middle"
-              />
+        <mat-card class="d-flex mb-2 card">
+          <!-- Head de um post -->
+          <div head class="p-0 post_head">
+            <!-- Image -->
+            <div id="user" class="d-flex align-items-center">
+              <div id="imagem" class="card_post_image">
+                <img
+                  src="../../../content/images/undraw_female_avatar_w3jk.svg"
+                  alt="avatar female"
+                  width="40"
+                  height="40"
+                  style="vertical-align: middle"
+                />
+              </div>
+
+              usuario
             </div>
-            <div
-              id="nick"
-              style="
-                width: 100%;
-                height: 20px;
-                text-align: center;
-                font-size: 12px;
-              "
-            >
-              @anonimo
-            </div>
-            <div
-              id="nick"
-              style="
-                width: 100%;
-                height: 20px;
-                text-align: center;
-                font-size: 12px;
-                background-color: #536dfe;
-                border-radius: 20px;
-                color: white;
-              "
-            >
-              Seguir
+
+            <!-- Horario de post -->
+            <div id="time_post" class="d-flex card_head_time_post">
+              há 3 minuto(s)
             </div>
           </div>
 
+          <!-- Body -->
           <div
             class="col-xs-10 col-sm-10 col-md-9 col-lg-10 p-0 d-inline-block post_body"
-            style="text-align: left; word-wrap: break-word"
           >
             {{ post.body }}
+          </div>
 
-            <div style="position: absolute; bottom: 0px; right: 0px">
-              <button
-                mat-icon-button
-                color="primary"
-                aria-label="Example icon button with a heart icon"
-              >
-                <mat-icon>
-                  <span class="material-icons"> bookmark </span>
-                </mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                color="primary"
-                aria-label="Example icon button with a heart icon"
-              >
-                <mat-icon>
-                  <span class="material-icons"> chat_bubble </span>
-                </mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                color="primary"
-                aria-label="Example icon button with a heart icon"
-              >
-                <mat-icon>
-                  <span class="material-icons"> restart_alt </span>
-                </mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                color="primary"
-                aria-label="Example icon button with a heart icon"
-              >
-                <mat-icon>
-                  <span class="material-icons"> favorite </span>
-                </mat-icon>
-              </button>
-            </div>
+          <div style="position: absolute; bottom: 0px; right: 0px">
+            <button
+              mat-icon-button
+              color="primary"
+              aria-label="Example icon button with a heart icon"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+            <button
+              mat-icon-button
+              color="primary"
+              aria-label="Example icon button with a heart icon"
+            >
+              <i class="bi bi-link-45deg"></i>
+            </button>
+            <button
+              mat-icon-button
+              color="primary"
+              aria-label="Example icon button with a heart icon"
+            >
+              <i class="bi bi-chat-square-text"></i>
+            </button>
+            <button
+              mat-icon-button
+              color="primary"
+              aria-label="Example icon button with a heart icon"
+            >
+              <i class="bi bi-heart"></i>
+            </button>
           </div>
         </mat-card>
       </div>
     </div>
   </div>
+
+  <aside class="destaque-padrao-area">
+    <div
+      class="mt-2 pt-1 card"
+      style="float: left; width: 100%; height: 400px; background-color: #fff"
+    >
+      <div class="mt-2">
+        <p>Destaques</p>
+        <a class="linkMenu" href="feed"> 1º </a>
+        <a class="linkMenu" href="feed"> 2º </a>
+        <a class="linkMenu" href="feed"> 3º </a>
+        <a class="linkMenu" (click)="logout()" href=""> 4º </a>
+      </div>
+    </div>
+  </aside>
   <!-- <div class="col-md-2" style="background-color: brown; height: 200px; left: 70.8%; position: fixed;">
         <div id="padraoTrend"></div>
     </div> -->
-  <div class="col-sm-12 col-md-12 col-lg-12 p-0 mt-3 footer">
-    <mat-card
-      style="
-        min-height: 130px;
-        width: 100%;
-        text-align: center;
-        left: 0;
-        bottom: 0;
-      "
-      class="d-flex"
-    >
-    </mat-card>
-  </div>
 </div>

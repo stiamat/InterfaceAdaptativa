@@ -1,11 +1,19 @@
 .feed {
   background-color: #e6e6e6;
   min-height: 1000px;
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
 
   .menu-padrao-area {
-    left: 16.5%;
+    left: 22%;
     position: fixed;
+    width: 10%;
+  }
+
+  .destaque-padrao-area {
+    margin-top: 15px;
+    left: 68%;
+    position: fixed;
+    width: 10%;
   }
 
   .linkMenu {
@@ -45,10 +53,42 @@
     padding: 10px !important;
     font-family: 'Poppins';
     font-size: 15px;
+    text-align: left;
+    word-wrap: break-word;
+    margin-left: 45px;
   }
 
   .post_head {
-    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .input-progression {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+.card {
+  border-radius: 8px !important;
+  min-height: 130px;
+  text-align: center;
+  font-family: 'Poppins';
+  // box-shadow: 3px 3px 10px #00000066;
+
+  &_post_image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+  }
+
+  &_head_time_post {
+    font-size: small;
+    color: rgb(170, 170, 170);
   }
 }
 
@@ -91,27 +131,25 @@
     .menu-padrao-area {
       left: 12.5%;
     }
-    .post_head {
-      width: 100px;
-    }
+    // .post_head {
+    //   width: 100px;
+    // }
   }
 }
 
 @media screen and (max-width: 767px) {
   .feed {
-    .menu-padrao-area {
+    padding: 20px;
+    .menu-padrao-area,
+    .destaque-padrao-area {
       display: none;
     }
-    .post_head {
-      width: 100px;
-    }
+    // .post_head {
+    //   width: 100px;
+    // }
 
     .post_body {
       width: 340px;
     }
   }
-}
-
-.mat-card {
-  border-radius: 25px !important;
 }

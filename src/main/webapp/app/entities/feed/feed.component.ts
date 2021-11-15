@@ -4,7 +4,6 @@ import { FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AccountService } from "app/core/auth/account.service";
 import { LoginService } from "app/core/login/login.service";
-import { Account } from "app/core/user/account.model";
 import { IPost, Post } from "app/shared/model/post.model";
 import * as moment from 'moment';
 import { Observable } from "rxjs";
@@ -24,7 +23,7 @@ export class FeedComponent implements OnInit {
     loading = true;
     post:IPost = {id:0};
     feed = [this.post,this.post,this.post];
-    account: Account = null;
+    account: any = null;
     isSaving = false;
 
     editForm = this.fb.group({
