@@ -5,199 +5,108 @@
 @include mat-core();
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-button:focus{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;600&display=swap');
+
+button:focus {
   outline: none !important;
 }
 
-// /* ==============================================================
-// Bootstrap tweaks
-// ===============================================================*/
+.invalid {
+  border-color: $danger;
+}
 
-// body,
-// h1,
-// h2,
-// h3,
-// h4 {
-//   font-weight: 300;
-// }
+$primary: #3f3d56;
+$secondary: #536dfe;
+$success: #4ea685;
+$danger: #ff6584;
+$base: #e6e6e6;
 
-// /* Increase contrast of links to get 100% on Lighthouse Accessability Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
-// a {
-//   color: #533f03;
-//   font-weight: bold;
-// }
+$primary1: #535167;
+$secondary1: #657cff;
+$success1: #60af92;
+$danger1: #ff7591;
+$base1: #e9e9e9;
 
-// a:hover {
-//   color: #533f03;
-// }
+$primary2: #6f6e80;
+$secondary2: #7e92fe;
+$success2: #7abca4;
+$danger2: #ff8ca3;
+$base2: #ececec;
 
-// /* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
-// a:not([href]):not([tabindex]):hover.dropdown-item {
-//   color: $dropdown-link-hover-color;
-// }
+$primary3: #9f9eab;
+$secondary3: #a9b6ff;
+$success3: #a7d3c2;
+$danger3: #ffb2c2;
+$base3: #f3f3f3;
 
-// /* override .dropdown-item.active background-color on hover */
-// .dropdown-item.active:hover {
-//   background-color: mix($dropdown-link-hover-bg, $dropdown-link-active-bg, 50%);
-// }
+// tamanho de telas
+$container-xl: 1440px;
+$container-lg: 1140px;
+$container-m: 960px;
+$container-s: 540px;
 
-// a:hover {
-//   /* make sure browsers use the pointer cursor for anchors, even with no href */
-//   cursor: pointer;
-// }
+@mixin responsive($device) {
+  @if $device == xl {
+    // Maior que 1440px
+    @media screen and (min-width: $container-xl) {
+      @content;
+    }
+  } @else if $device == lg {
+    // Entre 1140 e 1440px
+    @media screen and (min-width: $container-lg) and (max-width: $container-xl) {
+      @content;
+    }
+  } @else if $device == m {
+    // Entre 960 e 1140
+    @media screen and (min-width: $container-m) and (max-width: $container-lg) {
+      @content;
+    }
+  } @else if $device == s {
+    // Menor que 960px
+    @media screen and (max-width: $container-m) {
+      @content;
+    }
+  } @else if $device == xs {
+    // Menor que 540px
+    @media screen and (max-width: $container-s) {
+      @content;
+    }
+  }
+}
 
-// .dropdown-item:hover {
-//   color: $dropdown-link-hover-color;
-// }
+body {
+  background-color: $base !important;
+  color: $primary !important;
+}
 
-// /* ==========================================================================
-// Browser Upgrade Prompt
-// ========================================================================== */
-// .browserupgrade {
-//   margin: 0.2em 0;
-//   background: #ccc;
-//   color: #000;
-//   padding: 0.2em 0;
-// }
+.btn {
+  border-radius: 2rem !important;
+}
+.btn:hover,
+.btn:focus {
+  box-shadow: unset;
+}
 
-// /* ==========================================================================
-// Generic styles
-// ========================================================================== */
+* {
+  font-family: 'Poppins' !important;
+  font-weight: 400;
+  font-style: normal;
+}
 
-// /* Error highlight on input fields */
-// .ng-valid[required],
-// .ng-valid.required {
-//   border-left: 5px solid green;
-// }
+.body-adapative {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 1vw;
 
-// .ng-invalid:not(form) {
-//   border-left: 5px solid red;
-// }
+  .item-principal {
+    grid-column: 2 / 4;
+  }
 
-// /* other generic styles */
+  @include responsive(s) {
+    grid-template-columns: auto;
 
-// .jh-card {
-//   padding: 1.5%;
-//   margin-top: 20px;
-//   border: none;
-// }
-
-// .error {
-//   color: white;
-//   background-color: red;
-// }
-
-// .pad {
-//   padding: 10px;
-// }
-
-// .w-40 {
-//   width: 40% !important;
-// }
-
-// .w-60 {
-//   width: 60% !important;
-// }
-
-// .break {
-//   white-space: normal;
-//   word-break: break-all;
-// }
-
-// .readonly {
-//   background-color: #eee;
-//   opacity: 1;
-// }
-
-// .footer {
-//   border-top: 1px;
-// }
-
-// .hand,
-// [jhisortby] {
-//   cursor: pointer;
-// }
-
-// /* ==========================================================================
-// Custom alerts for notification
-// ========================================================================== */
-// .alerts {
-//   .alert {
-//     text-overflow: ellipsis;
-//     pre {
-//       background: none;
-//       border: none;
-//       font: inherit;
-//       color: inherit;
-//       padding: 0;
-//       margin: 0;
-//     }
-//     .popover pre {
-//       font-size: 10px;
-//     }
-//   }
-//   .jhi-toast {
-//     position: fixed;
-//     width: 100%;
-//     &.left {
-//       left: 5px;
-//     }
-//     &.right {
-//       right: 5px;
-//     }
-//     &.top {
-//       top: 55px;
-//     }
-//     &.bottom {
-//       bottom: 55px;
-//     }
-//   }
-// }
-
-// @media screen and (min-width: 480px) {
-//   .alerts .jhi-toast {
-//     width: 50%;
-//   }
-// }
-
-// /* ==========================================================================
-// entity detail page css
-// ========================================================================== */
-// .row.jh-entity-details > {
-//   dd {
-//     margin-bottom: 15px;
-//   }
-// }
-
-// @media screen and (min-width: 768px) {
-//   .row.jh-entity-details > {
-//     dt {
-//       margin-bottom: 15px;
-//     }
-//     dd {
-//       border-bottom: 1px solid #eee;
-//       padding-left: 180px;
-//       margin-left: 0;
-//     }
-//   }
-// }
-
-// /* ==========================================================================
-// ui bootstrap tweaks
-// ========================================================================== */
-// .nav,
-// .pagination,
-// .carousel,
-// .panel-title a {
-//   cursor: pointer;
-// }
-
-// .thread-dump-modal-lock {
-//   max-width: 450px;
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-//   white-space: nowrap;
-// }
-
-// /* jhipster-needle-scss-add-main JHipster will add new css style */
-
+    .item-principal {
+      grid-column: unset;
+    }
+  }
+}
