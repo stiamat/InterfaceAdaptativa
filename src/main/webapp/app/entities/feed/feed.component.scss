@@ -180,6 +180,7 @@
     padding: 10px;
     box-shadow: -4px 4px 20px #657cff4a;
     margin-bottom: 30px;
+    transition: all 0.3s;
 
     .input {
       grid-column: 1/5;
@@ -190,6 +191,11 @@
         outline: unset;
       }
     }
+
+    &:hover,
+    &:focus {
+      box-shadow: -4px 4px 5px #657cff57;
+    }
   }
 
   .input-post {
@@ -199,7 +205,7 @@
 
     background-color: white;
     border: 0px;
-    border-left: 3px solid $secondary;
+    border-left: 4px solid $secondary;
     border-radius: 0.75rem;
     padding: 15px;
 
@@ -227,7 +233,7 @@
   width: 100%;
   color: $primary;
   background-color: $secondary1;
-  border: 1px solid $primary;
+  border: 0px solid $primary;
   box-shadow: unset;
   box-shadow: inset 0px -2px 2px #3f3d566e, 0px 2px 4px $primary;
   transition: all 0.2s;
@@ -245,15 +251,19 @@
   &-cor-secondary {
     color: $base;
     background-color: $primary;
-    border: 1px solid $primary;
+    border: 0px solid $primary;
     box-shadow: unset;
 
     &:hover,
-    &:focus,
-    &:active {
+    &:focus {
       color: $primary;
       background-color: $secondary1;
       box-shadow: inset 0px -2px 2px #3f3d566e, 0px 2px 4px $primary;
+    }
+    &:active {
+      color: $primary;
+      background-color: $secondary1;
+      box-shadow: inset 0px 2px 4px #3f3d566e, 0px 0px 0px $primary;
     }
   }
 }

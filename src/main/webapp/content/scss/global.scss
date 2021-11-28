@@ -77,6 +77,12 @@ $container-s: 540px;
 body {
   background-color: $base !important;
   color: $primary !important;
+  transition: all 0.3s;
+}
+
+.body_dark {
+  background-color: $primary !important;
+  color: $base !important;
 }
 
 .btn {
