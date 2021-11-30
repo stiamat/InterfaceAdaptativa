@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -94,19 +96,11 @@ public class PostServiceImpl implements PostService {
             OWLDataFactory factory = manager.getOWLDataFactory();
 
             // Carregando classes de interesse
-            OWLClass font_Increase = manager.getOWLDataFactory().getOWLClass(IRI.create(ontologyIRI + "#Font_Increase"));
-            OWLClass font_Decrease = manager.getOWLDataFactory().getOWLClass(IRI.create(ontologyIRI + "#Font_Decrease"));
+            Map<String, OWLClass> ClassesOWL = this.loadingClassOWL(manager, ontologyIRI);
 
-            OWLIndividual i02 = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#02"));
-            OWLDataPropertyExpression has_Age= factory.getOWLDataProperty(IRI.create(ontologyIRI + "#has_Age"));
-            OWLDataPropertyAssertionAxiom axiom = factory.getOWLDataPropertyAssertionAxiom(has_Age, i02, 55);
-            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            //Carregando Individuo para inferencia
+            this.loadingIndividual(factory, ontologyIRI, ontology, manager);
 
-            manager.applyChange(addAxiom);
-            // salvar individuo na ontologia (not necessario)
-            manager.saveOntology(ontology);
-
-            //
 
             // Reasoner
             ReasonerFactory reasonerFactory = new ReasonerFactory();
@@ -114,21 +108,58 @@ public class PostServiceImpl implements PostService {
             configuration.throwInconsistentOntologyException=false;
             OWLReasoner reasoner= reasonerFactory.createReasoner(ontology, configuration);
 
-            for (OWLClass c : ontology.getClassesInSignature()) {
-                if (c.getIRI().getFragment().equals("Basic_Experience_Mode")){
-                    NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
-                    System.out.println(c.getIRI().getFragment());
-                    for (OWLNamedIndividual i : instances.getFlattened()) {
-                        System.out.println(i.getIRI().getFragment());
-                    }
-                }
-            }
-
             // Teste de consistencia da ontologia
             boolean consistent = reasoner.isConsistent();
-            System.out.println(consistent);
+
+            this.inferindoSobreIndividuo(ontology, reasoner);
+
+
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public Map<String,OWLClass> loadingClassOWL(OWLOntologyManager manager, IRI ontologyIRI){
+        Map<String,OWLClass> classesOWL = new HashMap<String,OWLClass>();
+
+        OWLClass font_Increase = manager.getOWLDataFactory().getOWLClass(IRI.create(ontologyIRI + "#Font_Increase"));
+        classesOWL.put("Font_Increase", font_Increase);
+
+        OWLClass font_Decrease = manager.getOWLDataFactory().getOWLClass(IRI.create(ontologyIRI + "#Font_Decrease"));
+        classesOWL.put("Font_Increase", font_Increase);
+
+        return classesOWL;
+    }
+
+    public void loadingIndividual(OWLDataFactory factory, IRI ontologyIRI, OWLOntology ontology, OWLOntologyManager manager){
+        OWLIndividual individuo = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#02"));
+
+        // idade
+        OWLDataPropertyExpression has_Age= factory.getOWLDataProperty(IRI.create(ontologyIRI + "#has_Age"));
+        OWLDataPropertyAssertionAxiom axiom = factory.getOWLDataPropertyAssertionAxiom(has_Age, individuo, 55);
+        AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+        manager.applyChange(addAxiom);
+
+
+        // necessidades especiais
+
+
+
+        // salvar individuo na ontologia (não é necessario necessario)
+        // manager.saveOntology(ontology);
+    }
+
+    public void inferindoSobreIndividuo(OWLOntology ontology, OWLReasoner reasoner){
+
+        for (OWLClass c : ontology.getClassesInSignature()) {
+            if (c.getIRI().getFragment().equals("Basic_Experience_Mode")){
+                NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
+                System.out.println(c.getIRI().getFragment());
+                for (OWLNamedIndividual i : instances.getFlattened()) {
+                    System.out.println(i.getIRI().getFragment());
+                }
+            }
+        }
+
     }
 }
