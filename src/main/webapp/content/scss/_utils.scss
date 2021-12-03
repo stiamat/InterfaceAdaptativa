@@ -1,0 +1,38 @@
+// utils
+
+.btn {
+  border-radius: 0.75rem !important;
+  width: 100%;
+  color: $base;
+  background-color: $secondary1;
+  border: 0px solid $primary;
+  box-shadow: unset;
+  box-shadow: inset 0px -2px 2px #3f3d566e, 0px 2px 4px $primary;
+  transition: all 0.2s;
+  padding: 5px;
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 0px -2px 2px #3f3d566e, 0px 2px 4px $primary;
+  }
+  &:active {
+    box-shadow: inset 0px 2px 4px #3f3d566e, 0px 0px 0px $primary;
+  }
+
+  &-cor-secondary {
+    color: $base;
+    background-color: $primary;
+    border: 0px solid $primary;
+    box-shadow: unset;
+
+    &:hover,
+    &:focus {
+      background-color: $secondary1;
+      box-shadow: inset 0px -2px 2px #3f3d566e, 0px 2px 4px $primary;
+    }
+    &:active {
+      background-color: $secondary1;
+      box-shadow: inset 0px 2px 4px #3f3d566e, 0px 0px 0px $primary;
+    }
+  }
+}
