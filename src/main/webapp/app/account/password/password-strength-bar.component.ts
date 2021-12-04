@@ -3,7 +3,11 @@ import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
 @Component({
   selector: 'jhi-password-strength-bar',
   template: ` <div id="strength">
-    <small>Password strength:</small>
+    <small
+      >Para obter uma senha forte insira pelo meno um número, uma letra
+      maiúscula, uma letra minuscula e um caracter especial.</small
+    ><br /><br />
+    <small>Força da Senha:</small>
     <ul id="strengthBar">
       <li class="point"></li>
       <li class="point"></li>

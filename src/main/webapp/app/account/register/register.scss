@@ -1,0 +1,85 @@
+@import '../../../content/scss/global.scss';
+@import '../../../content/scss/_utils.scss';
+
+.buttonVoltar {
+  background-color: #e6e6e6;
+  color: #536dfe;
+  width: 90%;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  border: 3px solid #536dfe;
+  &:hover,
+  :focus {
+    background-color: #536dfe;
+    color: #e6e6e6;
+    width: 100%;
+  }
+}
+
+.buttonEntrar {
+  background-color: #536dfe;
+  border: 3px solid #536dfe;
+  color: white;
+  width: 90%;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+}
+
+.buttonEntrar:hover,
+.buttonEntrar:focus {
+  background-color: #536dfe;
+  width: 100%;
+}
+
+.conteudo {
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  animation-name: openMain;
+  animation-duration: 2s;
+}
+
+.circleFloat {
+  width: 100rem;
+  height: 100rem;
+  border-radius: 50%;
+  background-color: #536dfe;
+  position: fixed;
+  top: -500px;
+  left: 50%;
+  z-index: -1;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  animation-name: openPage;
+  animation-duration: 2s;
+}
+
+.imageFloat {
+  background-image: url('../../../content/images/undraw_mobile_user_7oqo.svg');
+  height: 40rem;
+  width: 47rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: fixed;
+  top: 20rem;
+  left: 50%;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  animation-name: openMain;
+  animation-duration: 4s;
+}
+
+@keyframes openPage {
+  from {
+    top: -500px;
+    left: -800px;
+  }
+  to {
+    top: -500px;
+    left: 50%;
+  }
+}
+
+@keyframes openMain {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

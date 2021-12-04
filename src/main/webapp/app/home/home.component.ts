@@ -5,7 +5,6 @@ import { LoginService } from 'app/core/login/login.service';
 import { Account } from 'app/core/user/account.model';
 import { Subscription } from 'rxjs';
 
-
 @Component({
   selector: 'jhi-home',
   templateUrl: './home.component.html',
@@ -16,19 +15,24 @@ export class HomeComponent implements OnInit, OnDestroy {
   authSubscription?: Subscription;
   inputlogin = true;
   authenticationError = false;
-  input= "";
-  password = "";
+  input = '';
+  password = '';
 
-  constructor(private accountService: AccountService, private loginService: LoginService, private router: Router) {}
+  constructor(
+    private accountService: AccountService,
+    private loginService: LoginService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-
-    if(this.isAuthenticated()){
-      console.warn('teste');
-      location.assign('feed');
-    }
-
-    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
+    this.authSubscription = this.accountService
+      .getAuthenticationState()
+      .subscribe(account => {
+        this.account = account;
+        if (this.isAuthenticated()) {
+          this.router.navigate(['feed']);
+        }
+      });
   }
 
   isAuthenticated(): boolean {
@@ -38,21 +42,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   login(): void {
     // this.loginModalService.open();
 
-    this.loginService.login({
+    this.loginService
+      .login({
         username: this.input,
         password: this.password,
         rememberMe: false,
       })
       .subscribe(
-        () => {
+        account => {
           this.authenticationError = false;
-          location.assign('feed');
+          this.account = account;
+          this.router.navigate(['feed']);
         },
         () => (this.authenticationError = true)
       );
   }
 
-  register():void{
+  register(): void {
     this.router.navigate(['/account/register']);
   }
 
@@ -62,36 +68,40 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeInput():void {
-
+  changeInput(): void {
     const cadastrar = document.querySelector('#novoporaqui');
     const login = document.querySelector('#login');
 
-    if(this.inputlogin){
-
+    if (this.inputlogin) {
       login?.classList.add('removeOpacity');
       login?.classList.remove('addOpacity');
 
       cadastrar?.classList.add('addOpacity');
       cadastrar?.classList.remove('removeOpacity');
 
-      cadastrar?.classList.replace('novo','novoAtivo');
-      login?.classList.replace('loginAtivo','loginDesativado');
+      cadastrar?.classList.replace('novo', 'novoAtivo');
+      login?.classList.replace('loginAtivo', 'loginDesativado');
 
       document.querySelector('#circleFloat')?.classList.add('addCircleFloat');
-      document.querySelector('#circleFloat')?.classList.remove('removeCircleFloat');
-    }else{
+      document
+        .querySelector('#circleFloat')
+        ?.classList.remove('removeCircleFloat');
+    } else {
       login?.classList.remove('removeOpacity');
       login?.classList.add('addOpacity');
 
       cadastrar?.classList.remove('addOpacity');
       cadastrar?.classList.add('removeOpacity');
 
-      cadastrar?.classList.replace('novoAtivo','novo');
-      login?.classList.replace('loginDesativado','loginAtivo');
+      cadastrar?.classList.replace('novoAtivo', 'novo');
+      login?.classList.replace('loginDesativado', 'loginAtivo');
 
-      document.querySelector('#circleFloat')?.classList.add('removeCircleFloat');
-      document.querySelector('#circleFloat')?.classList.remove('addCircleFloat');
+      document
+        .querySelector('#circleFloat')
+        ?.classList.add('removeCircleFloat');
+      document
+        .querySelector('#circleFloat')
+        ?.classList.remove('addCircleFloat');
     }
 
     this.inputlogin = !this.inputlogin;

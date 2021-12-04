@@ -3,7 +3,7 @@
 
     <div class="col-md-6 w-100 d-inline-block">
         <div id="novoporaqui" class="novo">
-           <div class="d-flex justify-content-center align-content-center
+            <div class="d-flex justify-content-center align-content-center
                 align-content-center">
                 <h3 class="font-weight-bold" style="color:white; margin-top: 100px;">Novo por Aqui</h3>
             </div>
@@ -16,11 +16,12 @@
             <div class="d-flex justify-content-center align-content-center
                 align-content-center">
                 <div class="col-md-6 mt-3 text-center">
-                    <button type="button" (click)="register()" class="btn font-weight-bold buttonEntrar" style="border: 3px solid">Cadastrar</button>
+                    <button type="button" (click)="register()" class="btn font-weight-bold buttonEntrar"
+                        style="border: 3px solid">Cadastrar</button>
                 </div>
-            </div> 
+            </div>
         </div>
-        
+
 
         <div class="imageFloat">
             &nbsp;
@@ -28,7 +29,7 @@
         <div class="circleFloat" id="circleFloat">
             &nbsp;
         </div>
-        
+
     </div>
     <div class="col-md-6 w-100">
         <form id="login" class="loginAtivo" (submit)="login()">
@@ -40,16 +41,16 @@
             <div class="d-flex justify-content-center align-content-center
                 align-content-center">
                 <div class="col-md-6 mt-3">
-                    <input type="email" class="form-control inputLogin"
-                        id="emailInputid" placeholder="email" [(ngModel)]="input" [ngModelOptions]="{standalone: true}">
+                    <input type="email" class="form-control inputLogin" id="emailInputid" placeholder="Nome de Usuário"
+                        [(ngModel)]="input" [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
 
             <div class="d-flex justify-content-center align-content-center
                 align-content-center">
                 <div class="col-md-6 mt-3">
-                    <input type="password" class="form-control inputLogin"
-                        id="passwordInputid" placeholder="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                    <input type="password" class="form-control inputLogin" id="passwordInputid" placeholder="Senha"
+                        [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
 
@@ -60,7 +61,7 @@
                 </div>
             </div>
         </form>
-        
+
 
         <div class="justify-content-center align-content-center
             align-content-center mobile">
@@ -70,7 +71,7 @@
                 </button>
             </div>
         </div>
-        
+
     </div>
 
 

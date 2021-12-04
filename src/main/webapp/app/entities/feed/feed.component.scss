@@ -224,34 +224,62 @@
       height: 100%;
       outline: none;
     }
+
+    .link {
+      grid-column: 1 / 6;
+      transition: all 2s;
+
+      .form-control {
+        color: $primary;
+        background-color: $base;
+        box-shadow: inset 0px 2px 3px #3f3d566e;
+        padding-left: 5px;
+      }
+      .form-group {
+        margin: 0px;
+      }
+
+      .form-row {
+        transition: all 2s;
+        display: none;
+      }
+      .visible {
+        display: flex;
+      }
+    }
   }
 
   .card-post {
     background-color: white;
+    box-shadow: 1px 2px 5px #0000004a;
     border: 0px;
     border-radius: 0.75rem;
-    min-height: 200px;
     margin-top: 2rem;
     padding: 1rem;
+    padding-bottom: 5px;
     width: 100%;
 
     .grid {
       display: grid;
-      grid-template-columns: 5rem auto 5rem;
+      grid-template-columns: 4rem auto 5rem;
     }
 
     .img {
       background-color: $secondary;
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
+    }
+
+    .date {
+      color: $primary2;
+      font-size: smaller;
     }
 
     .header {
       .avatar {
         display: flex;
         align-items: center;
-        justify-content: center;
         grid-column: 1;
       }
       .nick {
@@ -268,10 +296,104 @@
 
     .body {
       .corpo {
-        background-color: $secondary;
-        height: 50px;
+        height: auto;
+        white-space: pre-line;
         grid-column: 2/4;
+
+        @include responsive(s) {
+          grid-column: 1/4;
+          margin-top: 3px;
+        }
       }
     }
+
+    .footer {
+      display: block;
+      .actions {
+        grid-column: 1/4;
+        display: flex;
+        justify-content: flex-end;
+
+        .mat-primary {
+          color: $primary;
+        }
+        .mat-icon-button {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  @include responsive(s) {
+    margin-top: 70px;
+  }
+}
+
+.sidebar-left {
+  display: flex;
+  justify-content: end;
+
+  .util {
+    position: fixed;
+    width: 200px;
+    transition: all 1s;
+    z-index: 99;
+  }
+
+  .logo {
+    background-color: white;
+    width: 100%;
+    height: 70px;
+  }
+
+  .menu {
+    box-shadow: 5px 5px 20px #657cff4a;
+    background-color: white;
+    width: 100%;
+    height: 500px;
+    margin-top: 2rem;
+    border-radius: 0.75rem;
+    transition: all 1s;
+
+    &:hover {
+      box-shadow: 5px 5px 5px #657cff4a;
+    }
+  }
+
+  @include responsive(lg) {
+    .util {
+      width: 200px;
+    }
+  }
+
+  @include responsive(m) {
+    .util {
+      width: 150px;
+    }
+  }
+
+  @include responsive(s) {
+    .util {
+      position: unset;
+      width: 100%;
+    }
+    .logo {
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+    .menu {
+      display: none;
+    }
+  }
+}
+
+.sidebar-right {
+  .util {
+    width: 35%;
+  }
+
+  @include responsive(s) {
+    display: none;
   }
 }

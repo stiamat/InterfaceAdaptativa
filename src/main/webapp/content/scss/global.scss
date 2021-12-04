@@ -40,8 +40,8 @@ $danger3: #ffb2c2;
 $base3: #f3f3f3;
 
 // tamanho de telas
-$container-xl: 1440px;
-$container-lg: 1140px;
+$container-xl: 1840px;
+$container-lg: 1440px;
 $container-m: 960px;
 $container-s: 540px;
 
@@ -101,11 +101,11 @@ body {
 
 .body-adapative {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto 40% auto;
   grid-gap: 1vw;
 
   .item-principal {
-    grid-column: 2 / 4;
+    grid-column: 2;
   }
 
   @include responsive(s) {
@@ -115,4 +115,27 @@ body {
       grid-column: unset;
     }
   }
+}
+
+/* width */
+::-webkit-scrollbar {
+  max-width: 7px;
+  max-height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px $primary;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary;
 }

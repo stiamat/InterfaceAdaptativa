@@ -1,21 +1,54 @@
 <div class="body-adapative">
-    <div class="sidebar-left">01</div>
+    <div class="sidebar-left">
+        <div class="util">
+            <div class="logo"></div>
+            <div class="menu">
+                <div class="avatar"></div>
+                <div class="inicio">Inicio</div>
+                <div class="perfil">Perfil</div>
+                <div class="configuracoes">Configurações</div>
+                <div class="sair">Sair</div>
+            </div>
+        </div>
+
+    </div>
 
     <div class="item-principal main">
 
         <!-- Busca -->
         <div class="input-busca" data-bs-toggle="tooltip" data-bs-placement="right" title="Tooltip on right">
             <input class="input" type="text" placeholder="Busque aqui...">
-            <button class="btn"><i class="bi bi-search"></i></button>
+            <button class="btn_feed"><i class="bi bi-search"></i></button>
         </div>
 
         <!-- Post -->
         <div class="input-post">
-            <textarea class="area-text" maxlength="100" placeholder=" Tudo bem com você?" [(ngModel)]="input"
-                (ngModelChange)="checkinput($event)"></textarea>
-            <button class="btn btn-cor-secondary"><i class="bi bi-paperclip"></i></button>
-            <button class="btn"><i class="bi bi-send"></i></button>
-            <input class="block" type="file">
+            <textarea id="area-text" class="area-text" maxlength="200" placeholder=" Tudo bem com você?"
+                [(ngModel)]="input" (ngModelChange)="checkinput($event)"></textarea>
+            <button class="btn_feed btn_feed-cor-secondary" (click)="changeLink()"><i
+                    class="bi bi-paperclip"></i></button>
+            <button class="btn_feed" (click)="createPost()"><i class="bi bi-send"></i></button>
+            <form class="link">
+                <div class="form-row" id="link">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control" id="tipoPost">
+                                <option>Normal</option>
+                                <option>Vídeo</option>
+                                <option>PDF</option>
+                                <option>Artigo</option>
+                                <option>Conferência</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="inputLink" placeholder="Insira um link aqui..."
+                            [(ngModel)]="inputLink" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+            </form>
+
+
         </div>
 
         <!-- Separarator -->
@@ -23,18 +56,37 @@
 
         <div class="feed">
 
-            <div class="card-post">
+            <div class="card-post" *ngFor="let post of feed">
                 <div class="grid header">
                     <div class="avatar">
                         <div class="img"></div>
                     </div>
-                    <div class="nick">Luiza Avelino</div>
+                    <div class="nick">{{post.userLogin}}</div>
                     <div class="date">há 3 mins</div>
                 </div>
                 <div class="grid body">
-                    <div class="corpo"></div>
+                    <div class="corpo">{{post.body}}</div>
                 </div>
-                <div class="grid footer"></div>
+                <div class="grid footer">
+                    <div class="actions">
+                        <button *ngIf="account.id == post.userId" (click)="deletePost(post)" mat-icon-button
+                            color="primary" aria-label="Example icon button with a heart icon">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button color="primary"
+                            aria-label="Example icon button with a heart icon">
+                            <i class="bi bi-link-45deg"></i>
+                        </button>
+                        <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon">
+                            <i class="bi bi-chat-square-text"></i>
+                        </button>
+                        <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+
+
+                </div>
             </div>
 
         </div>

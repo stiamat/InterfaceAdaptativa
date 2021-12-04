@@ -1,6 +1,6 @@
 // utils
 
-.btn {
+.btn_feed {
   border-radius: 0.75rem !important;
   width: 100%;
   color: $base;
@@ -34,5 +34,14 @@
       background-color: $secondary1;
       box-shadow: inset 0px 2px 4px #3f3d566e, 0px 0px 0px $primary;
     }
+  }
+}
+
+.inputLogin {
+  background-color: white !important;
+  color: #727272 !important;
+  border-radius: 2rem !important;
+  &::placeholder {
+    color: $primary3 !important;
   }
 }
