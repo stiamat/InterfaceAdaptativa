@@ -1,0 +1,35 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "user",
+      "otherEntityName": "user",
+      "relationshipType": "one-to-one",
+      "otherEntityField": "login",
+      "ownerSide": true,
+      "useJPADerivedIdentifier": true,
+      "otherEntityRelationshipName": "profile"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "status",
+      "fieldType": "StatusProfile",
+      "fieldValues": "NOVO,ATUAL,LEGADO"
+    },
+    {
+      "fieldName": "ultimaModificacao",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "changelogDate": "20211208195014",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "profile",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": true,
+  "pagination": "pagination"
+}

@@ -1,0 +1,10 @@
+.nav {
+  width: 100%;
+}
+.modal-content {
+  backdrop-filter: blur(10px) !important;
+  background-color: #0048ff21 !important;
+}
+::ng-deep.mat-tab-label {
+  border-radius: 20px 20px 0px 0px;
+}

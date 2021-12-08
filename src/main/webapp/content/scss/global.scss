@@ -15,6 +15,10 @@ button:focus {
   border-color: $danger;
 }
 
+.modal-backdrop.show {
+  opacity: 0;
+}
+
 $primary: #3f3d56;
 $secondary: #536dfe;
 $success: #4ea685;
