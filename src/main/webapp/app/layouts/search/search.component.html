@@ -1,23 +1,103 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#search">
-    Launch demo modal
-</button>
+<ng-template #modal>
+    <mat-dialog-content>
+        <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="tabSelectedSearch">
+            <mat-tab disabled>
+                <div id='inicio'>
+                    <h4>Bem Vindo!</h4>
+                    <p>
+                        Este site é uma amostra de como podemos utilizar Ontologias para criar uma interface adaptativa.
+                    </p>
+                    <p>Mas para isso precisamos te conhecer um pouco mais.</p>
+                    <p> Clique em CONTINUAR para responder algumas
+                        perguntas.
+                        Caso não queira utilizar deste recurso basta apenas CANCELAR.</p>
+                </div>
+            </mat-tab>
+            <mat-tab disabled>
+                <h4>Pesquisa</h4>
+                <form>
 
-<div class="modal fade" id="search" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    data-focus="false" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">
-                <mat-tab-group mat-align-tabs="center">
-                    <mat-tab label="First"> Content 1 </mat-tab>
-                    <mat-tab label="Second"> Content 2 </mat-tab>
-                    <mat-tab label="Third"> Content 3 </mat-tab>
-                </mat-tab-group>
-            </div>
+                    <div class="form-group">
+                        <label for="dataNascimento">Data de Nascimento</label>
+                        <input type="date" id="dataNascimento" min="1950-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimento">Você possui alguma dificuldade ao acessar sites?</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio1">Sim</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2">Não</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimento">Este tamanho de texto é confortavel para você?</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio1">Sim</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2">Não</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimento">Você é dautonico?</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio1">Sim</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2">Não</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimento">Você é dautonico?</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio1">Sim</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2">Não</label>
+                        </div>
+                    </div>
+
+                </form>
+            </mat-tab>
+            <mat-tab disabled>
+                <h4>Acordo de Confidencialidade</h4>
+                <p>Suas respostas são confidenciais e seus dados não serão compartilhados com nenhuma outra entidade.
+                    Iremos apenas consultar suas para melhorar seu uso dentro deste site.</p>
+                <p>O intuito de deste site é providenciar o melhor ambiente possivel para todo tipo de pessoa.</p>
+                <p>Utilizamos Ontologias para mapear um perfil e customizamos a interface para o usuário</p>
+                <p>Mas se você não estiver de acordo com nosso estudo, basta apenas reijeitar que iremos esquecer todas
+                    as suas resposta.</p>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <div *ngIf="tabSelectedSearch == 0">
+            <button class="buttonSearch" (click)="selectedNextTabSearch()">Continuar <span><i
+                        class="bi bi-arrow-right"></i></span>
+            </button>
         </div>
-    </div>
-</div>
-<script>
-    $(function () {
-        $('#myTab li:last-child a').tab('show')
-    })
-</script>
+        <div *ngIf="tabSelectedSearch != 0 && tabSelectedSearch != (totalTabSearch-1)">
+            <button class="buttonSearch" (click)="selectedPreviesTabSearch()"><span><i
+                        class="bi bi-arrow-left"></i></span>
+                Voltar</button>
+            <button class="buttonSearch" (click)="selectedNextTabSearch()">Continuar <span><i
+                        class="bi bi-arrow-right"></i></span>
+            </button>
+        </div>
+        <div *ngIf="tabSelectedSearch ==  (totalTabSearch-1)">
+            <button class="buttonSearch" [mat-dialog-close]="data"><span><i class="bi bi-x-lg"></i></span>
+                Rejeitar</button>
+            <button class="buttonSearch" [mat-dialog-close]="data"><span><i class="bi bi-check-lg"></i></span>
+                Finalizar</button>
+        </div>
+    </mat-dialog-actions>
+</ng-template>
