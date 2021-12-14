@@ -96,7 +96,8 @@
         <div *ngIf="tabSelectedSearch ==  (totalTabSearch-1)">
             <button class="buttonSearch" [mat-dialog-close]="data"><span><i class="bi bi-x-lg"></i></span>
                 Rejeitar</button>
-            <button class="buttonSearch" [mat-dialog-close]="data"><span><i class="bi bi-check-lg"></i></span>
+            <button class="buttonSearch" [mat-dialog-close]="data" (click)="save()"><span><i
+                        class="bi bi-check-lg"></i></span>
                 Finalizar</button>
         </div>
     </mat-dialog-actions>

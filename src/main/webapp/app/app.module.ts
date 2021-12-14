@@ -13,7 +13,6 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
-import { SearchComponent } from './layouts/search/search.component';
 import { MaterialModule } from './material-module';
 import './vendor';
 
@@ -37,7 +36,6 @@ import './vendor';
     ErrorComponent,
     PageRibbonComponent,
     FooterComponent,
-    SearchComponent,
   ],
   bootstrap: [MainComponent],
 })

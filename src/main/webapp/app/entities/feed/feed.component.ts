@@ -4,10 +4,13 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
+import { StatusProfile } from 'app/shared/model/enumerations/status-profile.model';
 import { IPost, Post } from 'app/shared/model/post.model';
+import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { PostService } from '../post/post.service';
+import { ProfileService } from '../profile/profile.service';
 
 function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -28,10 +31,11 @@ export class FeedComponent implements OnInit {
   inputLink = '';
   loading = true;
   post: IPost = { id: 0 };
-  feed = [this.post, this.post, this.post];
+  feed: IPost[] = [];
   account: any = null;
   isSaving = false;
   link = false;
+  profile: IProfile;
 
   editForm = this.fb.group({
     id: [],
@@ -47,13 +51,15 @@ export class FeedComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private fb: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {
     (async () => {
-      await delay(3000);
+      await delay(1000);
       this.loadAll();
+      this.adaptative();
     })();
 
     this.accountService
@@ -63,6 +69,20 @@ export class FeedComponent implements OnInit {
     document.getElementById('area-text').addEventListener('keypress', event => {
       if (event.which === 13 && !event.shiftKey) {
         this.createPost();
+      }
+    });
+  }
+
+  adaptative() {
+    this.profileService.find(this.account.id).subscribe(p => {
+      this.profile = p.body;
+      console.warn(this.profile);
+
+      if (this.profile.status === StatusProfile.ATUAL) {
+        const element = document.querySelector('.body_adaptative');
+        if (!element) return;
+        console.warn(element);
+        element.classList.add('dark_mode');
       }
     });
   }
@@ -77,7 +97,18 @@ export class FeedComponent implements OnInit {
       })
       .subscribe((res: HttpResponse<IPost[]>) => {
         this.loading = false;
-        this.feed = res.body;
+        if (this.feed.length === 0) {
+          this.feed = res.body;
+        } else {
+          res.body.forEach(p => {
+            const teste = this.feed.find(pf => pf.id === p.id);
+
+            if (!teste) {
+              this.feed.unshift(p);
+            }
+          });
+        }
+
         console.log(res.body);
       });
   }
@@ -130,6 +161,10 @@ export class FeedComponent implements OnInit {
 
   deletePost(post: IPost) {
     if (this.account.id === post.userId) {
+      this.feed.splice(
+        this.feed.findIndex(p => p.id === post.id),
+        1
+      );
       this.subscribeToSaveResponse(this.postService.delete(post.id));
     }
   }
@@ -152,5 +187,21 @@ export class FeedComponent implements OnInit {
 
   navegaWeb(post: IPost) {
     window.open(post.link, '_blank');
+  }
+
+  timePublicacao(date: moment.Moment) {
+    const atual = moment(moment.now());
+    if (atual.diff(date, 'years') > 0)
+      return 'há ' + atual.diff(date, 'years') + ' ano(s)';
+    if (atual.diff(date, 'months') >= 1)
+      return 'há ' + atual.diff(date, 'months') + ' mês';
+    if (atual.diff(date, 'days') >= 1 && atual.diff(date, 'days') < 30)
+      return 'há ' + atual.diff(date, 'days') + ' dia(s)';
+    if (atual.diff(date, 'hours') >= 1 && atual.diff(date, 'hours') < 24)
+      return 'há ' + atual.diff(date, 'hours') + ' hora(s)';
+    if (atual.diff(date, 'minutes') >= 1 && atual.diff(date, 'minutes') < 60)
+      return 'há ' + atual.diff(date, 'minutes') + ' minuto(s)';
+    if (atual.diff(date, 'seconds') >= 1 && atual.diff(date, 'seconds') < 60)
+      return 'há ' + 1 + ' minuto';
   }
 }

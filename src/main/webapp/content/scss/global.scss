@@ -43,6 +43,8 @@ $success3: #a7d3c2;
 $danger3: #ffb2c2;
 $base3: #f3f3f3;
 
+$darkmode: #47464e;
+
 // tamanho de telas
 $container-xl: 1840px;
 $container-lg: 1440px;
@@ -142,4 +144,18 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: $primary;
+}
+
+::-webkit-input-placeholder {
+  /* Edge */
+  color: $primary2;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer */
+  color: $primary2;
+}
+
+::placeholder {
+  color: $primary2;
 }

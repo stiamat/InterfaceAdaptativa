@@ -1,13 +1,21 @@
+<jhi-search></jhi-search>
 <div class="body-adapative">
     <div class="sidebar-left">
         <div class="util">
-            <div class="logo"></div>
+            <div class="logo">
+                <img src="../../../content/images/Logo.svg" alt="logo">
+            </div>
             <div class="menu">
-                <div class="avatar"></div>
-                <div class="inicio">Inicio</div>
-                <div class="perfil">Perfil</div>
-                <div class="configuracoes">Configurações</div>
-                <div class="sair">Sair</div>
+                <div class="item avatar"></div>
+                <div class="item inicio"><i class="bi bi-house icon-inicio"></i> <span class="text-icon">Inicio</span>
+                </div>
+                <div class="item perfil"><i class="bi bi-person icon-perfil"></i> <span class="text-icon">Perfil</span>
+                </div>
+                <div class="item configuracoes"><i class="bi bi-gear icon-configuracoes"></i> <span
+                        class="text-icon">Config.</span>
+                </div>
+                <div class="item sair"><i class="bi bi-door-open icon-sair"></i> <span class="text-icon">Sair</span>
+                </div>
             </div>
         </div>
 
@@ -56,13 +64,13 @@
 
         <div class="feed">
 
-            <div class="card-post" *ngFor="let post of feed">
+            <div class="card-post newItem" *ngFor="let post of feed">
                 <div class="grid header">
                     <div class="avatar">
                         <div class="img"></div>
                     </div>
                     <div class="nick">{{post.userLogin}}</div>
-                    <div class="date">há 3 mins</div>
+                    <div class="date">{{timePublicacao(post.date)}}</div>
                 </div>
                 <div class="grid body">
                     <div class="corpo">{{post.body}}</div>
@@ -75,7 +83,11 @@
                         </button>
                         <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button color="primary"
                             aria-label="Example icon button with a heart icon">
-                            <i class="bi bi-link-45deg"></i>
+                            <!-- <i class="bi bi-link-45deg"></i>
+                            <i class="bi bi-file-pdf"></i>
+                            <i class="bi bi-play-btn"></i>
+                            <i class="bi bi-file-text"></i> -->
+                            <i class="bi bi-person-video3"></i>
                         </button>
                         <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon">
                             <i class="bi bi-chat-square-text"></i>
