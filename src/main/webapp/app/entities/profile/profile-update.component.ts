@@ -25,6 +25,7 @@ export class ProfileUpdateComponent implements OnInit {
     status: [],
     ultimaModificacao: [],
     userId: [],
+    listFriends: [],
   });
 
   constructor(
@@ -59,6 +60,7 @@ export class ProfileUpdateComponent implements OnInit {
         ? profile.ultimaModificacao.format(DATE_TIME_FORMAT)
         : null,
       userId: profile.userId,
+      listFriends: profile.listFriends,
     });
   }
 
@@ -88,6 +90,7 @@ export class ProfileUpdateComponent implements OnInit {
           )
         : undefined,
       userId: this.editForm.get(['userId'])!.value,
+      listFriends: this.editForm.get(['listFriends'])!.value,
     };
   }
 
@@ -111,5 +114,16 @@ export class ProfileUpdateComponent implements OnInit {
 
   trackById(index: number, item: IUser): any {
     return item.id;
+  }
+
+  getSelected(selectedVals: IUser[], option: IUser): IUser {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

@@ -20,6 +20,12 @@
                 <dd>
                     {{ profile.userLogin }}
                 </dd>
+                <dt><span>List Friends</span></dt>
+                <dd>
+                    <span *ngFor="let listFriends of profile.listFriends; let last = last">
+                        {{ listFriends.login }}{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
             </dl>
 
             <button type="submit"

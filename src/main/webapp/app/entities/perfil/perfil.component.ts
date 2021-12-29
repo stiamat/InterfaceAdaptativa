@@ -1,10 +1,12 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 import { IPost } from 'app/shared/model/post.model';
+import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
 import { PostService } from '../post/post.service';
 import { ProfileService } from '../profile/profile.service';
@@ -16,25 +18,52 @@ import { ProfileService } from '../profile/profile.service';
 })
 export class PerfilComponent implements OnInit {
   account: any = null;
+  user: IUser = null;
+  profile: IProfile = null;
   post: IPost[] = null;
   loading = false;
   feed: IPost[] = [];
+  loginProfile: string;
 
   constructor(
     private postService: PostService,
     private loginService: LoginService,
     private router: Router,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder,
+    private userService: UserService,
     private accountService: AccountService,
     private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {
-    this.accountService.getAuthenticationState().subscribe(account => {
-      this.account = account;
-      this.loadAll();
-    });
+    this.accountService
+      .getAuthenticationState()
+      .subscribe(account => (this.account = account));
+
+    this.activatedRoute.queryParams.subscribe(
+      param => {
+        this.loginProfile = param.login;
+        if (!this.loginProfile) this.loginProfile = this.account.login;
+        this.loadUser();
+      },
+      err => {
+        this.loginProfile = this.account.login;
+        this.loadUser();
+      }
+    );
+  }
+
+  loadUser() {
+    this.userService.find(this.loginProfile).subscribe(
+      suc => {
+        this.user = suc;
+        this.loadProfile();
+        this.loadAll();
+      },
+      err => {
+        this.router.navigate(['404']);
+      }
+    );
   }
 
   itens(item: string) {
@@ -93,7 +122,7 @@ export class PerfilComponent implements OnInit {
     this.postService
       .query({
         'active.equals': true,
-        'userId.equals': [this.account.id],
+        'userId.equals': [this.user.id],
         page: 0,
         size: 999,
         sort: ['id,desc'],
@@ -102,5 +131,12 @@ export class PerfilComponent implements OnInit {
         this.loading = false;
         this.feed = res.body;
       });
+  }
+
+  loadProfile(): void {
+    this.profileService.find(this.account.id).subscribe(suc => {
+      console.warn(suc);
+      this.profile = suc.body;
+    });
   }
 }

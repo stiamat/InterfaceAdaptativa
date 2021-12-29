@@ -28,6 +28,13 @@ public interface ProfileService {
      */
     Page<ProfileDTO> findAll(Pageable pageable);
 
+    /**
+     * Get all the profiles with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    Page<ProfileDTO> findAllWithEagerRelationships(Pageable pageable);
+
 
     /**
      * Get the "id" profile.

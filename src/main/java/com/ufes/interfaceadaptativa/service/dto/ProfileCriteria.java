@@ -52,6 +52,8 @@ public class ProfileCriteria implements Serializable, Criteria {
 
     private LongFilter userId;
 
+    private LongFilter listFriendsId;
+
     public ProfileCriteria() {
     }
 
@@ -60,6 +62,7 @@ public class ProfileCriteria implements Serializable, Criteria {
         this.status = other.status == null ? null : other.status.copy();
         this.ultimaModificacao = other.ultimaModificacao == null ? null : other.ultimaModificacao.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
+        this.listFriendsId = other.listFriendsId == null ? null : other.listFriendsId.copy();
     }
 
     @Override
@@ -99,6 +102,14 @@ public class ProfileCriteria implements Serializable, Criteria {
         this.userId = userId;
     }
 
+    public LongFilter getListFriendsId() {
+        return listFriendsId;
+    }
+
+    public void setListFriendsId(LongFilter listFriendsId) {
+        this.listFriendsId = listFriendsId;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -113,7 +124,8 @@ public class ProfileCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(status, that.status) &&
             Objects.equals(ultimaModificacao, that.ultimaModificacao) &&
-            Objects.equals(userId, that.userId);
+            Objects.equals(userId, that.userId) &&
+            Objects.equals(listFriendsId, that.listFriendsId);
     }
 
     @Override
@@ -122,7 +134,8 @@ public class ProfileCriteria implements Serializable, Criteria {
         id,
         status,
         ultimaModificacao,
-        userId
+        userId,
+        listFriendsId
         );
     }
 
@@ -134,6 +147,7 @@ public class ProfileCriteria implements Serializable, Criteria {
                 (status != null ? "status=" + status + ", " : "") +
                 (ultimaModificacao != null ? "ultimaModificacao=" + ultimaModificacao + ", " : "") +
                 (userId != null ? "userId=" + userId + ", " : "") +
+                (listFriendsId != null ? "listFriendsId=" + listFriendsId + ", " : "") +
             "}";
     }
 

@@ -28,6 +28,17 @@
 
     <changeSet id="20211208195014-1-relations" author="jhipster">
 
+        <createTable tableName="profile_list_friends">
+            <column name="list_friends_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="profile_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="profile_id, list_friends_id" tableName="profile_list_friends"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 

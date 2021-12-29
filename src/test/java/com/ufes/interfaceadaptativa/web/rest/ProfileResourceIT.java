@@ -12,9 +12,14 @@ import com.ufes.interfaceadaptativa.service.ProfileQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,11 +29,13 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.ufes.interfaceadaptativa.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +44,7 @@ import com.ufes.interfaceadaptativa.domain.enumeration.StatusProfile;
  * Integration tests for the {@link ProfileResource} REST controller.
  */
 @SpringBootTest(classes = InterfaceAdaptativaApp.class)
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class ProfileResourceIT {
@@ -51,8 +59,14 @@ public class ProfileResourceIT {
     @Autowired
     private ProfileRepository profileRepository;
 
+    @Mock
+    private ProfileRepository profileRepositoryMock;
+
     @Autowired
     private ProfileMapper profileMapper;
+
+    @Mock
+    private ProfileService profileServiceMock;
 
     @Autowired
     private ProfileService profileService;
@@ -203,6 +217,26 @@ public class ProfileResourceIT {
             .andExpect(jsonPath("$.[*].ultimaModificacao").value(hasItem(sameInstant(DEFAULT_ULTIMA_MODIFICACAO))));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllProfilesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(profileServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restProfileMockMvc.perform(get("/api/profiles?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(profileServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllProfilesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(profileServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restProfileMockMvc.perform(get("/api/profiles?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(profileServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getProfile() throws Exception {
@@ -408,6 +442,26 @@ public class ProfileResourceIT {
 
         // Get all the profileList where user equals to userId + 1
         defaultProfileShouldNotBeFound("userId.equals=" + (userId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllProfilesByListFriendsIsEqualToSomething() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+        User listFriends = UserResourceIT.createEntity(em);
+        em.persist(listFriends);
+        em.flush();
+        profile.addListFriends(listFriends);
+        profileRepository.saveAndFlush(profile);
+        Long listFriendsId = listFriends.getId();
+
+        // Get all the profileList where listFriends equals to listFriendsId
+        defaultProfileShouldBeFound("listFriendsId.equals=" + listFriendsId);
+
+        // Get all the profileList where listFriends equals to listFriendsId + 1
+        defaultProfileShouldNotBeFound("listFriendsId.equals=" + (listFriendsId + 1));
     }
 
     /**

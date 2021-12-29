@@ -33,13 +33,13 @@
     <div class="main main_perfil">
         <div id="header_perfil" class="header_perfil">
             <div class="avatar">
-                <figure *ngIf="account.imageUrl">
-                    <img [src]="account.imageUrl" alt="avatar do usuario" class="avatar" style="border: 2px solid;">
+                <figure *ngIf="user?.imageUrl">
+                    <img [src]="user?.imageUrl" alt="avatar do usuario" class="avatar" style="border: 2px solid;">
                 </figure>
-                <div *ngIf="!account.imageUrl" class="avatar"></div>
+                <div *ngIf="!user?.imageUrl" class="avatar"></div>
             </div>
-            <div class="name">{{account.login}}</div>
-            <div class="seguir">
+            <div class="name">{{user?.login}}</div>
+            <div class="seguir" *ngIf="user?.id != account?.id">
                 <button class="btn_feed btn_seguir">
                     <i class="bi bi-bookmark-heart"></i> Seguir</button>
                 <button class="btn_feed btn_feed-cor-secondary btn_seguir">

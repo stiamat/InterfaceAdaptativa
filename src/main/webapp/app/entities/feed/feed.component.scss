@@ -282,11 +282,16 @@
         display: flex;
         align-items: center;
         grid-column: 1;
+        cursor: pointer;
       }
       .nick {
         display: flex;
         align-items: center;
         grid-column: 2;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
       }
       .date {
         display: flex;

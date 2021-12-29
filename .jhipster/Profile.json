@@ -10,6 +10,14 @@
       "ownerSide": true,
       "useJPADerivedIdentifier": true,
       "otherEntityRelationshipName": "profile"
+    },
+    {
+      "relationshipName": "listFriends",
+      "otherEntityName": "user",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "login",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "profile"
     }
   ],
   "fields": [

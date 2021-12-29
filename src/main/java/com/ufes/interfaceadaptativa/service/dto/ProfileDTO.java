@@ -2,6 +2,8 @@ package com.ufes.interfaceadaptativa.service.dto;
 
 import java.time.ZonedDateTime;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import com.ufes.interfaceadaptativa.domain.enumeration.StatusProfile;
 
 /**
@@ -19,6 +21,7 @@ public class ProfileDTO implements Serializable {
     private Long userId;
 
     private String userLogin;
+    private Set<UserDTO> listFriends = new HashSet<>();
     
     public Long getId() {
         return id;
@@ -60,6 +63,14 @@ public class ProfileDTO implements Serializable {
         this.userLogin = userLogin;
     }
 
+    public Set<UserDTO> getListFriends() {
+        return listFriends;
+    }
+
+    public void setListFriends(Set<UserDTO> users) {
+        this.listFriends = users;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,6 +97,7 @@ public class ProfileDTO implements Serializable {
             ", ultimaModificacao='" + getUltimaModificacao() + "'" +
             ", userId=" + getUserId() +
             ", userLogin='" + getUserLogin() + "'" +
+            ", listFriends='" + getListFriends() + "'" +
             "}";
     }
 }

@@ -79,13 +79,14 @@
                 </div>
                 <div class="card-post newItem">
                     <div class="grid header">
-                        <div class="avatar">
-                            <figure *ngIf="post.userImagem">
-                                <img [src]="post.userImagem" alt="avatar do usuario" class="avatar_img">
-                            </figure>
+                        <div class="avatar" (click)="perfilPost(post.userLogin)">
+
+                            <img *ngIf="post.userImagem" [src]="post.userImagem" alt="avatar do usuario"
+                                class="avatar_img">
+
                             <div *ngIf="!post.userImagem" class="img"></div>
                         </div>
-                        <div class="nick">{{post.userLogin}}</div>
+                        <div class="nick" (click)="perfilPost(post.userLogin)">{{post.userLogin}}</div>
                         <div class="date">{{timePublicacao(post.date)}}</div>
                     </div>
                     <div class="grid body">

@@ -58,8 +58,8 @@ export class FeedComponent implements OnInit {
 
   ngOnInit(): void {
     (async () => {
-      await delay(1000);
-      this.loadAll();
+      await delay(300);
+
       this.adaptative();
     })();
 
@@ -77,6 +77,7 @@ export class FeedComponent implements OnInit {
   adaptative() {
     this.profileService.find(this.account.id).subscribe(p => {
       this.profile = p.body;
+      this.loadAll();
       console.warn(this.profile);
 
       if (this.profile.status === StatusProfile.ATUAL) {
@@ -89,9 +90,16 @@ export class FeedComponent implements OnInit {
   }
 
   loadAll(): void {
+    //lista de amigos
+    const listUser = this.profile.listFriends.map(u => u.id);
+    listUser.push(3);
+    listUser.push(this.profile.id);
+    console.warn(listUser);
+
     this.postService
       .query({
         'active.equals': true,
+        'userId.in': listUser,
         page: 0,
         size: 999,
         sort: ['id,desc'],
@@ -226,11 +234,17 @@ export class FeedComponent implements OnInit {
       this.router.navigate(['/feed']);
     }
     if (item === 'perfil') {
-      this.router.navigate(['/perfil']);
+      this.router.navigate(['/perfil'], {
+        queryParams: { login: '' + this.account.login },
+      });
     }
     if (item === 'config') {
       this.router.navigate(['/config']);
     }
+  }
+
+  perfilPost(login: string) {
+    this.router.navigate(['/perfil'], { queryParams: { login: '' + login } });
   }
 
   search() {

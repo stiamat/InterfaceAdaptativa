@@ -14,5 +14,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
+        <addForeignKeyConstraint baseColumnNames="profile_id"
+                                 baseTableName="profile_list_friends"
+                                 constraintName="fk_profile_list_friends_profile_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+
+        <addForeignKeyConstraint baseColumnNames="list_friends_id"
+                                 baseTableName="profile_list_friends"
+                                 constraintName="fk_profile_list_friends_list_friends_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
     </changeSet>
 </databaseChangeLog>

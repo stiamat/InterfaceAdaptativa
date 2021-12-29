@@ -56,11 +56,15 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
 
+    public Page<ProfileDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return profileRepository.findAllWithEagerRelationships(pageable).map(profileMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<ProfileDTO> findOne(Long id) {
         log.debug("Request to get Profile : {}", id);
-        return profileRepository.findById(id)
+        return profileRepository.findOneWithEagerRelationships(id)
             .map(profileMapper::toDto);
     }
 
