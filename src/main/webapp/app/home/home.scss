@@ -170,6 +170,12 @@ Main page styles
     border: 3px solid white;
     color: white !important;
     outline: none !important;
+    padding: 0px;
+  }
+
+  ::ng-deep.mat-button-wrapper {
+    font-size: 20px;
+    padding: 0px !important;
   }
 
   .loginAtivo {

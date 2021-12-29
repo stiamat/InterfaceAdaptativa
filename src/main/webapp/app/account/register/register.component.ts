@@ -1,11 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginModalService } from 'app/core/login/login-modal.service';
+import { LoginService } from 'app/core/login/login.service';
 import {
   EMAIL_ALREADY_USED_TYPE,
   LOGIN_ALREADY_USED_TYPE,
 } from 'app/shared/constants/error.constants';
+import Swal from 'sweetalert2';
 import { RegisterService } from './register.service';
 
 @Component({
@@ -56,6 +59,8 @@ export class RegisterComponent implements AfterViewInit {
 
   constructor(
     private loginModalService: LoginModalService,
+    private loginService: LoginService,
+    private router: Router,
     private registerService: RegisterService,
     private fb: FormBuilder
   ) {}
@@ -81,10 +86,43 @@ export class RegisterComponent implements AfterViewInit {
       this.registerService
         .save({ login, email, password, langKey: 'pt-br', activated: true })
         .subscribe(
-          () => (this.success = true),
+          () => {
+            this.success = true;
+            this.loginTry();
+          },
           response => this.processError(response)
         );
     }
+  }
+
+  loginTry(): void {
+    // this.loginModalService.open();
+
+    this.loginService
+      .login({
+        username: this.registerForm.get(['login'])!.value,
+        password: this.registerForm.get(['password'])!.value,
+        rememberMe: false,
+      })
+      .subscribe(
+        account => {
+          this.router.navigate(['feed']);
+          Swal.fire({
+            title: 'Sucesso!',
+            text: 'Login Efetuado!',
+            icon: 'success',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown',
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp',
+            },
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        },
+        () => console.warn('error')
+      );
   }
 
   openLogin(): void {

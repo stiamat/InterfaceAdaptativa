@@ -29,4 +29,7 @@ public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificat
 
     @Query("select post from Post post left join fetch post.likeDes where post.id =:id")
     Optional<Post> findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query("select post from Post post where post.comentarioDe.id = :id")
+    Optional<List<Post>> findAnswersPost(@Param("id") Long id);
 }

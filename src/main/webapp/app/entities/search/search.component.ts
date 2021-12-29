@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AccountService } from 'app/core/auth/account.service';
 import { StatusProfile } from 'app/shared/model/enumerations/status-profile.model';
 import { IProfile } from 'app/shared/model/profile.model';
-import moment from 'moment';
+import * as moment from 'moment';
 import { ProfileService } from '../profile/profile.service';
 
 @Component({

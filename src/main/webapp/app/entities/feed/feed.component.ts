@@ -29,6 +29,7 @@ function submitOnEnter(event: any) {
 export class FeedComponent implements OnInit {
   input = '';
   inputLink = '';
+  inputSearch = '';
   loading = true;
   post: IPost = { id: 0 };
   feed: IPost[] = [];
@@ -82,7 +83,7 @@ export class FeedComponent implements OnInit {
         const element = document.querySelector('.body_adaptative');
         if (!element) return;
         console.warn(element);
-        element.classList.add('dark_mode');
+        // element.classList.add('font_grande_1');
       }
     });
   }
@@ -203,5 +204,47 @@ export class FeedComponent implements OnInit {
       return 'há ' + atual.diff(date, 'minutes') + ' minuto(s)';
     if (atual.diff(date, 'seconds') >= 1 && atual.diff(date, 'seconds') < 60)
       return 'há ' + 1 + ' minuto';
+  }
+
+  curti(post: IPost) {
+    this.postService.curti(post.id, this.account.id).subscribe(suc => {
+      post.likeDes = suc.body;
+    });
+  }
+
+  curtido(post: IPost): boolean {
+    if (post.likeDes.find(u => u.id === this.account.id)) return true;
+    return false;
+  }
+
+  comentar(post: number) {
+    this.router.navigate(['/feed/' + post]);
+  }
+
+  itens(item: string) {
+    if (item === 'inicio') {
+      this.router.navigate(['/feed']);
+    }
+    if (item === 'perfil') {
+      this.router.navigate(['/perfil']);
+    }
+    if (item === 'config') {
+      this.router.navigate(['/config']);
+    }
+  }
+
+  search() {
+    if (this.inputSearch.length > 0) {
+      this.postService
+        .query({
+          'body.contains': [this.inputSearch],
+        })
+        .subscribe(res => {
+          this.feed = res.body;
+        });
+    } else {
+      this.feed = [];
+      this.loadAll();
+    }
   }
 }

@@ -4,6 +4,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
 import { Account } from 'app/core/user/account.model';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'jhi-home',
@@ -53,8 +54,36 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.authenticationError = false;
           this.account = account;
           this.router.navigate(['feed']);
+          Swal.fire({
+            title: 'Sucesso!',
+            text: 'Login Efetuado!',
+            icon: 'success',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown',
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp',
+            },
+            showConfirmButton: false,
+            timer: 3000,
+          });
         },
-        () => (this.authenticationError = true)
+        () => {
+          this.authenticationError = true;
+          Swal.fire({
+            title: 'Ops!',
+            text: 'Nome de Usuário ou Senha incorreta!',
+            icon: 'error',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown',
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp',
+            },
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        }
       );
   }
 

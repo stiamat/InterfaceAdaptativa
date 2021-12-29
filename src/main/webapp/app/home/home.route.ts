@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-
 import { HomeComponent } from './home.component';
 
 export const HOME_ROUTE: Route = {
@@ -7,6 +6,6 @@ export const HOME_ROUTE: Route = {
   component: HomeComponent,
   data: {
     authorities: [],
-    pageTitle: 'Welcome, Java Hipster!',
+    pageTitle: 'Interface Adaptativa',
   },
 };

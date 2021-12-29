@@ -1,10 +1,14 @@
 package com.ufes.interfaceadaptativa.service.impl;
 
+import com.ufes.interfaceadaptativa.domain.User;
+import com.ufes.interfaceadaptativa.repository.UserRepository;
 import com.ufes.interfaceadaptativa.service.PostService;
 import com.ufes.interfaceadaptativa.domain.Post;
 import com.ufes.interfaceadaptativa.repository.PostRepository;
 import com.ufes.interfaceadaptativa.service.dto.PostDTO;
+import com.ufes.interfaceadaptativa.service.dto.UserDTO;
 import com.ufes.interfaceadaptativa.service.mapper.PostMapper;
+import com.ufes.interfaceadaptativa.service.mapper.UserMapper;
 import org.semanticweb.HermiT.Configuration;
 import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.HermiT.ReasonerFactory;
@@ -23,10 +27,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Post}.
@@ -39,11 +41,17 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
+    private final UserRepository userRepository;
+
+    private final UserMapper userMapper;
+
     private final PostMapper postMapper;
 
-    public PostServiceImpl(PostRepository postRepository, PostMapper postMapper) {
+    public PostServiceImpl(PostRepository postRepository, PostMapper postMapper, UserRepository userRepository, UserMapper userMapper) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -82,6 +90,22 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(id);
     }
 
+    @Override
+    public List<UserDTO> curti(long postId, long userId) {
+        Post post = postRepository.findById(postId).get();
+        User user = userRepository.findById(userId).get();
+        Set<User> likes = post.getLikeDes();
+
+        if (likes.contains(user)) {
+            likes.remove(user);
+        } else {
+            likes.add(user);
+        }
+
+        post.setLikeDes(likes);
+        return userMapper.usersToUserDTOs(likes.stream().collect(Collectors.toList()));
+    }
+
     public void owl() {
         try {
             // Gerenciador da ontologia - carrega funções e propriedade para podermos trabalhar com as ontologias
@@ -104,9 +128,9 @@ public class PostServiceImpl implements PostService {
 
             // Reasoner
             ReasonerFactory reasonerFactory = new ReasonerFactory();
-            Configuration configuration=new Configuration();
-            configuration.throwInconsistentOntologyException=false;
-            OWLReasoner reasoner= reasonerFactory.createReasoner(ontology, configuration);
+            Configuration configuration = new Configuration();
+            configuration.throwInconsistentOntologyException = false;
+            OWLReasoner reasoner = reasonerFactory.createReasoner(ontology, configuration);
 
             // Teste de consistencia da ontologia
             boolean consistent = reasoner.isConsistent();
@@ -114,13 +138,13 @@ public class PostServiceImpl implements PostService {
             this.inferindoSobreIndividuo(ontology, reasoner);
 
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Map<String,OWLClass> loadingClassOWL(OWLOntologyManager manager, IRI ontologyIRI){
-        Map<String,OWLClass> classesOWL = new HashMap<String,OWLClass>();
+    public Map<String, OWLClass> loadingClassOWL(OWLOntologyManager manager, IRI ontologyIRI) {
+        Map<String, OWLClass> classesOWL = new HashMap<String, OWLClass>();
 
         OWLClass font_Increase = manager.getOWLDataFactory().getOWLClass(IRI.create(ontologyIRI + "#Font_Increase"));
         classesOWL.put("Font_Increase", font_Increase);
@@ -131,11 +155,11 @@ public class PostServiceImpl implements PostService {
         return classesOWL;
     }
 
-    public void loadingIndividual(OWLDataFactory factory, IRI ontologyIRI, OWLOntology ontology, OWLOntologyManager manager){
+    public void loadingIndividual(OWLDataFactory factory, IRI ontologyIRI, OWLOntology ontology, OWLOntologyManager manager) {
         OWLIndividual individuo = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#02"));
 
         // idade
-        OWLDataPropertyExpression has_Age= factory.getOWLDataProperty(IRI.create(ontologyIRI + "#has_Age"));
+        OWLDataPropertyExpression has_Age = factory.getOWLDataProperty(IRI.create(ontologyIRI + "#has_Age"));
         OWLDataPropertyAssertionAxiom axiom = factory.getOWLDataPropertyAssertionAxiom(has_Age, individuo, 55);
         AddAxiom addAxiom = new AddAxiom(ontology, axiom);
         manager.applyChange(addAxiom);
@@ -144,15 +168,14 @@ public class PostServiceImpl implements PostService {
         // necessidades especiais
 
 
-
         // salvar individuo na ontologia (não é necessario necessario)
         // manager.saveOntology(ontology);
     }
 
-    public void inferindoSobreIndividuo(OWLOntology ontology, OWLReasoner reasoner){
+    public void inferindoSobreIndividuo(OWLOntology ontology, OWLReasoner reasoner) {
 
         for (OWLClass c : ontology.getClassesInSignature()) {
-            if (c.getIRI().getFragment().equals("Basic_Experience_Mode")){
+            if (c.getIRI().getFragment().equals("Basic_Experience_Mode")) {
                 NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
                 System.out.println(c.getIRI().getFragment());
                 for (OWLNamedIndividual i : instances.getFlattened()) {

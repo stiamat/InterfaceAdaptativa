@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { SERVER_API_URL } from 'app/app.constants';
+import { IUser } from 'app/core/user/user.model';
+import { IPost } from 'app/shared/model/post.model';
+import { createRequestOption } from 'app/shared/util/request-util';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment';
-
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
-import { IPost } from 'app/shared/model/post.model';
 
 type EntityResponseType = HttpResponse<IPost>;
 type EntityArrayResponseType = HttpResponse<IPost[]>;
@@ -50,6 +50,21 @@ export class PostService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, {
+      observe: 'response',
+    });
+  }
+
+  curti(postId: number, userId: number): Observable<HttpResponse<IUser[]>> {
+    return this.http.get<IUser[]>(
+      `${this.resourceUrl}/curti/${postId}/${userId}`,
+      {
+        observe: 'response',
+      }
+    );
+  }
+
+  respostas(postId: number): Observable<HttpResponse<IPost[]>> {
+    return this.http.get<IPost[]>(`${this.resourceUrl}/answer/${postId}`, {
       observe: 'response',
     });
   }

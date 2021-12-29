@@ -2,9 +2,11 @@ package com.ufes.interfaceadaptativa.service;
 
 import com.ufes.interfaceadaptativa.service.dto.PostDTO;
 
+import com.ufes.interfaceadaptativa.service.dto.UserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -50,4 +52,6 @@ public interface PostService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<UserDTO> curti(long postId, long userId);
 }

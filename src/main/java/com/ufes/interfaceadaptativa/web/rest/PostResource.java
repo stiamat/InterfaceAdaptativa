@@ -1,6 +1,10 @@
 package com.ufes.interfaceadaptativa.web.rest;
 
+import com.ufes.interfaceadaptativa.domain.Post;
+import com.ufes.interfaceadaptativa.repository.PostRepository;
 import com.ufes.interfaceadaptativa.service.PostService;
+import com.ufes.interfaceadaptativa.service.dto.UserDTO;
+import com.ufes.interfaceadaptativa.service.mapper.PostMapper;
 import com.ufes.interfaceadaptativa.web.rest.errors.BadRequestAlertException;
 import com.ufes.interfaceadaptativa.service.dto.PostDTO;
 import com.ufes.interfaceadaptativa.service.dto.PostCriteria;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,9 +48,15 @@ public class PostResource {
 
     private final PostQueryService postQueryService;
 
-    public PostResource(PostService postService, PostQueryService postQueryService) {
+    private final PostRepository postRepository;
+
+    private final PostMapper postMapper;
+
+    public PostResource(PostService postService, PostQueryService postQueryService, PostRepository postRepository, PostMapper postMapper) {
         this.postService = postService;
         this.postQueryService = postQueryService;
+        this.postRepository = postRepository;
+        this.postMapper = postMapper;
     }
 
     /**
@@ -139,5 +150,24 @@ public class PostResource {
         log.debug("REST request to delete Post : {}", id);
         postService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+    }
+
+
+    @RequestMapping(value="/posts/curti/{postId}/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<List<UserDTO>> curti(@PathVariable Long postId, @PathVariable Long userId){
+        return ResponseEntity.ok().body(postService.curti(postId, userId));
+    }
+
+    @RequestMapping(value="/posts/answer/{postId}", method = RequestMethod.GET)
+    public ResponseEntity<List<PostDTO>> respostas(@PathVariable Long postId){
+        Optional<List<Post>> repostas = postRepository.findAnswersPost(postId);
+        List<PostDTO> lista;
+        if(repostas.isPresent()){
+            lista = postMapper.toDto(repostas.get());
+        }else{
+            lista = new ArrayList<>();
+        }
+
+        return ResponseEntity.ok().body(lista);
     }
 }

@@ -1,0 +1,150 @@
+<jhi-search></jhi-search>
+<div class="body-adapative">
+    <div class="sidebar-left">
+        <div class="util">
+            <div class="logo" (click)="itens('inicio')">
+                <img src="../../../content/images/Logo.svg" alt="logo">
+            </div>
+            <div class="menu">
+                <div class="item avatar" (click)="itens('perfil')"></div>
+                <div class="item inicio" (click)="itens('inicio')"><i class="bi bi-house icon-inicio"></i> <span
+                        class="text-icon">Inicio</span>
+                </div>
+                <div class="item perfil" (click)="itens('perfil')"><i class="bi bi-person icon-perfil"></i> <span
+                        class="text-icon">Perfil</span>
+                </div>
+                <div class="item configuracoes" (click)="itens('config')"><i class="bi bi-gear icon-configuracoes"></i>
+                    <span class="text-icon">Config.</span>
+                </div>
+                <div class="item sair" (click)="logout()"><i class="bi bi-door-open icon-sair"></i> <span
+                        class="text-icon">Sair</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="item-principal main" style="margin-top: 2rem;">
+
+        <!-- Button back -->
+        <div class="row col-md-4 col-sm-12">
+            <button class="btn_feed" (click)="previousState()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+        </div>
+
+        <!-- Post -->
+
+        <div class="post_principal">
+
+            <div class="card-post">
+                <div class="grid header">
+                    <div class="avatar">
+                        <div class="img"></div>
+                    </div>
+                    <div class="nick">{{post.userLogin}}</div>
+                    <div class="date">{{timePublicacao(post.date)}}</div>
+                </div>
+                <div class="grid body">
+                    <div class="corpo">{{post.body}}</div>
+                </div>
+                <div class="grid footer">
+                    <div class="actions">
+                        <button *ngIf="account.id == post.userId" (click)="deletePost(post)" mat-icon-button
+                            color="primary" aria-label="Example icon button with a heart icon">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button color="primary"
+                            aria-label="Example icon button with a heart icon">
+                            <!-- <i class="bi bi-link-45deg"></i>
+                            <i class="bi bi-file-pdf"></i>
+                            <i class="bi bi-play-btn"></i>
+                            <i class="bi bi-file-text"></i> -->
+                            <i class="bi bi-person-video3"></i>
+                        </button>
+                        <button mat-icon-button color="primary" aria-label="Curti esta publicação"
+                            (click)="curti(post)">
+                            <i *ngIf="!curtido(post)" class="bi bi-heart"></i>
+                            <i *ngIf="curtido(post)" class="bi bi-heart-fill" style="color: red;">
+                            </i>
+                        </button>
+                        <span class="actions-info">{{post.likeDes.length}}</span>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Reposda -->
+        <div class="input-post input_reposta">
+            <textarea id="area-text" class="area-text" maxlength="200" placeholder="Responda aqui..."
+                [(ngModel)]="input"></textarea>
+            <button class="btn_feed btn_feed-cor-secondary" (click)="changeLink()"><i
+                    class="bi bi-paperclip"></i></button>
+            <button class="btn_feed" (click)="createPost()"><i class="bi bi-send"></i></button>
+            <form class="link">
+                <div class="form-row" id="link">
+                    <div class="col-12">
+                        <input type="text" class="form-control" id="inputLink" placeholder="Insira um link aqui..."
+                            [(ngModel)]="inputLink" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+
+        <p>Repostas</p>
+        <div class="separator"></div>
+
+        <!-- Repostas -->
+        <div class="post_principal">
+
+            <div class="card-post" *ngFor="let post of respostas">
+                <div class="grid header">
+                    <div class="avatar">
+                        <div class="img"></div>
+                    </div>
+                    <div class="nick">{{post.userLogin}}</div>
+                    <div class="date">{{timePublicacao(post.date)}}</div>
+                </div>
+                <div class="grid body">
+                    <div class="corpo">{{post.body}}</div>
+                </div>
+                <div class="grid footer">
+                    <div class="actions">
+                        <button *ngIf="account.id == post.userId" (click)="deletePost(post)" mat-icon-button
+                            color="primary" aria-label="Example icon button with a heart icon">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button color="primary"
+                            aria-label="Example icon button with a heart icon">
+                            <!-- <i class="bi bi-link-45deg"></i>
+                            <i class="bi bi-file-pdf"></i>
+                            <i class="bi bi-play-btn"></i>
+                            <i class="bi bi-file-text"></i> -->
+                            <i class="bi bi-person-video3"></i>
+                        </button>
+                        <button mat-icon-button color="primary" aria-label="Curti esta publicação"
+                            (click)="curti(post)">
+                            <i *ngIf="!curtido(post)" class="bi bi-heart"></i>
+                            <i *ngIf="curtido(post)" class="bi bi-heart-fill" style="color: red;">
+                            </i>
+                        </button>
+                        <span class="actions-info">{{post.likeDes.length}}</span>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="sidebar-right">03</div>
+</div>

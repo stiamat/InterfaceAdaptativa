@@ -10,7 +10,7 @@ import com.ufes.interfaceadaptativa.domain.enumeration.TipoPost;
  * A DTO for the {@link com.ufes.interfaceadaptativa.domain.Post} entity.
  */
 public class PostDTO implements Serializable {
-    
+
     private Long id;
 
     private String body;
@@ -29,10 +29,13 @@ public class PostDTO implements Serializable {
     private Long userId;
 
     private String userLogin;
+
+    private String userImagem;
+
     private Set<UserDTO> likeDes = new HashSet<>();
 
     private Long comentarioDeId;
-    
+
     public Long getId() {
         return id;
     }
@@ -121,6 +124,14 @@ public class PostDTO implements Serializable {
         this.comentarioDeId = postId;
     }
 
+    public String getUserImagem() {
+        return userImagem;
+    }
+
+    public void setUserImagem(String userImagem) {
+        this.userImagem = userImagem;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -151,7 +162,6 @@ public class PostDTO implements Serializable {
             ", tipoPost='" + getTipoPost() + "'" +
             ", userId=" + getUserId() +
             ", userLogin='" + getUserLogin() + "'" +
-            ", likeDes='" + getLikeDes() + "'" +
             ", comentarioDeId=" + getComentarioDeId() +
             "}";
     }

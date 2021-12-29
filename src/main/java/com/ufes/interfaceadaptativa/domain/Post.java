@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.ufes.interfaceadaptativa.domain.enumeration.TipoPost;
+import org.hibernate.annotations.Fetch;
 
 /**
  * A Post.
@@ -51,15 +52,15 @@ public class Post implements Serializable {
     @JsonIgnoreProperties(value = "posts", allowSetters = true)
     private User user;
 
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "post_like_de",
                joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "like_de_id", referencedColumnName = "id"))
     private Set<User> likeDes = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "posts", allowSetters = true)
+    @JsonIgnoreProperties("posts")
     private Post comentarioDe;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

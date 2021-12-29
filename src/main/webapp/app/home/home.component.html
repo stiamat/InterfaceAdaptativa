@@ -66,8 +66,9 @@
         <div class="justify-content-center align-content-center
             align-content-center mobile">
             <div class="col-2 mt-3 text-center">
-                <button class="registerButton" mat-mini-fab type="button" (click)="changeInput()">
-                    <mat-icon><span class="material-icons flex" style="padding: -3px">person_add</span></mat-icon>
+                <button class="registerButton" mat-mini-fab type="button" (click)="changeInput()" style="padding: 0px;">
+                    <i *ngIf="inputlogin" class="bi bi-person-plus-fill"></i>
+                    <i *ngIf="!inputlogin" class="bi bi-arrow-right"></i>
                 </button>
             </div>
         </div>
