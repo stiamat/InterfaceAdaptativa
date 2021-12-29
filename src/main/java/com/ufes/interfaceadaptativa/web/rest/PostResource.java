@@ -170,4 +170,17 @@ public class PostResource {
 
         return ResponseEntity.ok().body(lista);
     }
+
+    @RequestMapping(value="/posts/search/{login}", method = RequestMethod.GET)
+    public ResponseEntity<List<PostDTO>> searchLogin(@PathVariable String login){
+        Optional<List<Post>> repostas = postRepository.searchLogin(login);
+        List<PostDTO> lista;
+        if(repostas.isPresent()){
+            lista = postMapper.toDto(repostas.get());
+        }else{
+            lista = new ArrayList<>();
+        }
+
+        return ResponseEntity.ok().body(lista);
+    }
 }

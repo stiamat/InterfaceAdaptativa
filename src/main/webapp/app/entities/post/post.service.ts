@@ -69,6 +69,12 @@ export class PostService {
     });
   }
 
+  searchLogin(login: string): Observable<HttpResponse<IPost[]>> {
+    return this.http.get<IPost[]>(`${this.resourceUrl}/search/${login}`, {
+      observe: 'response',
+    });
+  }
+
   protected convertDateFromClient(post: IPost): IPost {
     const copy: IPost = Object.assign({}, post, {
       date: post.date && post.date.isValid() ? post.date.toJSON() : undefined,

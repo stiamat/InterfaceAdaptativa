@@ -32,4 +32,10 @@ public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificat
 
     @Query("select post from Post post where post.comentarioDe.id = :id")
     Optional<List<Post>> findAnswersPost(@Param("id") Long id);
+
+    @Query("select post from Post post where post.user.login LIKE %:login%")
+    Optional<List<Post>> searchLogin(@Param("login") String login);
+
+    @Query(value = "select post.id, body, date, active, likes, link, tipo_post, user_id, comentario_de_id from post inner join jhi_user on user_id = jhi_user.id where jhi_user.login like '%:login%'", nativeQuery = true)
+    Optional<List<Post>> findLikesID(@Param("login") String login);
 }

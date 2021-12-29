@@ -72,6 +72,14 @@ export class FeedComponent implements OnInit {
         this.createPost();
       }
     });
+
+    document
+      .getElementById('input-busca')
+      .addEventListener('keypress', event => {
+        if (event.which === 13) {
+          this.search();
+        }
+      });
   }
 
   adaptative() {
@@ -84,7 +92,7 @@ export class FeedComponent implements OnInit {
         const element = document.querySelector('.body_adaptative');
         if (!element) return;
         console.warn(element);
-        // element.classList.add('font_grande_1');
+        element.classList.add('dark_mode');
       }
     });
   }
@@ -249,12 +257,19 @@ export class FeedComponent implements OnInit {
 
   search() {
     if (this.inputSearch.length > 0) {
+      this.feed = [];
       this.postService
         .query({
           'body.contains': [this.inputSearch],
         })
         .subscribe(res => {
           this.feed = res.body;
+
+          this.postService.searchLogin(this.inputSearch).subscribe(suc => {
+            suc.body.map(i => {
+              if (!this.feed.find(pf => pf.id === i.id)) this.feed.push(i);
+            });
+          });
         });
     } else {
       this.feed = [];
