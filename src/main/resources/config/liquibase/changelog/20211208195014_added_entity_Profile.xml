@@ -21,6 +21,45 @@
             <column name="ultima_modificacao" type="datetime">
                 <constraints nullable="true" />
             </column>
+            <column name="num_modificacao" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="age" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="auditory_disabilities" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="blindness" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="color_vision" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="contrast_sensitivity" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="fild_of_vision" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="light_sensitivity" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="visual_acuity" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="education" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="experience_level" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="gender" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="language" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="profile" columnName="ultima_modificacao" columnDataType="datetime"/>
@@ -58,6 +97,19 @@
             <column name="id" type="numeric"/>
             <column name="status" type="string"/>
             <column name="ultima_modificacao" type="datetime"/>
+            <column name="num_modificacao" type="numeric"/>
+            <column name="age" type="numeric"/>
+            <column name="auditory_disabilities" type="boolean"/>
+            <column name="blindness" type="boolean"/>
+            <column name="color_vision" type="boolean"/>
+            <column name="contrast_sensitivity" type="boolean"/>
+            <column name="fild_of_vision" type="boolean"/>
+            <column name="light_sensitivity" type="boolean"/>
+            <column name="visual_acuity" type="boolean"/>
+            <column name="education" type="string"/>
+            <column name="experience_level" type="string"/>
+            <column name="gender" type="string"/>
+            <column name="language" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

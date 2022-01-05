@@ -50,4 +50,6 @@ public interface ProfileService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    ProfileDTO friends(long profileId, long userId);
 }

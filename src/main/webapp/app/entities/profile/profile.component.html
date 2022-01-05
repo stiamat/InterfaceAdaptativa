@@ -25,6 +25,19 @@
                     <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span>Status</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="ultimaModificacao"><span>Ultima Modificacao</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="numModificacao"><span>Num Modificacao</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="age"><span>Age</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="auditoryDisabilities"><span>Auditory Disabilities</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="blindness"><span>Blindness</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="colorVision"><span>Color Vision</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="contrastSensitivity"><span>Contrast Sensitivity</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="fildOfVision"><span>Fild Of Vision</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lightSensitivity"><span>Light Sensitivity</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="visualAcuity"><span>Visual Acuity</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="education"><span>Education</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="experienceLevel"><span>Experience Level</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="gender"><span>Gender</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="language"><span>Language</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="userLogin"><span>User</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -34,6 +47,19 @@
                     <td><a [routerLink]="['/profile', profile.id, 'view']">{{ profile.id }}</a></td>
                     <td>{{ profile.status }}</td>
                     <td>{{ profile.ultimaModificacao | date:'medium' }}</td>
+                    <td>{{ profile.numModificacao }}</td>
+                    <td>{{ profile.age }}</td>
+                    <td>{{ profile.auditoryDisabilities }}</td>
+                    <td>{{ profile.blindness }}</td>
+                    <td>{{ profile.colorVision }}</td>
+                    <td>{{ profile.contrastSensitivity }}</td>
+                    <td>{{ profile.fildOfVision }}</td>
+                    <td>{{ profile.lightSensitivity }}</td>
+                    <td>{{ profile.visualAcuity }}</td>
+                    <td>{{ profile.education }}</td>
+                    <td>{{ profile.experienceLevel }}</td>
+                    <td>{{ profile.gender }}</td>
+                    <td>{{ profile.language }}</td>
                     <td>
                         {{ profile.userLogin }}
                     </td>

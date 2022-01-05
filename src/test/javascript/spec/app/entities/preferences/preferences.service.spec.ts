@@ -6,6 +6,8 @@ import {
 import { PreferencesService } from 'app/entities/preferences/preferences.service';
 import { IPreferences, Preferences } from 'app/shared/model/preferences.model';
 import { StatusPreferences } from 'app/shared/model/enumerations/status-preferences.model';
+import { ExperienceLevelMode } from 'app/shared/model/enumerations/experience-level-mode.model';
+import { FontMode } from 'app/shared/model/enumerations/font-mode.model';
 
 describe('Service Tests', () => {
   describe('Preferences Service', () => {
@@ -24,7 +26,14 @@ describe('Service Tests', () => {
       service = injector.get(PreferencesService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Preferences(0, StatusPreferences.TRUE);
+      elemDefault = new Preferences(
+        0,
+        StatusPreferences.TRUE,
+        ExperienceLevelMode.BASICMODE,
+        FontMode.DECREASE,
+        false,
+        false
+      );
     });
 
     describe('Service methods', () => {
@@ -61,6 +70,10 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             darkMode: 'BBBBBB',
+            experienceLevelMode: 'BBBBBB',
+            fontMode: 'BBBBBB',
+            contrastMode: true,
+            colorVisionMode: true,
           },
           elemDefault
         );
@@ -80,6 +93,10 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             darkMode: 'BBBBBB',
+            experienceLevelMode: 'BBBBBB',
+            fontMode: 'BBBBBB',
+            contrastMode: true,
+            colorVisionMode: true,
           },
           elemDefault
         );

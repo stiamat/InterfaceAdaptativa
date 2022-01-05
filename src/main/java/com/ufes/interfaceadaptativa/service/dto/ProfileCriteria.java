@@ -50,6 +50,32 @@ public class ProfileCriteria implements Serializable, Criteria {
 
     private ZonedDateTimeFilter ultimaModificacao;
 
+    private IntegerFilter numModificacao;
+
+    private IntegerFilter age;
+
+    private BooleanFilter auditoryDisabilities;
+
+    private BooleanFilter blindness;
+
+    private BooleanFilter colorVision;
+
+    private BooleanFilter contrastSensitivity;
+
+    private BooleanFilter fildOfVision;
+
+    private BooleanFilter lightSensitivity;
+
+    private BooleanFilter visualAcuity;
+
+    private StringFilter education;
+
+    private StringFilter experienceLevel;
+
+    private StringFilter gender;
+
+    private StringFilter language;
+
     private LongFilter userId;
 
     private LongFilter listFriendsId;
@@ -61,6 +87,19 @@ public class ProfileCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.status = other.status == null ? null : other.status.copy();
         this.ultimaModificacao = other.ultimaModificacao == null ? null : other.ultimaModificacao.copy();
+        this.numModificacao = other.numModificacao == null ? null : other.numModificacao.copy();
+        this.age = other.age == null ? null : other.age.copy();
+        this.auditoryDisabilities = other.auditoryDisabilities == null ? null : other.auditoryDisabilities.copy();
+        this.blindness = other.blindness == null ? null : other.blindness.copy();
+        this.colorVision = other.colorVision == null ? null : other.colorVision.copy();
+        this.contrastSensitivity = other.contrastSensitivity == null ? null : other.contrastSensitivity.copy();
+        this.fildOfVision = other.fildOfVision == null ? null : other.fildOfVision.copy();
+        this.lightSensitivity = other.lightSensitivity == null ? null : other.lightSensitivity.copy();
+        this.visualAcuity = other.visualAcuity == null ? null : other.visualAcuity.copy();
+        this.education = other.education == null ? null : other.education.copy();
+        this.experienceLevel = other.experienceLevel == null ? null : other.experienceLevel.copy();
+        this.gender = other.gender == null ? null : other.gender.copy();
+        this.language = other.language == null ? null : other.language.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
         this.listFriendsId = other.listFriendsId == null ? null : other.listFriendsId.copy();
     }
@@ -94,6 +133,110 @@ public class ProfileCriteria implements Serializable, Criteria {
         this.ultimaModificacao = ultimaModificacao;
     }
 
+    public IntegerFilter getNumModificacao() {
+        return numModificacao;
+    }
+
+    public void setNumModificacao(IntegerFilter numModificacao) {
+        this.numModificacao = numModificacao;
+    }
+
+    public IntegerFilter getAge() {
+        return age;
+    }
+
+    public void setAge(IntegerFilter age) {
+        this.age = age;
+    }
+
+    public BooleanFilter getAuditoryDisabilities() {
+        return auditoryDisabilities;
+    }
+
+    public void setAuditoryDisabilities(BooleanFilter auditoryDisabilities) {
+        this.auditoryDisabilities = auditoryDisabilities;
+    }
+
+    public BooleanFilter getBlindness() {
+        return blindness;
+    }
+
+    public void setBlindness(BooleanFilter blindness) {
+        this.blindness = blindness;
+    }
+
+    public BooleanFilter getColorVision() {
+        return colorVision;
+    }
+
+    public void setColorVision(BooleanFilter colorVision) {
+        this.colorVision = colorVision;
+    }
+
+    public BooleanFilter getContrastSensitivity() {
+        return contrastSensitivity;
+    }
+
+    public void setContrastSensitivity(BooleanFilter contrastSensitivity) {
+        this.contrastSensitivity = contrastSensitivity;
+    }
+
+    public BooleanFilter getFildOfVision() {
+        return fildOfVision;
+    }
+
+    public void setFildOfVision(BooleanFilter fildOfVision) {
+        this.fildOfVision = fildOfVision;
+    }
+
+    public BooleanFilter getLightSensitivity() {
+        return lightSensitivity;
+    }
+
+    public void setLightSensitivity(BooleanFilter lightSensitivity) {
+        this.lightSensitivity = lightSensitivity;
+    }
+
+    public BooleanFilter getVisualAcuity() {
+        return visualAcuity;
+    }
+
+    public void setVisualAcuity(BooleanFilter visualAcuity) {
+        this.visualAcuity = visualAcuity;
+    }
+
+    public StringFilter getEducation() {
+        return education;
+    }
+
+    public void setEducation(StringFilter education) {
+        this.education = education;
+    }
+
+    public StringFilter getExperienceLevel() {
+        return experienceLevel;
+    }
+
+    public void setExperienceLevel(StringFilter experienceLevel) {
+        this.experienceLevel = experienceLevel;
+    }
+
+    public StringFilter getGender() {
+        return gender;
+    }
+
+    public void setGender(StringFilter gender) {
+        this.gender = gender;
+    }
+
+    public StringFilter getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(StringFilter language) {
+        this.language = language;
+    }
+
     public LongFilter getUserId() {
         return userId;
     }
@@ -124,6 +267,19 @@ public class ProfileCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(status, that.status) &&
             Objects.equals(ultimaModificacao, that.ultimaModificacao) &&
+            Objects.equals(numModificacao, that.numModificacao) &&
+            Objects.equals(age, that.age) &&
+            Objects.equals(auditoryDisabilities, that.auditoryDisabilities) &&
+            Objects.equals(blindness, that.blindness) &&
+            Objects.equals(colorVision, that.colorVision) &&
+            Objects.equals(contrastSensitivity, that.contrastSensitivity) &&
+            Objects.equals(fildOfVision, that.fildOfVision) &&
+            Objects.equals(lightSensitivity, that.lightSensitivity) &&
+            Objects.equals(visualAcuity, that.visualAcuity) &&
+            Objects.equals(education, that.education) &&
+            Objects.equals(experienceLevel, that.experienceLevel) &&
+            Objects.equals(gender, that.gender) &&
+            Objects.equals(language, that.language) &&
             Objects.equals(userId, that.userId) &&
             Objects.equals(listFriendsId, that.listFriendsId);
     }
@@ -134,6 +290,19 @@ public class ProfileCriteria implements Serializable, Criteria {
         id,
         status,
         ultimaModificacao,
+        numModificacao,
+        age,
+        auditoryDisabilities,
+        blindness,
+        colorVision,
+        contrastSensitivity,
+        fildOfVision,
+        lightSensitivity,
+        visualAcuity,
+        education,
+        experienceLevel,
+        gender,
+        language,
         userId,
         listFriendsId
         );
@@ -146,6 +315,19 @@ public class ProfileCriteria implements Serializable, Criteria {
                 (id != null ? "id=" + id + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
                 (ultimaModificacao != null ? "ultimaModificacao=" + ultimaModificacao + ", " : "") +
+                (numModificacao != null ? "numModificacao=" + numModificacao + ", " : "") +
+                (age != null ? "age=" + age + ", " : "") +
+                (auditoryDisabilities != null ? "auditoryDisabilities=" + auditoryDisabilities + ", " : "") +
+                (blindness != null ? "blindness=" + blindness + ", " : "") +
+                (colorVision != null ? "colorVision=" + colorVision + ", " : "") +
+                (contrastSensitivity != null ? "contrastSensitivity=" + contrastSensitivity + ", " : "") +
+                (fildOfVision != null ? "fildOfVision=" + fildOfVision + ", " : "") +
+                (lightSensitivity != null ? "lightSensitivity=" + lightSensitivity + ", " : "") +
+                (visualAcuity != null ? "visualAcuity=" + visualAcuity + ", " : "") +
+                (education != null ? "education=" + education + ", " : "") +
+                (experienceLevel != null ? "experienceLevel=" + experienceLevel + ", " : "") +
+                (gender != null ? "gender=" + gender + ", " : "") +
+                (language != null ? "language=" + language + ", " : "") +
                 (userId != null ? "userId=" + userId + ", " : "") +
                 (listFriendsId != null ? "listFriendsId=" + listFriendsId + ", " : "") +
             "}";

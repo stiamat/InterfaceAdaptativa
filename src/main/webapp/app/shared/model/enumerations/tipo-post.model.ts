@@ -6,4 +6,6 @@ export const enum TipoPost {
   ARTIGO = 'ARTIGO',
 
   CONFERENCIA = 'CONFERENCIA',
+
+  VIDEOS = 'VIDEOS',
 }

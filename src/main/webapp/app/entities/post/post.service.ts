@@ -69,6 +69,12 @@ export class PostService {
     });
   }
 
+  respostasUser(userId: number): Observable<HttpResponse<IPost[]>> {
+    return this.http.get<IPost[]>(`${this.resourceUrl}/answer/user/${userId}`, {
+      observe: 'response',
+    });
+  }
+
   searchLogin(login: string): Observable<HttpResponse<IPost[]>> {
     return this.http.get<IPost[]>(`${this.resourceUrl}/search/${login}`, {
       observe: 'response',

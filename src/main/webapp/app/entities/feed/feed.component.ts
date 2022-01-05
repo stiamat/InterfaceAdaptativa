@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
 import { StatusProfile } from 'app/shared/model/enumerations/status-profile.model';
+import { TipoPost } from 'app/shared/model/enumerations/tipo-post.model';
 import { IPost, Post } from 'app/shared/model/post.model';
 import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
@@ -37,6 +38,7 @@ export class FeedComponent implements OnInit {
   isSaving = false;
   link = false;
   profile: IProfile;
+  tipoPost = 'NORMAL';
 
   editForm = this.fb.group({
     id: [],
@@ -92,7 +94,7 @@ export class FeedComponent implements OnInit {
         const element = document.querySelector('.body_adaptative');
         if (!element) return;
         console.warn(element);
-        element.classList.add('dark_mode');
+        // element.classList.add('dark_mode');
       }
     });
   }
@@ -131,11 +133,28 @@ export class FeedComponent implements OnInit {
   }
 
   private createFromForm(): IPost {
+    let tipoPostFromForm = null;
+    console.warn(this.tipoPost);
+
+    if (this.tipoPost === 'VIDEOS') {
+      tipoPostFromForm = TipoPost.VIDEOS;
+    }
+    if (this.tipoPost === 'ARTIGO') {
+      tipoPostFromForm = TipoPost.ARTIGO;
+    }
+    if (this.tipoPost === 'RECOMENDACAO') {
+      tipoPostFromForm = TipoPost.RECOMENDACAO;
+    }
+    if (this.tipoPost === 'CONFERENCIA') {
+      tipoPostFromForm = TipoPost.CONFERENCIA;
+    }
+
     return {
       ...new Post(),
       id: null,
       body: this.input,
       date: moment(moment.now()),
+      tipoPost: tipoPostFromForm,
       active: true,
       likes: 0,
       userId: this.account.id,

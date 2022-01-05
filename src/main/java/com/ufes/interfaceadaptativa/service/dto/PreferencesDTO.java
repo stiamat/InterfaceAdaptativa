@@ -2,6 +2,8 @@ package com.ufes.interfaceadaptativa.service.dto;
 
 import java.io.Serializable;
 import com.ufes.interfaceadaptativa.domain.enumeration.StatusPreferences;
+import com.ufes.interfaceadaptativa.domain.enumeration.ExperienceLevelMode;
+import com.ufes.interfaceadaptativa.domain.enumeration.FontMode;
 
 /**
  * A DTO for the {@link com.ufes.interfaceadaptativa.domain.Preferences} entity.
@@ -11,6 +13,14 @@ public class PreferencesDTO implements Serializable {
     private Long id;
 
     private StatusPreferences darkMode;
+
+    private ExperienceLevelMode experienceLevelMode;
+
+    private FontMode fontMode;
+
+    private Boolean contrastMode;
+
+    private Boolean colorVisionMode;
 
 
     private Long userId;
@@ -31,6 +41,38 @@ public class PreferencesDTO implements Serializable {
 
     public void setDarkMode(StatusPreferences darkMode) {
         this.darkMode = darkMode;
+    }
+
+    public ExperienceLevelMode getExperienceLevelMode() {
+        return experienceLevelMode;
+    }
+
+    public void setExperienceLevelMode(ExperienceLevelMode experienceLevelMode) {
+        this.experienceLevelMode = experienceLevelMode;
+    }
+
+    public FontMode getFontMode() {
+        return fontMode;
+    }
+
+    public void setFontMode(FontMode fontMode) {
+        this.fontMode = fontMode;
+    }
+
+    public Boolean isContrastMode() {
+        return contrastMode;
+    }
+
+    public void setContrastMode(Boolean contrastMode) {
+        this.contrastMode = contrastMode;
+    }
+
+    public Boolean isColorVisionMode() {
+        return colorVisionMode;
+    }
+
+    public void setColorVisionMode(Boolean colorVisionMode) {
+        this.colorVisionMode = colorVisionMode;
     }
 
     public Long getUserId() {
@@ -72,6 +114,10 @@ public class PreferencesDTO implements Serializable {
         return "PreferencesDTO{" +
             "id=" + getId() +
             ", darkMode='" + getDarkMode() + "'" +
+            ", experienceLevelMode='" + getExperienceLevelMode() + "'" +
+            ", fontMode='" + getFontMode() + "'" +
+            ", contrastMode='" + isContrastMode() + "'" +
+            ", colorVisionMode='" + isColorVisionMode() + "'" +
             ", userId=" + getUserId() +
             ", userLogin='" + getUserLogin() + "'" +
             "}";

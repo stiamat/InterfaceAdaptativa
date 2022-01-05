@@ -29,6 +29,58 @@
     {
       "fieldName": "ultimaModificacao",
       "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "numModificacao",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "auditoryDisabilities",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "blindness",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "colorVision",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "contrastSensitivity",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "fildOfVision",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "lightSensitivity",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "visualAcuity",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "education",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "experienceLevel",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "language",
+      "fieldType": "String"
     }
   ],
   "changelogDate": "20211208195014",

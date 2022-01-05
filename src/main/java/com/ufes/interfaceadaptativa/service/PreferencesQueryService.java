@@ -94,6 +94,18 @@ public class PreferencesQueryService extends QueryService<Preferences> {
             if (criteria.getDarkMode() != null) {
                 specification = specification.and(buildSpecification(criteria.getDarkMode(), Preferences_.darkMode));
             }
+            if (criteria.getExperienceLevelMode() != null) {
+                specification = specification.and(buildSpecification(criteria.getExperienceLevelMode(), Preferences_.experienceLevelMode));
+            }
+            if (criteria.getFontMode() != null) {
+                specification = specification.and(buildSpecification(criteria.getFontMode(), Preferences_.fontMode));
+            }
+            if (criteria.getContrastMode() != null) {
+                specification = specification.and(buildSpecification(criteria.getContrastMode(), Preferences_.contrastMode));
+            }
+            if (criteria.getColorVisionMode() != null) {
+                specification = specification.and(buildSpecification(criteria.getColorVisionMode(), Preferences_.colorVisionMode));
+            }
             if (criteria.getUserId() != null) {
                 specification = specification.and(buildSpecification(criteria.getUserId(),
                     root -> root.join(Preferences_.user, JoinType.LEFT).get(User_.id)));

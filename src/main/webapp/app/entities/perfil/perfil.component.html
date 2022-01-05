@@ -40,20 +40,20 @@
             </div>
             <div class="name">{{user?.login}}</div>
             <div class="seguir" *ngIf="user?.id != account?.id">
-                <button class="btn_feed btn_seguir">
+                <button class="btn_feed btn_seguir" *ngIf="!isFriend" (click)="friends()">
                     <i class="bi bi-bookmark-heart"></i> Seguir</button>
-                <button class="btn_feed btn_feed-cor-secondary btn_seguir">
+                <button class="btn_feed btn_feed-cor-secondary btn_seguir" *ngIf="isFriend" (click)="friends()">
                     <i class="bi bi-bookmark-heart-fill"></i> Deixar de Seguir</button>
             </div>
             <div class="descricao"></div>
         </div>
         <div id="body_perfil" class="body_perfil">
-            <mat-tab-group>
+            <mat-tab-group (selectedTabChange)="carregar($event)">
                 <mat-tab label="Todos">
                     <div class="feed">
                         <div *ngFor="let post of feed">
                             <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
-                                class="resposta-mini-card newItem">Em reposta ...
+                                class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
                             </div>
                             <div class="card-post newItem">
                                 <div class="grid header">
@@ -103,19 +103,269 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Respostas">
-                    Nada aqui
+                    <div class="feed">
+                        <div *ngFor="let post of feed">
+                            <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
+                                class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
+                            </div>
+                            <div class="card-post newItem">
+                                <div class="grid header">
+                                    <div class="avatar">
+                                        <figure *ngIf="post.userImagem">
+                                            <img [src]="post.userImagem" alt="avatar do usuario" class="avatar_img">
+                                        </figure>
+                                        <div *ngIf="!post.userImagem" class="img"></div>
+                                    </div>
+                                    <div class="nick">{{post.userLogin}}</div>
+                                    <div class="date">{{timePublicacao(post.date)}}</div>
+                                </div>
+                                <div class="grid body">
+                                    <div class="corpo">{{post.body}}</div>
+                                </div>
+                                <div class="grid footer">
+                                    <div class="actions">
+                                        <button *ngIf="account.id == post.userId" (click)="deletePost(post)"
+                                            mat-icon-button color="primary"
+                                            aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                        <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button
+                                            color="primary" aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-link-45deg"></i>
+                                        </button>
+                                        <button *ngIf="!post.comentarioDeId" mat-icon-button color="primary"
+                                            aria-label="Comentar esta publicação" (click)="comentar(post.id)">
+                                            <i class="bi bi-chat-square-text"></i>
+                                        </button>
+                                        <button mat-icon-button color="primary" aria-label="Curti esta publicação"
+                                            (click)="curti(post)">
+                                            <i *ngIf="!curtido(post)" class="bi bi-heart"></i>
+                                            <i *ngIf="curtido(post)" class="bi bi-heart-fill" style="color: red;">
+                                            </i>
+                                        </button>
+                                        <span class="actions-info">{{post.likeDes.length}}</span>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
                 </mat-tab>
                 <mat-tab label="Videos">
-                    Nada aqui
+                    <div class="feed">
+                        <div *ngFor="let post of feed">
+                            <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
+                                class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
+                            </div>
+                            <div class="card-post newItem">
+                                <div class="grid header">
+                                    <div class="avatar">
+                                        <figure *ngIf="post.userImagem">
+                                            <img [src]="post.userImagem" alt="avatar do usuario" class="avatar_img">
+                                        </figure>
+                                        <div *ngIf="!post.userImagem" class="img"></div>
+                                    </div>
+                                    <div class="nick">{{post.userLogin}}</div>
+                                    <div class="date">{{timePublicacao(post.date)}}</div>
+                                </div>
+                                <div class="grid body">
+                                    <div class="corpo">{{post.body}}</div>
+                                </div>
+                                <div class="grid footer">
+                                    <div class="actions">
+                                        <button *ngIf="account.id == post.userId" (click)="deletePost(post)"
+                                            mat-icon-button color="primary"
+                                            aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                        <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button
+                                            color="primary" aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-link-45deg"></i>
+                                        </button>
+                                        <button *ngIf="!post.comentarioDeId" mat-icon-button color="primary"
+                                            aria-label="Comentar esta publicação" (click)="comentar(post.id)">
+                                            <i class="bi bi-chat-square-text"></i>
+                                        </button>
+                                        <button mat-icon-button color="primary" aria-label="Curti esta publicação"
+                                            (click)="curti(post)">
+                                            <i *ngIf="!curtido(post)" class="bi bi-heart"></i>
+                                            <i *ngIf="curtido(post)" class="bi bi-heart-fill" style="color: red;">
+                                            </i>
+                                        </button>
+                                        <span class="actions-info">{{post.likeDes.length}}</span>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
                 </mat-tab>
-                <mat-tab label="PDF's">
-                    Nada aqui
+                <mat-tab label="PDF">
+                    <div class="feed">
+                        <div *ngFor="let post of feed">
+                            <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
+                                class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
+                            </div>
+                            <div class="card-post newItem">
+                                <div class="grid header">
+                                    <div class="avatar">
+                                        <figure *ngIf="post.userImagem">
+                                            <img [src]="post.userImagem" alt="avatar do usuario" class="avatar_img">
+                                        </figure>
+                                        <div *ngIf="!post.userImagem" class="img"></div>
+                                    </div>
+                                    <div class="nick">{{post.userLogin}}</div>
+                                    <div class="date">{{timePublicacao(post.date)}}</div>
+                                </div>
+                                <div class="grid body">
+                                    <div class="corpo">{{post.body}}</div>
+                                </div>
+                                <div class="grid footer">
+                                    <div class="actions">
+                                        <button *ngIf="account.id == post.userId" (click)="deletePost(post)"
+                                            mat-icon-button color="primary"
+                                            aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                        <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button
+                                            color="primary" aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-link-45deg"></i>
+                                        </button>
+                                        <button *ngIf="!post.comentarioDeId" mat-icon-button color="primary"
+                                            aria-label="Comentar esta publicação" (click)="comentar(post.id)">
+                                            <i class="bi bi-chat-square-text"></i>
+                                        </button>
+                                        <button mat-icon-button color="primary" aria-label="Curti esta publicação"
+                                            (click)="curti(post)">
+                                            <i *ngIf="!curtido(post)" class="bi bi-heart"></i>
+                                            <i *ngIf="curtido(post)" class="bi bi-heart-fill" style="color: red;">
+                                            </i>
+                                        </button>
+                                        <span class="actions-info">{{post.likeDes.length}}</span>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
                 </mat-tab>
                 <mat-tab label="Artigos">
-                    Nada aqui
+                    <div class="feed">
+                        <div *ngFor="let post of feed">
+                            <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
+                                class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
+                            </div>
+                            <div class="card-post newItem">
+                                <div class="grid header">
+                                    <div class="avatar">
+                                        <figure *ngIf="post.userImagem">
+                                            <img [src]="post.userImagem" alt="avatar do usuario" class="avatar_img">
+                                        </figure>
+                                        <div *ngIf="!post.userImagem" class="img"></div>
+                                    </div>
+                                    <div class="nick">{{post.userLogin}}</div>
+                                    <div class="date">{{timePublicacao(post.date)}}</div>
+                                </div>
+                                <div class="grid body">
+                                    <div class="corpo">{{post.body}}</div>
+                                </div>
+                                <div class="grid footer">
+                                    <div class="actions">
+                                        <button *ngIf="account.id == post.userId" (click)="deletePost(post)"
+                                            mat-icon-button color="primary"
+                                            aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                        <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button
+                                            color="primary" aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-link-45deg"></i>
+                                        </button>
+                                        <button *ngIf="!post.comentarioDeId" mat-icon-button color="primary"
+                                            aria-label="Comentar esta publicação" (click)="comentar(post.id)">
+                                            <i class="bi bi-chat-square-text"></i>
+                                        </button>
+                                        <button mat-icon-button color="primary" aria-label="Curti esta publicação"
+                                            (click)="curti(post)">
+                                            <i *ngIf="!curtido(post)" class="bi bi-heart"></i>
+                                            <i *ngIf="curtido(post)" class="bi bi-heart-fill" style="color: red;">
+                                            </i>
+                                        </button>
+                                        <span class="actions-info">{{post.likeDes.length}}</span>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
                 </mat-tab>
                 <mat-tab label="Conferencia">
-                    Nada aqui
+                    <div class="feed">
+                        <div *ngFor="let post of feed">
+                            <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
+                                class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
+                            </div>
+                            <div class="card-post newItem">
+                                <div class="grid header">
+                                    <div class="avatar">
+                                        <figure *ngIf="post.userImagem">
+                                            <img [src]="post.userImagem" alt="avatar do usuario" class="avatar_img">
+                                        </figure>
+                                        <div *ngIf="!post.userImagem" class="img"></div>
+                                    </div>
+                                    <div class="nick">{{post.userLogin}}</div>
+                                    <div class="date">{{timePublicacao(post.date)}}</div>
+                                </div>
+                                <div class="grid body">
+                                    <div class="corpo">{{post.body}}</div>
+                                </div>
+                                <div class="grid footer">
+                                    <div class="actions">
+                                        <button *ngIf="account.id == post.userId" (click)="deletePost(post)"
+                                            mat-icon-button color="primary"
+                                            aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                        <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button
+                                            color="primary" aria-label="Example icon button with a heart icon">
+                                            <i class="bi bi-link-45deg"></i>
+                                        </button>
+                                        <button *ngIf="!post.comentarioDeId" mat-icon-button color="primary"
+                                            aria-label="Comentar esta publicação" (click)="comentar(post.id)">
+                                            <i class="bi bi-chat-square-text"></i>
+                                        </button>
+                                        <button mat-icon-button color="primary" aria-label="Curti esta publicação"
+                                            (click)="curti(post)">
+                                            <i *ngIf="!curtido(post)" class="bi bi-heart"></i>
+                                            <i *ngIf="curtido(post)" class="bi bi-heart-fill" style="color: red;">
+                                            </i>
+                                        </button>
+                                        <span class="actions-info">{{post.likeDes.length}}</span>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
                 </mat-tab>
             </mat-tab-group>
 

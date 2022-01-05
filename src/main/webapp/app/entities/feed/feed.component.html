@@ -50,12 +50,13 @@
                 <div class="form-row" id="link">
                     <div class="col-4">
                         <div class="form-group">
-                            <select class="form-control" id="tipoPost">
-                                <option>Normal</option>
-                                <option>Vídeo</option>
-                                <option>PDF</option>
-                                <option>Artigo</option>
-                                <option>Conferência</option>
+                            <select class="form-control" [(ngModel)]="tipoPost" id="tipoPost"
+                                [ngModelOptions]="{standalone: true}">
+                                <option value="NORMAL">Normal</option>
+                                <option value="VIDEOS">Vídeo</option>
+                                <option value="RECOMENDACAO">PDF</option>
+                                <option value="ARTIGO">Artigo</option>
+                                <option value="CONFERENCIA">Conferência</option>
                             </select>
                         </div>
                     </div>
@@ -75,7 +76,7 @@
         <div class="feed">
             <div *ngFor="let post of feed">
                 <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
-                    class="resposta-mini-card newItem">Em reposta ...
+                    class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
                 </div>
                 <div class="card-post newItem">
                     <div class="grid header">
@@ -100,11 +101,12 @@
                             </button>
                             <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button
                                 color="primary" aria-label="Example icon button with a heart icon">
-                                <!-- <i class="bi bi-link-45deg"></i>
-                            <i class="bi bi-file-pdf"></i>
-                            <i class="bi bi-play-btn"></i>
-                            <i class="bi bi-file-text"></i> -->
-                                <i class="bi bi-person-video3"></i>
+                                <i class="bi bi-link-45deg"
+                                    *ngIf="post.tipoPost == 'NORMAL' || post.tipoPost == null"></i>
+                                <i class="bi bi-file-pdf" *ngIf="post.tipoPost == 'RECOMENDACAO'"></i>
+                                <i class="bi bi-play-btn" *ngIf="post.tipoPost == 'VIDEOS'"></i>
+                                <i class="bi bi-file-text" *ngIf="post.tipoPost == 'ARTIGO'"></i>
+                                <i class="bi bi-person-video3" *ngIf="post.tipoPost == 'CONFERENCIA'"></i>
                             </button>
                             <button *ngIf="!post.comentarioDeId" mat-icon-button color="primary"
                                 aria-label="Comentar esta publicação" (click)="comentar(post.id)">

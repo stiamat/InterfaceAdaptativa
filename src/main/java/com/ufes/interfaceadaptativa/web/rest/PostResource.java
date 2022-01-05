@@ -171,6 +171,19 @@ public class PostResource {
         return ResponseEntity.ok().body(lista);
     }
 
+    @RequestMapping(value="/posts/answer/user/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<List<PostDTO>> respostasUser(@PathVariable Long userId){
+        Optional<List<Post>> repostas = postRepository.findAnswersUser(userId);
+        List<PostDTO> lista;
+        if(repostas.isPresent()){
+            lista = postMapper.toDto(repostas.get());
+        }else{
+            lista = new ArrayList<>();
+        }
+
+        return ResponseEntity.ok().body(lista);
+    }
+
     @RequestMapping(value="/posts/search/{login}", method = RequestMethod.GET)
     public ResponseEntity<List<PostDTO>> searchLogin(@PathVariable String login){
         Optional<List<Post>> repostas = postRepository.searchLogin(login);

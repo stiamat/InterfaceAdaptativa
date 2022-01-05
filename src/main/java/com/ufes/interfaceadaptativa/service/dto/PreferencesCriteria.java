@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import io.github.jhipster.service.Criteria;
 import com.ufes.interfaceadaptativa.domain.enumeration.StatusPreferences;
+import com.ufes.interfaceadaptativa.domain.enumeration.ExperienceLevelMode;
+import com.ufes.interfaceadaptativa.domain.enumeration.FontMode;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
@@ -40,12 +42,56 @@ public class PreferencesCriteria implements Serializable, Criteria {
         }
 
     }
+    /**
+     * Class for filtering ExperienceLevelMode
+     */
+    public static class ExperienceLevelModeFilter extends Filter<ExperienceLevelMode> {
+
+        public ExperienceLevelModeFilter() {
+        }
+
+        public ExperienceLevelModeFilter(ExperienceLevelModeFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public ExperienceLevelModeFilter copy() {
+            return new ExperienceLevelModeFilter(this);
+        }
+
+    }
+    /**
+     * Class for filtering FontMode
+     */
+    public static class FontModeFilter extends Filter<FontMode> {
+
+        public FontModeFilter() {
+        }
+
+        public FontModeFilter(FontModeFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public FontModeFilter copy() {
+            return new FontModeFilter(this);
+        }
+
+    }
 
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
 
     private StatusPreferencesFilter darkMode;
+
+    private ExperienceLevelModeFilter experienceLevelMode;
+
+    private FontModeFilter fontMode;
+
+    private BooleanFilter contrastMode;
+
+    private BooleanFilter colorVisionMode;
 
     private LongFilter userId;
 
@@ -55,6 +101,10 @@ public class PreferencesCriteria implements Serializable, Criteria {
     public PreferencesCriteria(PreferencesCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.darkMode = other.darkMode == null ? null : other.darkMode.copy();
+        this.experienceLevelMode = other.experienceLevelMode == null ? null : other.experienceLevelMode.copy();
+        this.fontMode = other.fontMode == null ? null : other.fontMode.copy();
+        this.contrastMode = other.contrastMode == null ? null : other.contrastMode.copy();
+        this.colorVisionMode = other.colorVisionMode == null ? null : other.colorVisionMode.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
     }
 
@@ -79,6 +129,38 @@ public class PreferencesCriteria implements Serializable, Criteria {
         this.darkMode = darkMode;
     }
 
+    public ExperienceLevelModeFilter getExperienceLevelMode() {
+        return experienceLevelMode;
+    }
+
+    public void setExperienceLevelMode(ExperienceLevelModeFilter experienceLevelMode) {
+        this.experienceLevelMode = experienceLevelMode;
+    }
+
+    public FontModeFilter getFontMode() {
+        return fontMode;
+    }
+
+    public void setFontMode(FontModeFilter fontMode) {
+        this.fontMode = fontMode;
+    }
+
+    public BooleanFilter getContrastMode() {
+        return contrastMode;
+    }
+
+    public void setContrastMode(BooleanFilter contrastMode) {
+        this.contrastMode = contrastMode;
+    }
+
+    public BooleanFilter getColorVisionMode() {
+        return colorVisionMode;
+    }
+
+    public void setColorVisionMode(BooleanFilter colorVisionMode) {
+        this.colorVisionMode = colorVisionMode;
+    }
+
     public LongFilter getUserId() {
         return userId;
     }
@@ -100,6 +182,10 @@ public class PreferencesCriteria implements Serializable, Criteria {
         return
             Objects.equals(id, that.id) &&
             Objects.equals(darkMode, that.darkMode) &&
+            Objects.equals(experienceLevelMode, that.experienceLevelMode) &&
+            Objects.equals(fontMode, that.fontMode) &&
+            Objects.equals(contrastMode, that.contrastMode) &&
+            Objects.equals(colorVisionMode, that.colorVisionMode) &&
             Objects.equals(userId, that.userId);
     }
 
@@ -108,6 +194,10 @@ public class PreferencesCriteria implements Serializable, Criteria {
         return Objects.hash(
         id,
         darkMode,
+        experienceLevelMode,
+        fontMode,
+        contrastMode,
+        colorVisionMode,
         userId
         );
     }
@@ -118,6 +208,10 @@ public class PreferencesCriteria implements Serializable, Criteria {
         return "PreferencesCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (darkMode != null ? "darkMode=" + darkMode + ", " : "") +
+                (experienceLevelMode != null ? "experienceLevelMode=" + experienceLevelMode + ", " : "") +
+                (fontMode != null ? "fontMode=" + fontMode + ", " : "") +
+                (contrastMode != null ? "contrastMode=" + contrastMode + ", " : "") +
+                (colorVisionMode != null ? "colorVisionMode=" + colorVisionMode + ", " : "") +
                 (userId != null ? "userId=" + userId + ", " : "") +
             "}";
     }

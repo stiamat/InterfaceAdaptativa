@@ -28,7 +28,24 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Profile(0, StatusProfile.NOVO, currentDate);
+      elemDefault = new Profile(
+        0,
+        StatusProfile.NOVO,
+        currentDate,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA'
+      );
     });
 
     describe('Service methods', () => {
@@ -77,6 +94,19 @@ describe('Service Tests', () => {
           {
             status: 'BBBBBB',
             ultimaModificacao: currentDate.format(DATE_TIME_FORMAT),
+            numModificacao: 1,
+            age: 1,
+            auditoryDisabilities: true,
+            blindness: true,
+            colorVision: true,
+            contrastSensitivity: true,
+            fildOfVision: true,
+            lightSensitivity: true,
+            visualAcuity: true,
+            education: 'BBBBBB',
+            experienceLevel: 'BBBBBB',
+            gender: 'BBBBBB',
+            language: 'BBBBBB',
           },
           elemDefault
         );
@@ -102,6 +132,19 @@ describe('Service Tests', () => {
           {
             status: 'BBBBBB',
             ultimaModificacao: currentDate.format(DATE_TIME_FORMAT),
+            numModificacao: 1,
+            age: 1,
+            auditoryDisabilities: true,
+            blindness: true,
+            colorVision: true,
+            contrastSensitivity: true,
+            fildOfVision: true,
+            lightSensitivity: true,
+            visualAcuity: true,
+            education: 'BBBBBB',
+            experienceLevel: 'BBBBBB',
+            gender: 'BBBBBB',
+            language: 'BBBBBB',
           },
           elemDefault
         );

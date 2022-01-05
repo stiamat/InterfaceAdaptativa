@@ -24,6 +24,7 @@ export class PerfilComponent implements OnInit {
   loading = false;
   feed: IPost[] = [];
   loginProfile: string;
+  isFriend = false;
 
   constructor(
     private postService: PostService,
@@ -118,25 +119,79 @@ export class PerfilComponent implements OnInit {
     this.router.navigate(['/feed/' + post]);
   }
 
-  loadAll(): void {
-    this.postService
-      .query({
+  loadAll(queryIn: any = null): void {
+    let query = {
+      'active.equals': true,
+      'userId.equals': [this.user.id],
+      page: 0,
+      size: 999,
+      sort: ['id,desc'],
+    };
+    if (queryIn != null) query = queryIn;
+
+    this.postService.query(query).subscribe((res: HttpResponse<IPost[]>) => {
+      this.loading = false;
+      this.feed = res.body;
+    });
+  }
+
+  loadProfile(): void {
+    this.profileService.find(this.account.id).subscribe(suc => {
+      this.profile = suc.body;
+      if (this.profile.listFriends.find(i => i.id === this.user.id)) {
+        this.isFriend = true;
+      } else {
+        this.isFriend = false;
+      }
+    });
+  }
+
+  carregar(tipo: any) {
+    this.feed = [];
+    tipo = tipo.tab.textLabel;
+
+    let query = null;
+
+    if (tipo === 'Respostas') {
+      this.postService.respostasUser(this.user.id).subscribe(suc => {
+        this.feed = suc.body;
+      });
+      return;
+    } else {
+      query = {
         'active.equals': true,
         'userId.equals': [this.user.id],
         page: 0,
         size: 999,
         sort: ['id,desc'],
-      })
-      .subscribe((res: HttpResponse<IPost[]>) => {
-        this.loading = false;
-        this.feed = res.body;
-      });
+      };
+      if (tipo === 'Videos') {
+        query = Object.assign({ 'tipoPost.equals': 'VIDEOS' }, query);
+      }
+      if (tipo === 'PDF') {
+        query = Object.assign({ 'tipoPost.equals': 'RECOMENDACAO' }, query);
+      }
+      if (tipo === 'Artigos') {
+        query = Object.assign({ 'tipoPost.equals': 'ARTIGO' }, query);
+      }
+      if (tipo === 'Conferencia') {
+        query = Object.assign({ 'tipoPost.equals': 'CONFERENCIA' }, query);
+      }
+    }
+
+    this.loadAll(query);
   }
 
-  loadProfile(): void {
-    this.profileService.find(this.account.id).subscribe(suc => {
-      console.warn(suc);
-      this.profile = suc.body;
-    });
+  friends() {
+    this.profileService
+      .friends(this.profile.id, this.user.id)
+      .subscribe(suc => {
+        this.profile = suc.body;
+        if (this.profile.listFriends.find(i => i.id === this.user.id)) {
+          this.isFriend = true;
+        } else {
+          this.isFriend = false;
+        }
+      });
   }
 }

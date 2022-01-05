@@ -1,6 +1,7 @@
 package com.ufes.interfaceadaptativa.web.rest;
 
 import com.ufes.interfaceadaptativa.service.ProfileService;
+import com.ufes.interfaceadaptativa.service.dto.UserDTO;
 import com.ufes.interfaceadaptativa.web.rest.errors.BadRequestAlertException;
 import com.ufes.interfaceadaptativa.service.dto.ProfileDTO;
 import com.ufes.interfaceadaptativa.service.dto.ProfileCriteria;
@@ -144,4 +145,10 @@ public class ProfileResource {
         profileService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
+
+    @RequestMapping(value="/profiles/friends/{profileId}/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<ProfileDTO> friends(@PathVariable Long profileId, @PathVariable Long userId){
+        return ResponseEntity.ok().body(profileService.friends(profileId, userId));
+    }
+
 }

@@ -106,9 +106,9 @@ public class PostQueryService extends QueryService<Post> {
 //            if (criteria.getLink() != null) {
 //                specification = specification.and(buildStringSpecification(criteria.getLink(), Post_.link));
 //            }
-//            if (criteria.getTipoPost() != null) {
-//                specification = specification.and(buildSpecification(criteria.getTipoPost(), Post_.tipoPost));
-//            }
+            if (criteria.getTipoPost() != null) {
+                specification = specification.and(buildSpecification(criteria.getTipoPost(), Post_.tipoPost));
+            }
             if (criteria.getUserId() != null) {
                 specification = specification.and(buildSpecification(criteria.getUserId(),
                     root -> root.join(Post_.user, JoinType.LEFT).get(User_.id)));

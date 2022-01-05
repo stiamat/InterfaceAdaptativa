@@ -21,6 +21,36 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" for="field_experienceLevelMode">Experience Level Mode</label>
+                    <select class="form-control" name="experienceLevelMode" formControlName="experienceLevelMode" id="field_experienceLevelMode">
+                        <option value="BASICMODE">BASICMODE</option>
+                        <option value="AVERAGEMODE">AVERAGEMODE</option>
+                        <option value="HIGHMODE">HIGHMODE</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_fontMode">Font Mode</label>
+                    <select class="form-control" name="fontMode" formControlName="fontMode" id="field_fontMode">
+                        <option value="DECREASE">DECREASE</option>
+                        <option value="NORMAL">NORMAL</option>
+                        <option value="INCREASE">INCREASE</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_contrastMode">Contrast Mode</label>
+                    <input type="checkbox" class="form-control" name="contrastMode" id="field_contrastMode"
+                           formControlName="contrastMode"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_colorVisionMode">Color Vision Mode</label>
+                    <input type="checkbox" class="form-control" name="colorVisionMode" id="field_colorVisionMode"
+                           formControlName="colorVisionMode"/>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" for="field_user">User</label>
                     <select class="form-control" id="field_user" name="user" formControlName="userId">
                         <option [ngValue]="null"></option>

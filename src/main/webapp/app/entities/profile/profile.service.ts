@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { SERVER_API_URL } from 'app/app.constants';
+import { IProfile } from 'app/shared/model/profile.model';
+import { createRequestOption } from 'app/shared/util/request-util';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment';
-
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
-import { IProfile } from 'app/shared/model/profile.model';
 
 type EntityResponseType = HttpResponse<IProfile>;
 type EntityArrayResponseType = HttpResponse<IProfile[]>;
@@ -55,6 +54,18 @@ export class ProfileService {
     return this.http.delete(`${this.resourceUrl}/${id}`, {
       observe: 'response',
     });
+  }
+
+  friends(
+    profileId: number,
+    userId: number
+  ): Observable<HttpResponse<IProfile>> {
+    return this.http.get<IProfile>(
+      `${this.resourceUrl}/friends/${profileId}/${userId}`,
+      {
+        observe: 'response',
+      }
+    );
   }
 
   protected convertDateFromClient(profile: IProfile): IProfile {

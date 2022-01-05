@@ -17,6 +17,24 @@
       "fieldName": "darkMode",
       "fieldType": "StatusPreferences",
       "fieldValues": "TRUE,FALSE,AUTO"
+    },
+    {
+      "fieldName": "experienceLevelMode",
+      "fieldType": "ExperienceLevelMode",
+      "fieldValues": "BASICMODE,AVERAGEMODE,HIGHMODE"
+    },
+    {
+      "fieldName": "fontMode",
+      "fieldType": "FontMode",
+      "fieldValues": "DECREASE,NORMAL,INCREASE"
+    },
+    {
+      "fieldName": "contrastMode",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "colorVisionMode",
+      "fieldType": "Boolean"
     }
   ],
   "changelogDate": "20211208195503",

@@ -1,5 +1,5 @@
-id;status;ultima_modificacao
-1;NOVO;2021-12-07T20:16:02
-2;NOVO;2021-12-08T13:54:57
-3;NOVO;2021-12-07T23:49:52
-4;NOVO;2021-12-08T09:41:29
+id;status;ultima_modificacao;num_modificacao;age;auditory_disabilities;blindness;color_vision;contrast_sensitivity;fild_of_vision;light_sensitivity;visual_acuity;education;experience_level;gender;language
+1;NOVO;2021-12-07T20:16:02;23505;4094;true;false;false;false;false;true;true;SCSI Credit Card Account Fresh;intangible transition THX;networks;hacking teal Communications
+2;NOVO;2021-12-08T19:00:20;39983;28177;true;true;true;false;true;true;true;invoice Assistant strategy;primary;copy Unbranded Concrete Fish;Keyboard
+3;LEGADO;2021-12-08T12:33:38;89739;66072;false;false;true;false;true;false;true;e-services Creek time-frame;next-generation;Maryland Awesome District;Rubber disintermediate Maine
+4;ATUAL;2021-12-07T22:19:18;60419;36855;true;false;true;true;false;true;true;El Salvador Avon Key;Soap Shoes;index Route;Intelligent override

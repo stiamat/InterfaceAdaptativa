@@ -24,6 +24,10 @@
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                     <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="darkMode"><span>Dark Mode</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="experienceLevelMode"><span>Experience Level Mode</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="fontMode"><span>Font Mode</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="contrastMode"><span>Contrast Mode</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="colorVisionMode"><span>Color Vision Mode</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="userLogin"><span>User</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -32,6 +36,10 @@
                 <tr *ngFor="let preferences of preferences ;trackBy: trackId">
                     <td><a [routerLink]="['/preferences', preferences.id, 'view']">{{ preferences.id }}</a></td>
                     <td>{{ preferences.darkMode }}</td>
+                    <td>{{ preferences.experienceLevelMode }}</td>
+                    <td>{{ preferences.fontMode }}</td>
+                    <td>{{ preferences.contrastMode }}</td>
+                    <td>{{ preferences.colorVisionMode }}</td>
                     <td>
                         {{ preferences.userLogin }}
                     </td>

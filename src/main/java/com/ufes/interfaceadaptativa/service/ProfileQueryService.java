@@ -97,6 +97,45 @@ public class ProfileQueryService extends QueryService<Profile> {
             if (criteria.getUltimaModificacao() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUltimaModificacao(), Profile_.ultimaModificacao));
             }
+            if (criteria.getNumModificacao() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getNumModificacao(), Profile_.numModificacao));
+            }
+            if (criteria.getAge() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getAge(), Profile_.age));
+            }
+            if (criteria.getAuditoryDisabilities() != null) {
+                specification = specification.and(buildSpecification(criteria.getAuditoryDisabilities(), Profile_.auditoryDisabilities));
+            }
+            if (criteria.getBlindness() != null) {
+                specification = specification.and(buildSpecification(criteria.getBlindness(), Profile_.blindness));
+            }
+            if (criteria.getColorVision() != null) {
+                specification = specification.and(buildSpecification(criteria.getColorVision(), Profile_.colorVision));
+            }
+            if (criteria.getContrastSensitivity() != null) {
+                specification = specification.and(buildSpecification(criteria.getContrastSensitivity(), Profile_.contrastSensitivity));
+            }
+            if (criteria.getFildOfVision() != null) {
+                specification = specification.and(buildSpecification(criteria.getFildOfVision(), Profile_.fildOfVision));
+            }
+            if (criteria.getLightSensitivity() != null) {
+                specification = specification.and(buildSpecification(criteria.getLightSensitivity(), Profile_.lightSensitivity));
+            }
+            if (criteria.getVisualAcuity() != null) {
+                specification = specification.and(buildSpecification(criteria.getVisualAcuity(), Profile_.visualAcuity));
+            }
+            if (criteria.getEducation() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getEducation(), Profile_.education));
+            }
+            if (criteria.getExperienceLevel() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getExperienceLevel(), Profile_.experienceLevel));
+            }
+            if (criteria.getGender() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getGender(), Profile_.gender));
+            }
+            if (criteria.getLanguage() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getLanguage(), Profile_.language));
+            }
             if (criteria.getUserId() != null) {
                 specification = specification.and(buildSpecification(criteria.getUserId(),
                     root -> root.join(Profile_.user, JoinType.LEFT).get(User_.id)));

@@ -28,6 +28,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.ufes.interfaceadaptativa.domain.enumeration.StatusPreferences;
+import com.ufes.interfaceadaptativa.domain.enumeration.ExperienceLevelMode;
+import com.ufes.interfaceadaptativa.domain.enumeration.FontMode;
 /**
  * Integration tests for the {@link PreferencesResource} REST controller.
  */
@@ -38,6 +40,18 @@ public class PreferencesResourceIT {
 
     private static final StatusPreferences DEFAULT_DARK_MODE = StatusPreferences.TRUE;
     private static final StatusPreferences UPDATED_DARK_MODE = StatusPreferences.FALSE;
+
+    private static final ExperienceLevelMode DEFAULT_EXPERIENCE_LEVEL_MODE = ExperienceLevelMode.BASICMODE;
+    private static final ExperienceLevelMode UPDATED_EXPERIENCE_LEVEL_MODE = ExperienceLevelMode.AVERAGEMODE;
+
+    private static final FontMode DEFAULT_FONT_MODE = FontMode.DECREASE;
+    private static final FontMode UPDATED_FONT_MODE = FontMode.NORMAL;
+
+    private static final Boolean DEFAULT_CONTRAST_MODE = false;
+    private static final Boolean UPDATED_CONTRAST_MODE = true;
+
+    private static final Boolean DEFAULT_COLOR_VISION_MODE = false;
+    private static final Boolean UPDATED_COLOR_VISION_MODE = true;
 
     @Autowired
     private PreferencesRepository preferencesRepository;
@@ -67,7 +81,11 @@ public class PreferencesResourceIT {
      */
     public static Preferences createEntity(EntityManager em) {
         Preferences preferences = new Preferences()
-            .darkMode(DEFAULT_DARK_MODE);
+            .darkMode(DEFAULT_DARK_MODE)
+            .experienceLevelMode(DEFAULT_EXPERIENCE_LEVEL_MODE)
+            .fontMode(DEFAULT_FONT_MODE)
+            .contrastMode(DEFAULT_CONTRAST_MODE)
+            .colorVisionMode(DEFAULT_COLOR_VISION_MODE);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -83,7 +101,11 @@ public class PreferencesResourceIT {
      */
     public static Preferences createUpdatedEntity(EntityManager em) {
         Preferences preferences = new Preferences()
-            .darkMode(UPDATED_DARK_MODE);
+            .darkMode(UPDATED_DARK_MODE)
+            .experienceLevelMode(UPDATED_EXPERIENCE_LEVEL_MODE)
+            .fontMode(UPDATED_FONT_MODE)
+            .contrastMode(UPDATED_CONTRAST_MODE)
+            .colorVisionMode(UPDATED_COLOR_VISION_MODE);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -113,6 +135,10 @@ public class PreferencesResourceIT {
         assertThat(preferencesList).hasSize(databaseSizeBeforeCreate + 1);
         Preferences testPreferences = preferencesList.get(preferencesList.size() - 1);
         assertThat(testPreferences.getDarkMode()).isEqualTo(DEFAULT_DARK_MODE);
+        assertThat(testPreferences.getExperienceLevelMode()).isEqualTo(DEFAULT_EXPERIENCE_LEVEL_MODE);
+        assertThat(testPreferences.getFontMode()).isEqualTo(DEFAULT_FONT_MODE);
+        assertThat(testPreferences.isContrastMode()).isEqualTo(DEFAULT_CONTRAST_MODE);
+        assertThat(testPreferences.isColorVisionMode()).isEqualTo(DEFAULT_COLOR_VISION_MODE);
 
         // Validate the id for MapsId, the ids must be same
         assertThat(testPreferences.getId()).isEqualTo(testPreferences.getUser().getId());
@@ -187,7 +213,11 @@ public class PreferencesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(preferences.getId().intValue())))
-            .andExpect(jsonPath("$.[*].darkMode").value(hasItem(DEFAULT_DARK_MODE.toString())));
+            .andExpect(jsonPath("$.[*].darkMode").value(hasItem(DEFAULT_DARK_MODE.toString())))
+            .andExpect(jsonPath("$.[*].experienceLevelMode").value(hasItem(DEFAULT_EXPERIENCE_LEVEL_MODE.toString())))
+            .andExpect(jsonPath("$.[*].fontMode").value(hasItem(DEFAULT_FONT_MODE.toString())))
+            .andExpect(jsonPath("$.[*].contrastMode").value(hasItem(DEFAULT_CONTRAST_MODE.booleanValue())))
+            .andExpect(jsonPath("$.[*].colorVisionMode").value(hasItem(DEFAULT_COLOR_VISION_MODE.booleanValue())));
     }
     
     @Test
@@ -201,7 +231,11 @@ public class PreferencesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(preferences.getId().intValue()))
-            .andExpect(jsonPath("$.darkMode").value(DEFAULT_DARK_MODE.toString()));
+            .andExpect(jsonPath("$.darkMode").value(DEFAULT_DARK_MODE.toString()))
+            .andExpect(jsonPath("$.experienceLevelMode").value(DEFAULT_EXPERIENCE_LEVEL_MODE.toString()))
+            .andExpect(jsonPath("$.fontMode").value(DEFAULT_FONT_MODE.toString()))
+            .andExpect(jsonPath("$.contrastMode").value(DEFAULT_CONTRAST_MODE.booleanValue()))
+            .andExpect(jsonPath("$.colorVisionMode").value(DEFAULT_COLOR_VISION_MODE.booleanValue()));
     }
 
 
@@ -278,6 +312,214 @@ public class PreferencesResourceIT {
 
     @Test
     @Transactional
+    public void getAllPreferencesByExperienceLevelModeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where experienceLevelMode equals to DEFAULT_EXPERIENCE_LEVEL_MODE
+        defaultPreferencesShouldBeFound("experienceLevelMode.equals=" + DEFAULT_EXPERIENCE_LEVEL_MODE);
+
+        // Get all the preferencesList where experienceLevelMode equals to UPDATED_EXPERIENCE_LEVEL_MODE
+        defaultPreferencesShouldNotBeFound("experienceLevelMode.equals=" + UPDATED_EXPERIENCE_LEVEL_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByExperienceLevelModeIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where experienceLevelMode not equals to DEFAULT_EXPERIENCE_LEVEL_MODE
+        defaultPreferencesShouldNotBeFound("experienceLevelMode.notEquals=" + DEFAULT_EXPERIENCE_LEVEL_MODE);
+
+        // Get all the preferencesList where experienceLevelMode not equals to UPDATED_EXPERIENCE_LEVEL_MODE
+        defaultPreferencesShouldBeFound("experienceLevelMode.notEquals=" + UPDATED_EXPERIENCE_LEVEL_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByExperienceLevelModeIsInShouldWork() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where experienceLevelMode in DEFAULT_EXPERIENCE_LEVEL_MODE or UPDATED_EXPERIENCE_LEVEL_MODE
+        defaultPreferencesShouldBeFound("experienceLevelMode.in=" + DEFAULT_EXPERIENCE_LEVEL_MODE + "," + UPDATED_EXPERIENCE_LEVEL_MODE);
+
+        // Get all the preferencesList where experienceLevelMode equals to UPDATED_EXPERIENCE_LEVEL_MODE
+        defaultPreferencesShouldNotBeFound("experienceLevelMode.in=" + UPDATED_EXPERIENCE_LEVEL_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByExperienceLevelModeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where experienceLevelMode is not null
+        defaultPreferencesShouldBeFound("experienceLevelMode.specified=true");
+
+        // Get all the preferencesList where experienceLevelMode is null
+        defaultPreferencesShouldNotBeFound("experienceLevelMode.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByFontModeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where fontMode equals to DEFAULT_FONT_MODE
+        defaultPreferencesShouldBeFound("fontMode.equals=" + DEFAULT_FONT_MODE);
+
+        // Get all the preferencesList where fontMode equals to UPDATED_FONT_MODE
+        defaultPreferencesShouldNotBeFound("fontMode.equals=" + UPDATED_FONT_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByFontModeIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where fontMode not equals to DEFAULT_FONT_MODE
+        defaultPreferencesShouldNotBeFound("fontMode.notEquals=" + DEFAULT_FONT_MODE);
+
+        // Get all the preferencesList where fontMode not equals to UPDATED_FONT_MODE
+        defaultPreferencesShouldBeFound("fontMode.notEquals=" + UPDATED_FONT_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByFontModeIsInShouldWork() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where fontMode in DEFAULT_FONT_MODE or UPDATED_FONT_MODE
+        defaultPreferencesShouldBeFound("fontMode.in=" + DEFAULT_FONT_MODE + "," + UPDATED_FONT_MODE);
+
+        // Get all the preferencesList where fontMode equals to UPDATED_FONT_MODE
+        defaultPreferencesShouldNotBeFound("fontMode.in=" + UPDATED_FONT_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByFontModeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where fontMode is not null
+        defaultPreferencesShouldBeFound("fontMode.specified=true");
+
+        // Get all the preferencesList where fontMode is null
+        defaultPreferencesShouldNotBeFound("fontMode.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByContrastModeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where contrastMode equals to DEFAULT_CONTRAST_MODE
+        defaultPreferencesShouldBeFound("contrastMode.equals=" + DEFAULT_CONTRAST_MODE);
+
+        // Get all the preferencesList where contrastMode equals to UPDATED_CONTRAST_MODE
+        defaultPreferencesShouldNotBeFound("contrastMode.equals=" + UPDATED_CONTRAST_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByContrastModeIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where contrastMode not equals to DEFAULT_CONTRAST_MODE
+        defaultPreferencesShouldNotBeFound("contrastMode.notEquals=" + DEFAULT_CONTRAST_MODE);
+
+        // Get all the preferencesList where contrastMode not equals to UPDATED_CONTRAST_MODE
+        defaultPreferencesShouldBeFound("contrastMode.notEquals=" + UPDATED_CONTRAST_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByContrastModeIsInShouldWork() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where contrastMode in DEFAULT_CONTRAST_MODE or UPDATED_CONTRAST_MODE
+        defaultPreferencesShouldBeFound("contrastMode.in=" + DEFAULT_CONTRAST_MODE + "," + UPDATED_CONTRAST_MODE);
+
+        // Get all the preferencesList where contrastMode equals to UPDATED_CONTRAST_MODE
+        defaultPreferencesShouldNotBeFound("contrastMode.in=" + UPDATED_CONTRAST_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByContrastModeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where contrastMode is not null
+        defaultPreferencesShouldBeFound("contrastMode.specified=true");
+
+        // Get all the preferencesList where contrastMode is null
+        defaultPreferencesShouldNotBeFound("contrastMode.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByColorVisionModeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where colorVisionMode equals to DEFAULT_COLOR_VISION_MODE
+        defaultPreferencesShouldBeFound("colorVisionMode.equals=" + DEFAULT_COLOR_VISION_MODE);
+
+        // Get all the preferencesList where colorVisionMode equals to UPDATED_COLOR_VISION_MODE
+        defaultPreferencesShouldNotBeFound("colorVisionMode.equals=" + UPDATED_COLOR_VISION_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByColorVisionModeIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where colorVisionMode not equals to DEFAULT_COLOR_VISION_MODE
+        defaultPreferencesShouldNotBeFound("colorVisionMode.notEquals=" + DEFAULT_COLOR_VISION_MODE);
+
+        // Get all the preferencesList where colorVisionMode not equals to UPDATED_COLOR_VISION_MODE
+        defaultPreferencesShouldBeFound("colorVisionMode.notEquals=" + UPDATED_COLOR_VISION_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByColorVisionModeIsInShouldWork() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where colorVisionMode in DEFAULT_COLOR_VISION_MODE or UPDATED_COLOR_VISION_MODE
+        defaultPreferencesShouldBeFound("colorVisionMode.in=" + DEFAULT_COLOR_VISION_MODE + "," + UPDATED_COLOR_VISION_MODE);
+
+        // Get all the preferencesList where colorVisionMode equals to UPDATED_COLOR_VISION_MODE
+        defaultPreferencesShouldNotBeFound("colorVisionMode.in=" + UPDATED_COLOR_VISION_MODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPreferencesByColorVisionModeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        preferencesRepository.saveAndFlush(preferences);
+
+        // Get all the preferencesList where colorVisionMode is not null
+        defaultPreferencesShouldBeFound("colorVisionMode.specified=true");
+
+        // Get all the preferencesList where colorVisionMode is null
+        defaultPreferencesShouldNotBeFound("colorVisionMode.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllPreferencesByUserIsEqualToSomething() throws Exception {
         // Get already existing entity
         User user = preferences.getUser();
@@ -299,7 +541,11 @@ public class PreferencesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(preferences.getId().intValue())))
-            .andExpect(jsonPath("$.[*].darkMode").value(hasItem(DEFAULT_DARK_MODE.toString())));
+            .andExpect(jsonPath("$.[*].darkMode").value(hasItem(DEFAULT_DARK_MODE.toString())))
+            .andExpect(jsonPath("$.[*].experienceLevelMode").value(hasItem(DEFAULT_EXPERIENCE_LEVEL_MODE.toString())))
+            .andExpect(jsonPath("$.[*].fontMode").value(hasItem(DEFAULT_FONT_MODE.toString())))
+            .andExpect(jsonPath("$.[*].contrastMode").value(hasItem(DEFAULT_CONTRAST_MODE.booleanValue())))
+            .andExpect(jsonPath("$.[*].colorVisionMode").value(hasItem(DEFAULT_COLOR_VISION_MODE.booleanValue())));
 
         // Check, that the count call also returns 1
         restPreferencesMockMvc.perform(get("/api/preferences/count?sort=id,desc&" + filter))
@@ -346,7 +592,11 @@ public class PreferencesResourceIT {
         // Disconnect from session so that the updates on updatedPreferences are not directly saved in db
         em.detach(updatedPreferences);
         updatedPreferences
-            .darkMode(UPDATED_DARK_MODE);
+            .darkMode(UPDATED_DARK_MODE)
+            .experienceLevelMode(UPDATED_EXPERIENCE_LEVEL_MODE)
+            .fontMode(UPDATED_FONT_MODE)
+            .contrastMode(UPDATED_CONTRAST_MODE)
+            .colorVisionMode(UPDATED_COLOR_VISION_MODE);
         PreferencesDTO preferencesDTO = preferencesMapper.toDto(updatedPreferences);
 
         restPreferencesMockMvc.perform(put("/api/preferences")
@@ -359,6 +609,10 @@ public class PreferencesResourceIT {
         assertThat(preferencesList).hasSize(databaseSizeBeforeUpdate);
         Preferences testPreferences = preferencesList.get(preferencesList.size() - 1);
         assertThat(testPreferences.getDarkMode()).isEqualTo(UPDATED_DARK_MODE);
+        assertThat(testPreferences.getExperienceLevelMode()).isEqualTo(UPDATED_EXPERIENCE_LEVEL_MODE);
+        assertThat(testPreferences.getFontMode()).isEqualTo(UPDATED_FONT_MODE);
+        assertThat(testPreferences.isContrastMode()).isEqualTo(UPDATED_CONTRAST_MODE);
+        assertThat(testPreferences.isColorVisionMode()).isEqualTo(UPDATED_COLOR_VISION_MODE);
     }
 
     @Test

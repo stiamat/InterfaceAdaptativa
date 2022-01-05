@@ -36,12 +36,22 @@ public class PostDTO implements Serializable {
 
     private Long comentarioDeId;
 
+    private String userComentario;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserComentario() {
+        return userComentario;
+    }
+
+    public void setUserComentario(String userComentario) {
+        this.userComentario = userComentario;
     }
 
     public String getBody() {

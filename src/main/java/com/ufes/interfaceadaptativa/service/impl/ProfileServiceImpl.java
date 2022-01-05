@@ -1,5 +1,7 @@
 package com.ufes.interfaceadaptativa.service.impl;
 
+import com.ufes.interfaceadaptativa.domain.Post;
+import com.ufes.interfaceadaptativa.domain.User;
 import com.ufes.interfaceadaptativa.service.ProfileService;
 import com.ufes.interfaceadaptativa.domain.Profile;
 import com.ufes.interfaceadaptativa.repository.ProfileRepository;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Profile}.
@@ -72,5 +76,21 @@ public class ProfileServiceImpl implements ProfileService {
     public void delete(Long id) {
         log.debug("Request to delete Profile : {}", id);
         profileRepository.deleteById(id);
+    }
+
+    @Override
+    public ProfileDTO friends(long profileId, long userId) {
+        Profile profile = profileRepository.findById(profileId).get();
+        User user = userRepository.findById(userId).get();
+        Set<User> friends = profile.getListFriends();
+
+        if (friends.contains(user)) {
+            friends.remove(user);
+        } else {
+            friends.add(user);
+        }
+
+        profile.setListFriends(friends);
+        return profileMapper.toDto(profile);
     }
 }

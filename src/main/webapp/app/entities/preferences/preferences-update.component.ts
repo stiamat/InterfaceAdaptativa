@@ -21,6 +21,10 @@ export class PreferencesUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     darkMode: [],
+    experienceLevelMode: [],
+    fontMode: [],
+    contrastMode: [],
+    colorVisionMode: [],
     userId: [],
   });
 
@@ -47,6 +51,10 @@ export class PreferencesUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: preferences.id,
       darkMode: preferences.darkMode,
+      experienceLevelMode: preferences.experienceLevelMode,
+      fontMode: preferences.fontMode,
+      contrastMode: preferences.contrastMode,
+      colorVisionMode: preferences.colorVisionMode,
       userId: preferences.userId,
     });
   }
@@ -70,6 +78,10 @@ export class PreferencesUpdateComponent implements OnInit {
       ...new Preferences(),
       id: this.editForm.get(['id'])!.value,
       darkMode: this.editForm.get(['darkMode'])!.value,
+      experienceLevelMode: this.editForm.get(['experienceLevelMode'])!.value,
+      fontMode: this.editForm.get(['fontMode'])!.value,
+      contrastMode: this.editForm.get(['contrastMode'])!.value,
+      colorVisionMode: this.editForm.get(['colorVisionMode'])!.value,
       userId: this.editForm.get(['userId'])!.value,
     };
   }
