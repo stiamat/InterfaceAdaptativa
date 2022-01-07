@@ -1,104 +1,250 @@
-<ng-template #modal>
-    <mat-dialog-content>
-        <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="tabSelectedSearch">
-            <mat-tab disabled>
-                <div id='inicio'>
-                    <h4>Bem Vindo!</h4>
-                    <p>
-                        Este site é uma amostra de como podemos utilizar Ontologias para criar uma interface adaptativa.
-                    </p>
-                    <p>Mas para isso precisamos te conhecer um pouco mais.</p>
-                    <p> Clique em CONTINUAR para responder algumas
-                        perguntas.
-                        Caso não queira utilizar deste recurso basta apenas CANCELAR.</p>
-                </div>
-            </mat-tab>
-            <mat-tab disabled>
-                <h4>Pesquisa</h4>
-                <form>
+<ng-template #modal let-data>
+    <div class="search_modal">
+        <mat-dialog-content>
+            <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="tabSelectedSearch">
+                <mat-tab disabled>
+                    <div class="logo search_logo">
+                        <img src="../../../content/images/Logo.svg" alt="logo">
+                        <h4>Bem Vindo!</h4>
+                    </div>
+                    <div id='inicio'>
 
-                    <div class="form-group">
-                        <label for="dataNascimento">Data de Nascimento</label>
-                        <input type="date" id="dataNascimento" min="1950-01-01">
+                        <p>
+                            Este trabalho tem como objetivo geral desenvolver um sistema de interface adaptativa baseado
+                            em ontologias de HCI-ON. O site deve se adaptar automaticamente para o seu usuário, apoiando
+                            suas necessidades de uso de acordo com suas características. Em síntese, o sistema deve
+                            alterar sua interface para melhorar sua usabilidade de acordo com informações fornecidas por
+                            você.
+                        </p>
+                        <p> Clique em CONTINUAR para responder algumas
+                            perguntas.
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <label for="dataNascimento">Você possui alguma dificuldade ao acessar sites?</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio1">Sim</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio2">Não</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="dataNascimento">Este tamanho de texto é confortavel para você?</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio1">Sim</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio2">Não</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="dataNascimento">Você é dautonico?</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio1">Sim</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio2">Não</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="dataNascimento">Você é dautonico?</label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio1">Sim</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio2">Não</label>
-                        </div>
-                    </div>
+                </mat-tab>
+                <mat-tab disabled>
+                    <h4>Acordo de Estudo e Confidencialidade</h4>
+                    <ul>
+                        <li>Suas respostas são confidenciais e seus dados não serão compartilhados com nenhuma outra
+                            entidade.</li>
+                        <li>Os dados que seram armazenados seram utilizados apenas para melhorar seu uso dentro deste
+                            site.</li>
+                        <li>O intuito de deste site é providenciar o melhor ambiente possivel para todo tipo de pessoa.
+                        </li>
+                        <li>Utilizamos Ontologias para mapear um perfil e customizamos a interface para o usuário.</li>
+                    </ul>
 
-                </form>
-            </mat-tab>
-            <mat-tab disabled>
-                <h4>Acordo de Confidencialidade</h4>
-                <p>Suas respostas são confidenciais e seus dados não serão compartilhados com nenhuma outra entidade.
-                    Iremos apenas consultar suas para melhorar seu uso dentro deste site.</p>
-                <p>O intuito de deste site é providenciar o melhor ambiente possivel para todo tipo de pessoa.</p>
-                <p>Utilizamos Ontologias para mapear um perfil e customizamos a interface para o usuário</p>
-                <p>Mas se você não estiver de acordo com nosso estudo, basta apenas reijeitar que iremos esquecer todas
-                    as suas resposta.</p>
-            </mat-tab>
-        </mat-tab-group>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-        <div *ngIf="tabSelectedSearch == 0">
-            <button class="buttonSearch" (click)="selectedNextTabSearch()">Continuar <span><i
-                        class="bi bi-arrow-right"></i></span>
-            </button>
-        </div>
-        <div *ngIf="tabSelectedSearch != 0 && tabSelectedSearch != (totalTabSearch-1)">
-            <button class="buttonSearch" (click)="selectedPreviesTabSearch()"><span><i
-                        class="bi bi-arrow-left"></i></span>
-                Voltar</button>
-            <button class="buttonSearch" (click)="selectedNextTabSearch()">Continuar <span><i
-                        class="bi bi-arrow-right"></i></span>
-            </button>
-        </div>
-        <div *ngIf="tabSelectedSearch ==  (totalTabSearch-1)">
-            <button class="buttonSearch" [mat-dialog-close]="data"><span><i class="bi bi-x-lg"></i></span>
-                Rejeitar</button>
-            <button class="buttonSearch" [mat-dialog-close]="data" (click)="save()"><span><i
-                        class="bi bi-check-lg"></i></span>
-                Finalizar</button>
-        </div>
-    </mat-dialog-actions>
+                    <p>Caso você não esteja de acordo com nosso estudo, basta apenas reijeitar está pesquisa.</p>
+                </mat-tab>
+                <mat-tab disabled>
+                    <h4>Pesquisa</h4>
+                    <form class="row" style="width: 100%">
+
+                        <div class="form-group col-md-6">
+                            <p>Selecione sua data de nascimento:</p>
+                            <!-- <input type="date" id="dataNascimento" min="1950-01-01"> -->
+                            <mat-form-field appearance="fill">
+                                <mat-label>Data de Nascimento</mat-label>
+                                <input matInput [matDatepicker]="picker" min="1950-01-01"
+                                    [(ngModel)]="data.dataNascimento" [ngModelOptions]="{standalone: true}"
+                                    (dateInput)="onDate($event.value)">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker>
+                                </mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p>Selecione sua Língua Principal:</p>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Língua Principal</mat-label>
+                                <mat-select (selectionChange)="onLanguage($event)">
+                                    <mat-option *ngFor="let lang of language" [value]="lang.value">
+                                        {{lang.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p>Selecione seu Gênero:</p>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Gênero</mat-label>
+                                <mat-select (selectionChange)="onGender($event)">
+                                    <mat-option *ngFor="let gen of genero" [value]="gen">
+                                        {{gen}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p>Selecione sua Experiência em Redes Sociais:</p>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Nível de Experiência</mat-label>
+                                <mat-select (selectionChange)="onExp($event)">
+                                    <mat-option *ngFor="let exp of experiencia" [value]="exp">
+                                        {{exp}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </form>
+                </mat-tab>
+
+                <mat-tab disabled>
+                    <h4>Pesquisa</h4>
+                    <form class="row" style="width: 100%">
+                        <div class="form-group col-md-6">
+                            <label for="dificuldade">Você possui alguma dificuldade ao acessar certos tipos de
+                                sites?</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="dificuldade1" name="dificuldade" class="custom-control-input">
+                                <label class="custom-control-label" for="dificuldade1">Sim</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="dificuldade2" name="dificuldade" class="custom-control-input">
+                                <label class="custom-control-label" for="dificuldade2">Não</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="auditory">Você possui algum problema auditivo?</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="auditory1" name="auditory" class="custom-control-input"
+                                    [(ngModel)]="data.profile.auditoryDisabilities" [value]='true'>
+                                <label class="custom-control-label" for="auditory1">Sim</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="auditory2" name="auditory" class="custom-control-input"
+                                    [(ngModel)]="data.profile.auditoryDisabilities" [value]='false'>
+                                <label class="custom-control-label" for="auditory2">Não</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="dautonismo">Você possui algum grau de Dautonismo?</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="dautonismo1" name="dautonismo" class="custom-control-input"
+                                    [(ngModel)]="data.profile.colorVision" [value]='true'>
+                                <label class="custom-control-label" for="dautonismo1">Sim</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="dautonismo2" name="dautonismo" class="custom-control-input"
+                                    [(ngModel)]="data.profile.colorVision" [value]='false'>
+                                <label class="custom-control-label" for="dautonismo2">Não</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="cegueira">Você possui algum grau de Cegueira?</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="cegueira1" name="cegueira" class="custom-control-input"
+                                    [(ngModel)]="data.profile.blindness" [value]='true'>
+                                <label class="custom-control-label" for="cegueira1">Sim</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="cegueira2" name="cegueira" class="custom-control-input"
+                                    [(ngModel)]="data.profile.blindness" [value]='false'>
+                                <label class="custom-control-label" for="cegueira2">Não</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="contrastSensitivity">Você possui algum grau de Déficit Visual?</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="contrastSensitivity1" name="contrastSensitivity"
+                                    class="custom-control-input" [(ngModel)]="data.profile.contrastSensitivity"
+                                    [value]='true'>
+                                <label class="custom-control-label" for="contrastSensitivity1">Sim</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="contrastSensitivity2" name="contrastSensitivity"
+                                    class="custom-control-input" [(ngModel)]="data.profile.contrastSensitivity"
+                                    [value]='false'>
+                                <label class="custom-control-label" for="contrastSensitivity2">Não</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="fildOfVision">Você possui algum problema com o Campo de Visão?</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="fildOfVision1" name="fildOfVision" class="custom-control-input"
+                                    [(ngModel)]="data.profile.fildOfVision" [value]='true'>
+                                <label class="custom-control-label" for="fildOfVision1">Sim</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="fildOfVision2" name="fildOfVision" class="custom-control-input"
+                                    [(ngModel)]="data.profile.fildOfVision" [value]='false'>
+                                <label class="custom-control-label" for="fildOfVision2">Não</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="lightSensitivity">Você possui sensibilidade a Luminosidade?</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="lightSensitivity1" name="lightSensitivity"
+                                    class="custom-control-input" [(ngModel)]="data.profile.lightSensitivity"
+                                    [value]='true'>
+                                <label class="custom-control-label" for="lightSensitivity1">Sim</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="lightSensitivity2" name="lightSensitivity"
+                                    class="custom-control-input" [(ngModel)]="data.profile.fildOfVision"
+                                    [value]='false'>
+                                <label class="custom-control-label" for="lightSensitivity2">Não</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="visualAcuity">Você possui algum grau de Miopia?</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="visualAcuity1" name="visualAcuity" class="custom-control-input"
+                                    [(ngModel)]="data.profile.visualAcuity" [value]='true'>
+                                <label class="custom-control-label" for="visualAcuity1">Sim</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="visualAcuity2" name="visualAcuity" class="custom-control-input"
+                                    [(ngModel)]="data.profile.visualAcuity" [value]='false'>
+                                <label class="custom-control-label" for="visualAcuity2">Não</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="texto">Este tamanho de texto é confortável para você?</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="texto1" name="texto" class="custom-control-input">
+                                <label class="custom-control-label" for="texto1">Sim</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="texto2" name="texto" class="custom-control-input">
+                                <label class="custom-control-label" for="texto2">Não</label>
+                            </div>
+                        </div>
+
+                    </form>
+                </mat-tab>
+
+            </mat-tab-group>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <div *ngIf="tabSelectedSearch == 0">
+                <button class="buttonSearch" (click)="selectedNextTabSearch()">Continuar <span><i
+                            class="bi bi-arrow-right"></i></span>
+                </button>
+            </div>
+            <div *ngIf="tabSelectedSearch != 0 && tabSelectedSearch != (totalTabSearch-1)">
+                <button class="buttonSearch" (click)="selectedPreviesTabSearch()"><span><i
+                            class="bi bi-arrow-left"></i></span>
+                    Voltar</button>
+                <button class="buttonSearch" (click)="selectedNextTabSearch()">Continuar <span><i
+                            class="bi bi-arrow-right"></i></span>
+                </button>
+            </div>
+            <div *ngIf="tabSelectedSearch ==  (totalTabSearch-1)">
+                <button class="buttonSearch" [mat-dialog-close]="data"><span><i class="bi bi-x-lg"></i></span>
+                    Rejeitar</button>
+                <button class="buttonSearch" [mat-dialog-close]="data"><span><i class="bi bi-check-lg"></i></span>
+                    Finalizar</button>
+            </div>
+        </mat-dialog-actions>
+    </div>
+
 </ng-template>

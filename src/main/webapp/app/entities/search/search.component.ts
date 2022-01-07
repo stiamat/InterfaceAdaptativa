@@ -12,6 +12,11 @@ import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
 import { ProfileService } from '../profile/profile.service';
 
+interface Lang {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'jhi-search',
   templateUrl: './search.component.html',
@@ -22,7 +27,23 @@ export class SearchComponent implements OnInit, AfterViewInit {
   totalTabSearch: number;
   resultSearch: any;
   account: any;
+  dataNascimento: Date;
+
   profile: IProfile;
+  language: Lang[] = [
+    { value: 'pt-br', viewValue: 'Português - Brasil' },
+    { value: 'pt-pt', viewValue: 'Português - Portugal' },
+    { value: 'en', viewValue: 'Inglês' },
+    { value: 'es', viewValue: 'Espanhol' },
+    { value: 'default', viewValue: 'Outra Língua' },
+  ];
+  genero: string[] = ['Feminino', 'Masculino', 'Neutro', 'Outro'];
+  experiencia: string[] = [
+    'Experiência Básica',
+    'Experiência Média',
+    'Experiência Alta',
+    'Sem Experiência',
+  ];
   @ViewChild('modal') modal: TemplateRef<any>;
 
   constructor(
@@ -32,7 +53,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.totalTabSearch = 3;
+    this.totalTabSearch = 4;
     this.tabSelectedSearch = 0;
   }
 
@@ -41,7 +62,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       this.account = account;
       this.profileService.find(this.account.id).subscribe(profile => {
         this.profile = profile.body;
-        if (this.profile.status === StatusProfile.NOVO) {
+        if (this.profile.status === StatusProfile.ATUAL) {
           this.openModal();
         }
       });
@@ -51,12 +72,18 @@ export class SearchComponent implements OnInit, AfterViewInit {
   openModal(): void {
     const modal = this.dialog.open(this.modal, {
       width: '80%',
+      data: { profile: this.profile, dataNascimento: this.dataNascimento },
       disableClose: true,
       closeOnNavigation: true,
     });
 
     modal.afterClosed().subscribe(result => {
       console.warn(result);
+      if (result) {
+        this.dataNascimento = result.dataNascimento;
+        this.profile = result.profile;
+        this.save();
+      }
     });
   }
 
@@ -70,8 +97,28 @@ export class SearchComponent implements OnInit, AfterViewInit {
   save() {
     this.profile.status = StatusProfile.ATUAL;
     this.profile.ultimaModificacao = moment(moment.now());
+
+    this.profile.age =
+      this.profile.ultimaModificacao.year() - this.dataNascimento.getFullYear();
+
     this.profileService.update(this.profile).subscribe(s => {
       console.warn(s);
     });
+  }
+
+  onDate(event: any): void {
+    this.dataNascimento = event;
+  }
+
+  onLanguage(event: any): void {
+    this.profile.language = event.value;
+  }
+
+  onGender(event: any): void {
+    this.profile.gender = event.value;
+  }
+
+  onExp(event: any): void {
+    this.profile.experienceLevel = event.value;
   }
 }

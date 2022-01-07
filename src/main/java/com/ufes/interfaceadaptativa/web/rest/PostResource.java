@@ -158,6 +158,12 @@ public class PostResource {
         return ResponseEntity.ok().body(postService.curti(postId, userId));
     }
 
+    @RequestMapping(value="/posts/owl/{userId}", method = RequestMethod.GET)
+    public ResponseEntity curti(@PathVariable Long userId){
+        postService.owl(userId);
+        return ResponseEntity.ok().body("Processando");
+    }
+
     @RequestMapping(value="/posts/answer/{postId}", method = RequestMethod.GET)
     public ResponseEntity<List<PostDTO>> respostas(@PathVariable Long postId){
         Optional<List<Post>> repostas = postRepository.findAnswersPost(postId);

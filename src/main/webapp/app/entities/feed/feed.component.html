@@ -20,7 +20,8 @@
                 <div class="item perfil" (click)="itens('perfil')"><i class="bi bi-person icon-perfil"></i> <span
                         class="text-icon">Perfil</span>
                 </div>
-                <div class="item configuracoes" (click)="itens('config')"><i class="bi bi-gear icon-configuracoes"></i>
+                <div class="item configuracoes" (click)="itens('config')" disabled><i
+                        class="bi bi-gear icon-configuracoes"></i>
                     <span class="text-icon">Config.</span>
                 </div>
                 <div class="item sair" (click)="logout()"><i class="bi bi-door-open icon-sair"></i> <span
@@ -87,7 +88,7 @@
 
                             <div *ngIf="!post.userImagem" class="img"></div>
                         </div>
-                        <div class="nick" (click)="perfilPost(post.userLogin)">{{post.userLogin}}</div>
+                        <div class="nick">{{post.userLogin}}</div>
                         <div class="date">{{timePublicacao(post.date)}}</div>
                     </div>
                     <div class="grid body">
@@ -110,6 +111,10 @@
                             </button>
                             <button *ngIf="!post.comentarioDeId" mat-icon-button color="primary"
                                 aria-label="Comentar esta publicação" (click)="comentar(post.id)">
+                                <i class="bi bi-chat-square-text"></i>
+                            </button>
+                            <button *ngIf="post.comentarioDeId" mat-icon-button color="primary"
+                                aria-label="Comentar esta publicação" (click)="comentar(post.comentarioDeId)">
                                 <i class="bi bi-chat-square-text"></i>
                             </button>
                             <button mat-icon-button color="primary" aria-label="Curti esta publicação"

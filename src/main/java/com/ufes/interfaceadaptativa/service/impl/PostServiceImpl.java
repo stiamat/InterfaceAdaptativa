@@ -52,12 +52,15 @@ public class PostServiceImpl implements PostService {
 
     private final ProfileRepository profileRepository;
 
-    public PostServiceImpl(PostRepository postRepository, PostMapper postMapper, UserRepository userRepository, UserMapper userMapper, ProfileRepository profileRepository) {
+    private final PreferencesServiceImpl preferencesServiceImpl;
+
+    public PostServiceImpl(PostRepository postRepository, PostMapper postMapper, UserRepository userRepository, UserMapper userMapper, ProfileRepository profileRepository, PreferencesServiceImpl preferencesServiceImpl) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.profileRepository = profileRepository;
+        this.preferencesServiceImpl = preferencesServiceImpl;
     }
 
     @Override
@@ -112,8 +115,7 @@ public class PostServiceImpl implements PostService {
         return userMapper.usersToUserDTOs(likes.stream().collect(Collectors.toList()));
     }
 
-
-
+    @Override
     public void owl(long idUser) {
         try {
             // Gerenciador da ontologia - carrega funções e propriedade para podermos trabalhar com as ontologias
@@ -164,29 +166,104 @@ public class PostServiceImpl implements PostService {
     }
 
     public void loadingIndividual(OWLDataFactory factory, IRI ontologyIRI, OWLOntology ontology, OWLOntologyManager manager, long idUser) {
+        Profile profile = profileRepository.findById(idUser).get();
+        preferencesServiceImpl.clearPreferences(idUser);
         OWLIndividual individuo = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#" + idUser));
 
-        // idade
-        OWLDataPropertyExpression has_Age = factory.getOWLDataProperty(IRI.create(ontologyIRI + "#has_Age"));
-        OWLDataPropertyAssertionAxiom axiom = factory.getOWLDataPropertyAssertionAxiom(has_Age, individuo, 55);
-        AddAxiom addAxiom = new AddAxiom(ontology, axiom);
-        manager.applyChange(addAxiom);
+        if(profile.getAge() != null){
+            // idade
+            OWLDataPropertyExpression has_Age = factory.getOWLDataProperty(IRI.create(ontologyIRI + "#has_Age"));
+            OWLDataPropertyAssertionAxiom axiom = factory.getOWLDataPropertyAssertionAxiom(has_Age, individuo, profile.getAge());
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }
 
-        // Basic Experience
-//        OWLObjectPropertyExpression has_Disabilities = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Disabilities"));
-//        OWLIndividual lightVision = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Light_Sensitivy"));
-//        OWLObjectPropertyAssertionAxiom newaxiom = factory.getOWLObjectPropertyAssertionAxiom(has_Disabilities, individuo, lightVision);
-//        addAxiom = new AddAxiom(ontology, newaxiom);
-//        manager.applyChange(addAxiom);
+        if(profile.isAuditoryDisabilities()){
+            // problemas auditivos
+            OWLObjectPropertyExpression has_Disabilities = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Disabilities"));
+            OWLIndividual disabilities = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Auditory_Disabilities"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Disabilities, individuo, disabilities);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }
 
-        // Light Vision
-        OWLObjectPropertyExpression has_Disabilities = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Disabilities"));
-        OWLIndividual lightVision = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Light_Sensitivy"));
-        OWLObjectPropertyAssertionAxiom newaxiom = factory.getOWLObjectPropertyAssertionAxiom(has_Disabilities, individuo, lightVision);
-        addAxiom = new AddAxiom(ontology, newaxiom);
-        manager.applyChange(addAxiom);
+        if(profile.isBlindness()){
+            // cegueira
+            OWLObjectPropertyExpression has_Disabilities = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Disabilities"));
+            OWLIndividual disabilities = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Blindness"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Disabilities, individuo, disabilities);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }
 
-        // necessidades especiais
+        if(profile.isColorVision()){
+            // daltonismo
+            OWLObjectPropertyExpression has_Disabilities = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Disabilities"));
+            OWLIndividual disabilities = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Color_Vision"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Disabilities, individuo, disabilities);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }
+
+        if(profile.isContrastSensitivity()){
+            // sensibilidade ao contraste
+            OWLObjectPropertyExpression has_Disabilities = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Disabilities"));
+            OWLIndividual disabilities = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Contrast_Sensitivity"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Disabilities, individuo, disabilities);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }
+
+        if(profile.isFildOfVision()){
+            // sensibilidade ao contraste
+            OWLObjectPropertyExpression has_Disabilities = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Disabilities"));
+            OWLIndividual disabilities = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Fild_Of_Vision"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Disabilities, individuo, disabilities);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }
+
+        if(profile.isLightSensitivity()){
+            // sensibilidade a luminosidade
+            OWLObjectPropertyExpression has_Disabilities = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Disabilities"));
+            OWLIndividual disabilities = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Light_Sensitivy"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Disabilities, individuo, disabilities);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }
+
+        if(profile.isVisualAcuity()){
+            // miopia
+            OWLObjectPropertyExpression has_Disabilities = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Disabilities"));
+            OWLIndividual disabilities = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Visual_Acuity"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Disabilities, individuo, disabilities);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }
+
+        if(profile.getExperienceLevel().equals("Basic")){
+            // experiencia Basica
+            OWLObjectPropertyExpression has_Experience_Level = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Experience_Level"));
+            OWLIndividual experience_Level = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Basic_Experience"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Experience_Level, individuo, experience_Level);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }else if(profile.getExperienceLevel().equals("Average")){
+            // experiencia Media
+            OWLObjectPropertyExpression has_Experience_Level = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Experience_Level"));
+            OWLIndividual experience_Level = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#Average_Experience"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Experience_Level, individuo, experience_Level);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }else if(profile.getExperienceLevel().equals("High")){
+            // experiencia Alta
+            OWLObjectPropertyExpression has_Experience_Level = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#has_Experience_Level"));
+            OWLIndividual experience_Level = factory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#High_Experience"));
+            OWLObjectPropertyAssertionAxiom axiom = factory.getOWLObjectPropertyAssertionAxiom(has_Experience_Level, individuo, experience_Level);
+            AddAxiom addAxiom = new AddAxiom(ontology, axiom);
+            manager.applyChange(addAxiom);
+        }
+
 
         // salvar individuo na ontologia (não é necessario necessario)
         // manager.saveOntology(ontology);
@@ -200,7 +277,9 @@ public class PostServiceImpl implements PostService {
                 NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
 
                 for (OWLNamedIndividual i : instances.getFlattened()) {
-                    System.out.println(i.getIRI().getShortForm().split("#")[1] + " - " + c.getIRI().getShortForm());
+                    long id = Long.parseLong(i.getIRI().getShortForm().split("#")[1]);
+                    System.out.println( id + " - " + c.getIRI().getShortForm());
+                    preferencesServiceImpl.updatePreferencesByReasoner("Basic_Mode",id);
                 }
             }
 
@@ -209,7 +288,9 @@ public class PostServiceImpl implements PostService {
                 NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
 
                 for (OWLNamedIndividual i : instances.getFlattened()) {
-                    System.out.println(i.getIRI().getShortForm().split("#")[1] + " - " + c.getIRI().getShortForm());
+                    long id = Long.parseLong(i.getIRI().getShortForm().split("#")[1]);
+                    System.out.println( id + " - " + c.getIRI().getShortForm());
+                    preferencesServiceImpl.updatePreferencesByReasoner("Average_Mode",id);
                 }
             }
 
@@ -218,7 +299,9 @@ public class PostServiceImpl implements PostService {
                 NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
 
                 for (OWLNamedIndividual i : instances.getFlattened()) {
-                    System.out.println(i.getIRI().getShortForm().split("#")[1] + " - " + c.getIRI().getShortForm());
+                    long id = Long.parseLong(i.getIRI().getShortForm().split("#")[1]);
+                    System.out.println( id + " - " + c.getIRI().getShortForm());
+                    preferencesServiceImpl.updatePreferencesByReasoner("High_Mode",id);
                 }
             }
 
@@ -227,7 +310,9 @@ public class PostServiceImpl implements PostService {
                 NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
 
                 for (OWLNamedIndividual i : instances.getFlattened()) {
-                    System.out.println(i.getIRI().getShortForm().split("#")[1] + " - " + c.getIRI().getShortForm());
+                    long id = Long.parseLong(i.getIRI().getShortForm().split("#")[1]);
+                    System.out.println( id + " - " + c.getIRI().getShortForm());
+                    preferencesServiceImpl.updatePreferencesByReasoner("Font_Decrease",id);
                 }
             }
 
@@ -236,7 +321,9 @@ public class PostServiceImpl implements PostService {
                 NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
 
                 for (OWLNamedIndividual i : instances.getFlattened()) {
-                    System.out.println(i.getIRI().getShortForm().split("#")[1] + " - " + c.getIRI().getShortForm());
+                    long id = Long.parseLong(i.getIRI().getShortForm().split("#")[1]);
+                    System.out.println( id + " - " + c.getIRI().getShortForm());
+                    preferencesServiceImpl.updatePreferencesByReasoner("Font_Increase",id);
                 }
             }
 
@@ -245,7 +332,9 @@ public class PostServiceImpl implements PostService {
                 NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
 
                 for (OWLNamedIndividual i : instances.getFlattened()) {
-                    System.out.println(i.getIRI().getShortForm().split("#")[1] + " - " + c.getIRI().getShortForm());
+                    long id = Long.parseLong(i.getIRI().getShortForm().split("#")[1]);
+                    System.out.println( id + " - " + c.getIRI().getShortForm());
+                    preferencesServiceImpl.updatePreferencesByReasoner("Dark_Mode",id);
                 }
             }
         }

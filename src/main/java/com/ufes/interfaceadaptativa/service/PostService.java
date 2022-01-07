@@ -54,4 +54,6 @@ public interface PostService {
     void delete(Long id);
 
     List<UserDTO> curti(long postId, long userId);
+
+    void owl(long idUser);
 }

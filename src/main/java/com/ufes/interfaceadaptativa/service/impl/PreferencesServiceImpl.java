@@ -1,5 +1,8 @@
 package com.ufes.interfaceadaptativa.service.impl;
 
+import com.ufes.interfaceadaptativa.domain.enumeration.ExperienceLevelMode;
+import com.ufes.interfaceadaptativa.domain.enumeration.FontMode;
+import com.ufes.interfaceadaptativa.domain.enumeration.StatusPreferences;
 import com.ufes.interfaceadaptativa.service.PreferencesService;
 import com.ufes.interfaceadaptativa.domain.Preferences;
 import com.ufes.interfaceadaptativa.repository.PreferencesRepository;
@@ -68,5 +71,53 @@ public class PreferencesServiceImpl implements PreferencesService {
     public void delete(Long id) {
         log.debug("Request to delete Preferences : {}", id);
         preferencesRepository.deleteById(id);
+    }
+
+    public void updatePreferencesByReasoner(String preference, long id){
+        Preferences pref = preferencesRepository.findById(id).get();
+
+        switch (preference){
+            case "Dark_Mode":
+                pref.setDarkMode(StatusPreferences.TRUE);
+                break;
+            case "Contrast_Mode":
+                pref.setContrastMode(true);
+                break;
+            case "Font_Decrease":
+                pref.setFontMode(FontMode.DECREASE);
+                break;
+            case "Font_Increase":
+                pref.setFontMode(FontMode.INCREASE);
+                break;
+            case "Color_Vision_Mode":
+                pref.setColorVisionMode(true);
+                break;
+            case "Basic_Mode":
+                pref.setExperienceLevelMode(ExperienceLevelMode.BASICMODE);
+                break;
+            case "Average_Mode":
+                pref.setExperienceLevelMode(ExperienceLevelMode.AVERAGEMODE);
+                break;
+            case "High_Mode":
+                pref.setExperienceLevelMode(ExperienceLevelMode.HIGHMODE);
+                break;
+            default:
+                break;
+        }
+        pref = preferencesRepository.save(pref);
+        return;
+    }
+
+    public void clearPreferences(long id){
+        Preferences pref = preferencesRepository.findById(id).get();
+
+        pref.setContrastMode(false);
+        pref.setDarkMode(StatusPreferences.AUTO);
+        pref.setFontMode(FontMode.NORMAL);
+        pref.setColorVisionMode(false);
+        pref.setExperienceLevelMode(ExperienceLevelMode.BASICMODE);
+
+        pref = preferencesRepository.save(pref);
+        return;
     }
 }
