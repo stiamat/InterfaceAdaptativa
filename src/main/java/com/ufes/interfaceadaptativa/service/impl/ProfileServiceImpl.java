@@ -2,6 +2,7 @@ package com.ufes.interfaceadaptativa.service.impl;
 
 import com.ufes.interfaceadaptativa.domain.Post;
 import com.ufes.interfaceadaptativa.domain.User;
+import com.ufes.interfaceadaptativa.service.PostService;
 import com.ufes.interfaceadaptativa.service.ProfileService;
 import com.ufes.interfaceadaptativa.domain.Profile;
 import com.ufes.interfaceadaptativa.repository.ProfileRepository;
@@ -35,10 +36,13 @@ public class ProfileServiceImpl implements ProfileService {
 
     private final UserRepository userRepository;
 
-    public ProfileServiceImpl(ProfileRepository profileRepository, ProfileMapper profileMapper, UserRepository userRepository) {
+    private final PostService postService;
+
+    public ProfileServiceImpl(ProfileRepository profileRepository, ProfileMapper profileMapper, UserRepository userRepository, PostService postService) {
         this.profileRepository = profileRepository;
         this.profileMapper = profileMapper;
         this.userRepository = userRepository;
+        this.postService = postService;
     }
 
     @Override
@@ -48,6 +52,7 @@ public class ProfileServiceImpl implements ProfileService {
         Long userId = profileDTO.getUserId();
         userRepository.findById(userId).ifPresent(profile::user);
         profile = profileRepository.save(profile);
+        this.postService.owl(profile.getId());
         return profileMapper.toDto(profile);
     }
 

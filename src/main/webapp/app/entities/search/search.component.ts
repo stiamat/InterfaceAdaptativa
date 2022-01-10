@@ -12,6 +12,9 @@ import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
 import { ProfileService } from '../profile/profile.service';
 
+function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 interface Lang {
   value: string;
   viewValue: string;
@@ -62,8 +65,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
       this.account = account;
       this.profileService.find(this.account.id).subscribe(profile => {
         this.profile = profile.body;
-        if (this.profile.status === StatusProfile.ATUAL) {
-          this.openModal();
+
+        if (this.profile.status !== StatusProfile.ATUAL) {
+          (async () => {
+            await delay(4000);
+            this.openModal();
+          })();
         }
       });
     });
@@ -78,7 +85,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
     });
 
     modal.afterClosed().subscribe(result => {
-      console.warn(result);
       if (result) {
         this.dataNascimento = result.dataNascimento;
         this.profile = result.profile;
@@ -101,8 +107,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.profile.age =
       this.profile.ultimaModificacao.year() - this.dataNascimento.getFullYear();
 
-    this.profileService.update(this.profile).subscribe(s => {
-      console.warn(s);
+    this.profileService.update(this.profile).subscribe(() => {
+      location.reload();
     });
   }
 

@@ -591,6 +591,12 @@
     }
   }
 
+  .font_pequena_1 {
+    * {
+      font-size: 14px !important;
+    }
+  }
+
   .dark_mode {
     background-color: $primary !important;
     color: $base !important;
@@ -642,6 +648,13 @@
 
     .mat-primary {
       color: $base !important;
+    }
+    .mat-tab-label {
+      color: white !important;
+    }
+
+    .mat-tab-group.mat-primary .mat-ink-bar {
+      background-color: $base !important;
     }
   }
 }

@@ -4,13 +4,13 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
-import { StatusProfile } from 'app/shared/model/enumerations/status-profile.model';
 import { TipoPost } from 'app/shared/model/enumerations/tipo-post.model';
 import { IPost, Post } from 'app/shared/model/post.model';
 import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { PostService } from '../post/post.service';
+import { PreferencesService } from '../preferences/preferences.service';
 import { ProfileService } from '../profile/profile.service';
 
 function delay(ms: number) {
@@ -55,19 +55,18 @@ export class FeedComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private accountService: AccountService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private preferencesService: PreferencesService
   ) {}
 
   ngOnInit(): void {
-    (async () => {
-      await delay(300);
-
-      this.adaptative();
-    })();
-
-    this.accountService
-      .getAuthenticationState()
-      .subscribe(account => (this.account = account));
+    this.accountService.getAuthenticationState().subscribe(account => {
+      this.account = account;
+      this.profileService.find(this.account.id).subscribe(p => {
+        this.profile = p.body;
+        this.loadAll();
+      });
+    });
 
     document.getElementById('area-text').addEventListener('keypress', event => {
       if (event.which === 13 && !event.shiftKey) {
@@ -82,21 +81,6 @@ export class FeedComponent implements OnInit {
           this.search();
         }
       });
-  }
-
-  adaptative() {
-    this.profileService.find(this.account.id).subscribe(p => {
-      this.profile = p.body;
-      this.loadAll();
-      console.warn(this.profile);
-
-      if (this.profile.status === StatusProfile.ATUAL) {
-        const element = document.querySelector('.body_adaptative');
-        if (!element) return;
-        console.warn(element);
-        // element.classList.add('dark_mode');
-      }
-    });
   }
 
   loadAll(): void {
