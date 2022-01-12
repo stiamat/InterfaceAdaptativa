@@ -28,6 +28,7 @@ function submitOnEnter(event: any) {
   styleUrls: ['feed.component.scss'],
 })
 export class FeedComponent implements OnInit {
+  isSearch = false;
   input = '';
   inputLink = '';
   inputSearch = '';
@@ -62,10 +63,12 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
-      this.profileService.find(this.account.id).subscribe(p => {
-        this.profile = p.body;
-        this.loadAll();
-      });
+      if (this.account) {
+        this.profileService.find(this.account.id).subscribe(p => {
+          this.profile = p.body;
+          this.loadAll();
+        });
+      }
     });
 
     document.getElementById('area-text').addEventListener('keypress', event => {
@@ -88,7 +91,6 @@ export class FeedComponent implements OnInit {
     const listUser = this.profile.listFriends.map(u => u.id);
     listUser.push(3);
     listUser.push(this.profile.id);
-    console.warn(listUser);
 
     this.postService
       .query({
@@ -272,11 +274,20 @@ export class FeedComponent implements OnInit {
             suc.body.map(i => {
               if (!this.feed.find(pf => pf.id === i.id)) this.feed.push(i);
             });
+
+            if (this.feed.length > 0) this.isSearch = true;
           });
         });
     } else {
       this.feed = [];
+      this.isSearch = false;
       this.loadAll();
     }
+  }
+
+  clean() {
+    this.feed = [];
+    this.isSearch = false;
+    this.loadAll();
   }
 }

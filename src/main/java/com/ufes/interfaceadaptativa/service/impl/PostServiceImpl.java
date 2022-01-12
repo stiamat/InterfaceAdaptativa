@@ -96,6 +96,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Post : {}", id);
+        this.postRepository.findAnswersPost(id).ifPresent(l -> {
+            l.forEach(p -> {
+                postRepository.deleteById(p.getId());
+            });
+        });
         postRepository.deleteById(id);
     }
 

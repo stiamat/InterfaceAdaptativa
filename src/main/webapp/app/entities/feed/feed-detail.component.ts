@@ -44,11 +44,13 @@ export class FeedDetailComponent implements OnInit {
       .getAuthenticationState()
       .subscribe(account => (this.account = account));
 
-    document.getElementById('area-text').addEventListener('keypress', event => {
-      if (event.which === 13 && !event.shiftKey) {
-        this.createPost();
-      }
-    });
+    document
+      .getElementById('area-text-resp')
+      .addEventListener('keypress', event => {
+        if (event.which === 13 && !event.shiftKey) {
+          this.createPost();
+        }
+      });
   }
 
   loadRespostas() {
@@ -163,5 +165,21 @@ export class FeedDetailComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+  deletePost(post: IPost) {
+    if (this.account.id === post.userId) {
+      if (post.id === this.post.id) {
+        this.postService.delete(post.id).subscribe(suc => {
+          this.router.navigate(['/feed']);
+        });
+      } else {
+        this.respostas.splice(
+          this.respostas.findIndex(p => p.id === post.id),
+          1
+        );
+        this.subscribeToSaveResponse(this.postService.delete(post.id));
+      }
+    }
   }
 }

@@ -12,7 +12,7 @@ import { ProfileService } from 'app/entities/profile/profile.service';
 import { FontMode } from 'app/shared/model/enumerations/font-mode.model';
 import { StatusPreferences } from 'app/shared/model/enumerations/status-preferences.model';
 import { StatusProfile } from 'app/shared/model/enumerations/status-profile.model';
-import moment from 'moment';
+import * as moment from 'moment';
 
 function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -24,6 +24,7 @@ function delay(ms: number) {
 })
 export class MainComponent implements OnInit {
   account: any = null;
+  erro = false;
   constructor(
     private accountService: AccountService,
     private titleService: Title,
@@ -35,11 +36,16 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     (async () => {
       while (this.account === null) {
-        this.accountService.identity().subscribe(suc => {
-          this.account = suc;
+        this.accountService.identity().subscribe(
+          suc => {
+            this.account = suc;
 
-          if (this.account?.id) this.adaptative();
-        });
+            if (this.account?.id) this.adaptative();
+          },
+          () => {
+            this.erro = true;
+          }
+        );
         await delay(10000);
       }
     })();

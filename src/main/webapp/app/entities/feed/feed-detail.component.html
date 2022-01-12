@@ -6,14 +6,22 @@
                 <img src="../../../content/images/Logo.svg" alt="logo">
             </div>
             <div class="menu">
-                <div class="item avatar" (click)="itens('perfil')"></div>
+                <div class="item imagem_perfil" (click)="itens('perfil')">
+
+                    <figure *ngIf="account.imageUrl">
+                        <img [src]="account.imageUrl" alt="avatar do usuario" class="avatar">
+                    </figure>
+                    <div *ngIf="!account.imageUrl" class="avatar"></div>
+                    <div>{{account.login}}</div>
+                </div>
                 <div class="item inicio" (click)="itens('inicio')"><i class="bi bi-house icon-inicio"></i> <span
                         class="text-icon">Inicio</span>
                 </div>
                 <div class="item perfil" (click)="itens('perfil')"><i class="bi bi-person icon-perfil"></i> <span
                         class="text-icon">Perfil</span>
                 </div>
-                <div class="item configuracoes" (click)="itens('config')"><i class="bi bi-gear icon-configuracoes"></i>
+                <div class="item configuracoes" (click)="itens('config')" disabled><i
+                        class="bi bi-gear icon-configuracoes"></i>
                     <span class="text-icon">Config.</span>
                 </div>
                 <div class="item sair" (click)="logout()"><i class="bi bi-door-open icon-sair"></i> <span
@@ -24,7 +32,7 @@
 
     </div>
 
-    <div class="item-principal main" style="margin-top: 2rem;">
+    <div class="item-principal main">
 
         <!-- Button back -->
         <div class="row col-md-4 col-sm-12">
@@ -38,8 +46,11 @@
 
             <div class="card-post">
                 <div class="grid header">
-                    <div class="avatar">
-                        <div class="img"></div>
+                    <div class="avatar" (click)="perfilPost(post.userLogin)">
+
+                        <img *ngIf="post.userImagem" [src]="post.userImagem" alt="avatar do usuario" class="avatar_img">
+
+                        <div *ngIf="!post.userImagem" class="img"></div>
                     </div>
                     <div class="nick">{{post.userLogin}}</div>
                     <div class="date">{{timePublicacao(post.date)}}</div>
@@ -55,11 +66,11 @@
                         </button>
                         <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button color="primary"
                             aria-label="Example icon button with a heart icon">
-                            <!-- <i class="bi bi-link-45deg"></i>
-                            <i class="bi bi-file-pdf"></i>
-                            <i class="bi bi-play-btn"></i>
-                            <i class="bi bi-file-text"></i> -->
-                            <i class="bi bi-person-video3"></i>
+                            <i class="bi bi-link-45deg" *ngIf="post.tipoPost == 'NORMAL' || post.tipoPost == null"></i>
+                            <i class="bi bi-file-pdf" *ngIf="post.tipoPost == 'RECOMENDACAO'"></i>
+                            <i class="bi bi-play-btn" *ngIf="post.tipoPost == 'VIDEOS'"></i>
+                            <i class="bi bi-file-text" *ngIf="post.tipoPost == 'ARTIGO'"></i>
+                            <i class="bi bi-person-video3" *ngIf="post.tipoPost == 'CONFERENCIA'"></i>
                         </button>
                         <button mat-icon-button color="primary" aria-label="Curti esta publicação"
                             (click)="curti(post)">
@@ -79,7 +90,7 @@
 
         <!-- Reposda -->
         <div class="input-post input_reposta">
-            <textarea id="area-text" class="area-text" maxlength="200" placeholder="Responda aqui..."
+            <textarea id="area-text-resp" class="area-text" maxlength="200" placeholder="Responda aqui..."
                 [(ngModel)]="input"></textarea>
             <button class="btn_feed btn_feed-cor-secondary" (click)="changeLink()"><i
                     class="bi bi-paperclip"></i></button>
@@ -102,10 +113,15 @@
         <!-- Repostas -->
         <div class="post_principal">
 
+
+
             <div class="card-post" *ngFor="let post of respostas">
                 <div class="grid header">
-                    <div class="avatar">
-                        <div class="img"></div>
+                    <div class="avatar" (click)="perfilPost(post.userLogin)">
+
+                        <img *ngIf="post.userImagem" [src]="post.userImagem" alt="avatar do usuario" class="avatar_img">
+
+                        <div *ngIf="!post.userImagem" class="img"></div>
                     </div>
                     <div class="nick">{{post.userLogin}}</div>
                     <div class="date">{{timePublicacao(post.date)}}</div>
@@ -121,11 +137,11 @@
                         </button>
                         <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button color="primary"
                             aria-label="Example icon button with a heart icon">
-                            <!-- <i class="bi bi-link-45deg"></i>
-                            <i class="bi bi-file-pdf"></i>
-                            <i class="bi bi-play-btn"></i>
-                            <i class="bi bi-file-text"></i> -->
-                            <i class="bi bi-person-video3"></i>
+                            <i class="bi bi-link-45deg" *ngIf="post.tipoPost == 'NORMAL' || post.tipoPost == null"></i>
+                            <i class="bi bi-file-pdf" *ngIf="post.tipoPost == 'RECOMENDACAO'"></i>
+                            <i class="bi bi-play-btn" *ngIf="post.tipoPost == 'VIDEOS'"></i>
+                            <i class="bi bi-file-text" *ngIf="post.tipoPost == 'ARTIGO'"></i>
+                            <i class="bi bi-person-video3" *ngIf="post.tipoPost == 'CONFERENCIA'"></i>
                         </button>
                         <button mat-icon-button color="primary" aria-label="Curti esta publicação"
                             (click)="curti(post)">
@@ -146,5 +162,26 @@
 
     </div>
 
-    <div class="sidebar-right">03</div>
+    <div class="sidebar-right">
+        <div class="util">
+            <div class="card-sidebar-right foco">
+
+            </div>
+            <div class="card-sidebar-right destaques">
+                # Destaques
+            </div>
+            <div class="card-sidebar-right parcerias">
+                # Projeto
+                <div class="image">
+                    <a href="https://nemo.inf.ufes.br/" target="_blank">
+                        <img src="http://intersep.nemo.inf.ufes.br/wp-content/themes/Nemo/assets/img/nemo-sobre.svg"
+                            alt="Acessar link para página Nemo - UFES"
+                            style="width: 100px; height: 100px; object-fit: cover;">
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 </div>

@@ -33,6 +33,9 @@ public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificat
     @Query("select post from Post post where post.comentarioDe.id = :id")
     Optional<List<Post>> findAnswersPost(@Param("id") Long id);
 
+    @Query("select count(post) from Post post where post.comentarioDe.id = :id")
+    Optional<Integer> findNumberAnswersPost(@Param("id") Long id);
+
     @Query("select post from Post post where post.user.id = :userId and post.comentarioDe is not null")
     Optional<List<Post>> findAnswersUser(@Param("userId") Long userId);
 

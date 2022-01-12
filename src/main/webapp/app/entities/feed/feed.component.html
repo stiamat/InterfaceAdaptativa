@@ -41,7 +41,7 @@
         </div>
 
         <!-- Post -->
-        <div class="input-post">
+        <div class="input-post" [hidden]="isSearch">
             <textarea id="area-text" class="area-text" maxlength="200" placeholder=" Tudo bem com você?"
                 [(ngModel)]="input" (ngModelChange)="checkinput($event)"></textarea>
             <button class="btn_feed btn_feed-cor-secondary" (click)="changeLink()"><i
@@ -67,8 +67,10 @@
                     </div>
                 </div>
             </form>
+        </div>
 
-
+        <div [hidden]="!isSearch">
+            <button class="btn_feed" (click)="clean()">Limpar</button>
         </div>
 
         <!-- Separarator -->
@@ -138,5 +140,26 @@
 
     </div>
 
-    <div class="sidebar-right">03</div>
+    <div class="sidebar-right">
+        <div class="util">
+            <div class="card-sidebar-right foco">
+
+            </div>
+            <div class="card-sidebar-right destaques">
+                # Destaques
+            </div>
+            <div class="card-sidebar-right parcerias">
+                # Projeto
+                <div class="image">
+                    <a href="https://nemo.inf.ufes.br/" target="_blank">
+                        <img src="http://intersep.nemo.inf.ufes.br/wp-content/themes/Nemo/assets/img/nemo-sobre.svg"
+                            alt="Acessar link para página Nemo - UFES"
+                            style="width: 100px; height: 100px; object-fit: cover;">
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 </div>

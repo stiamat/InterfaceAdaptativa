@@ -80,6 +80,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Profile : {}", id);
+
         profileRepository.deleteById(id);
     }
 

@@ -14,15 +14,15 @@
                 </div>
 
                 <div class="alert alert-danger" *ngIf="errorUserExists">
-                    <strong>Login name already registered!</strong> Please choose another one.
+                    <strong>Nome de Login já registrado!</strong> Por Favor escolha outro.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="errorEmailExists">
-                    <strong>Email is already in use!</strong> Please choose another one.
+                    <strong>Email já em uso!</strong> Por Favor escolha outro.
                 </div>
 
                 <div class="alert alert-danger" *ngIf="doNotMatch">
-                    The password and its confirmation do not match!
+                    As duas senhas não coincidem!
                 </div>
             </div>
         </div>
@@ -38,19 +38,19 @@
                         <div
                             *ngIf="registerForm.get('login')!.invalid && (registerForm.get('login')!.dirty || registerForm.get('login')!.touched)">
                             <small class="form-text text-danger" *ngIf="registerForm.get('login')?.errors?.required">
-                                Your username is required.
+                                Este campo é obrigatório. Ele será usada para conseguir acessar a plataforma.
                             </small>
 
                             <small class="form-text text-danger" *ngIf="registerForm.get('login')?.errors?.minlength">
-                                Your username is required to be at least 1 character.
+                                Seu nome de usuário tem que ser maior que 1 caracter.
                             </small>
 
                             <small class="form-text text-danger" *ngIf="registerForm.get('login')?.errors?.maxlength">
-                                Your username cannot be longer than 50 characters.
+                                Seu nome de usuário não pode ser maior que 50 caracteres.
                             </small>
 
                             <small class="form-text text-danger" *ngIf="registerForm.get('login')?.errors?.pattern">
-                                Your username can only contain letters and digits.
+                                Seu nome de usuário deve conter apenas letras e números.
                             </small>
                         </div>
                     </div>
@@ -63,19 +63,11 @@
                         <div
                             *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)">
                             <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.required">
-                                Your email is required.
+                                Este campo é obrigatório.
                             </small>
 
                             <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.invalid">
-                                Your email is invalid.
-                            </small>
-
-                            <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.minlength">
-                                Your email is required to be at least 5 characters.
-                            </small>
-
-                            <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.maxlength">
-                                Your email cannot be longer than 100 characters.
+                                Email inválido.
                             </small>
                         </div>
                     </div>
@@ -88,17 +80,17 @@
                         <div
                             *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)">
                             <small class="form-text text-danger" *ngIf="registerForm.get('password')?.errors?.required">
-                                Your password is required.
+                                Este campo é obrigatório.
                             </small>
 
                             <small class="form-text text-danger"
                                 *ngIf="registerForm.get('password')?.errors?.minlength">
-                                Your password is required to be at least 4 characters.
+                                Sua senha deve conter ao menos 4 caracteres.
                             </small>
 
                             <small class="form-text text-danger"
                                 *ngIf="registerForm.get('password')?.errors?.maxlength">
-                                Your password cannot be longer than 50 characters.
+                                Sua senha não pode conter mais que 50 caracteres.
                             </small>
                         </div>
 
@@ -115,17 +107,7 @@
                             *ngIf="registerForm.get('confirmPassword')!.invalid && (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)">
                             <small class="form-text text-danger"
                                 *ngIf="registerForm.get('confirmPassword')?.errors?.required">
-                                Your confirmation password is required.
-                            </small>
-
-                            <small class="form-text text-danger"
-                                *ngIf="registerForm.get('confirmPassword')?.errors?.minlength">
-                                Your confirmation password is required to be at least 4 characters.
-                            </small>
-
-                            <small class="form-text text-danger"
-                                *ngIf="registerForm.get('confirmPassword')?.errors?.maxlength">
-                                Your confirmation password cannot be longer than 50 characters.
+                                Este campo é obrigatório.
                             </small>
                         </div>
                     </div>

@@ -61,22 +61,27 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.accountService.getAuthenticationState().subscribe(account => {
-      this.account = account;
-      this.profileService.find(this.account.id).subscribe(profile => {
-        this.profile = profile.body;
+    (async () => {
+      await delay(4000);
+      this.accountService.getAuthenticationState().subscribe(account => {
+        this.account = account;
 
-        if (this.profile.status !== StatusProfile.ATUAL) {
-          (async () => {
-            await delay(4000);
+        this.profileService.find(this.account.id).subscribe(profile => {
+          this.profile = profile.body;
+
+          if (
+            this.profile.status === StatusProfile.NOVO ||
+            this.profile.status === null
+          ) {
             this.openModal();
-          })();
-        }
+          }
+        });
       });
-    });
+    })();
   }
 
   openModal(): void {
+    this.dialog.closeAll();
     const modal = this.dialog.open(this.modal, {
       width: '80%',
       data: { profile: this.profile, dataNascimento: this.dataNascimento },

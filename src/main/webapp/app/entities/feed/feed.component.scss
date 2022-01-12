@@ -549,6 +549,31 @@
     width: 35%;
   }
 
+  .card-sidebar-right {
+    background-color: white;
+    box-shadow: 1px 2px 5px #0000004a;
+    border: 0px;
+    border-radius: 0.75rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    padding-bottom: 5px;
+  }
+
+  .foco {
+    height: 4rem;
+  }
+  .destaques {
+    height: 12rem;
+  }
+  .parcerias {
+    height: 10rem;
+    .image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   @include responsive(s) {
     display: none;
   }
@@ -601,12 +626,11 @@
     background-color: $primary !important;
     color: $base !important;
 
-    .card-post {
-      background-color: $darkmode !important;
-      color: $base !important;
-    }
-
-    .menu {
+    .card-post,
+    .card-sidebar-right,
+    .menu,
+    .input-post,
+    .no-js {
       background-color: $darkmode !important;
       color: $base !important;
     }
@@ -618,16 +642,6 @@
       input {
         color: $base !important;
       }
-    }
-
-    .input-post {
-      background-color: $darkmode !important;
-      color: $base !important;
-    }
-
-    .no-js {
-      background-color: $primary !important;
-      color: $base !important;
     }
 
     .logo {
@@ -655,6 +669,10 @@
 
     .mat-tab-group.mat-primary .mat-ink-bar {
       background-color: $base !important;
+    }
+
+    .mat-dialog-container {
+      background-color: $darkmode !important;
     }
   }
 }
