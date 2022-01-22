@@ -6,7 +6,7 @@
                 <img src="../../../content/images/Logo.svg" alt="logo">
             </div>
             <div class="menu">
-                <div class="item imagem_perfil" (click)="itens('perfil')">
+                <div class="item imagem_perfil" (click)="itens('perfil')" matTooltip="Perfil">
 
                     <figure *ngIf="account.imageUrl">
                         <img [src]="account.imageUrl" alt="avatar do usuario" class="avatar">
@@ -14,18 +14,22 @@
                     <div *ngIf="!account.imageUrl" class="avatar"></div>
                     <div>{{account.login}}</div>
                 </div>
-                <div class="item inicio" (click)="itens('inicio')"><i class="bi bi-house icon-inicio"></i> <span
-                        class="text-icon">Inicio</span>
+                <div class="item inicio" (click)="itens('inicio')" matTooltip="Inicio"><i
+                        class="bi bi-house icon-inicio"></i> <span class="text-icon">Inicio</span>
                 </div>
-                <div class="item perfil" (click)="itens('perfil')"><i class="bi bi-person icon-perfil"></i> <span
-                        class="text-icon">Perfil</span>
+                <div class="item perfil" (click)="itens('perfil')" matTooltip="Perfil"><i
+                        class="bi bi-person icon-perfil"></i> <span class="text-icon">Perfil</span>
                 </div>
-                <div class="item configuracoes" (click)="itens('config')" disabled><i
+                <!-- <div class="item configuracoes" (click)="itens('config')" disabled matTooltip="Configurações"><i
+                        class="bi bi-gear icon-configuracoes"></i>
+                    <span class="text-icon">Config.</span>
+                </div> -->
+                <div class="item configuracoes" disabled matTooltip="Configurações"><i
                         class="bi bi-gear icon-configuracoes"></i>
                     <span class="text-icon">Config.</span>
                 </div>
-                <div class="item sair" (click)="logout()"><i class="bi bi-door-open icon-sair"></i> <span
-                        class="text-icon">Sair</span>
+                <div class="item sair" (click)="logout()" matTooltip="Sair"><i class="bi bi-door-open icon-sair"></i>
+                    <span class="text-icon">Sair</span>
                 </div>
             </div>
         </div>

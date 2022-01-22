@@ -25,6 +25,9 @@
     box-shadow: 5px 5px 20px #657cff4a;
 
     .avatar {
+      background: url('../../../content/images/undraw_male_avatar_323b.svg')
+          no-repeat,
+        $secondary;
       background-repeat: no-repeat;
       background-origin: content-box;
       background-size: cover;

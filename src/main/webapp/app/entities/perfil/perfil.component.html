@@ -5,7 +5,7 @@
                 <img src="../../../content/images/Logo.svg" alt="logo">
             </div>
             <div class="menu">
-                <div class="item imagem_perfil" (click)="itens('perfil')">
+                <div class="item imagem_perfil" (click)="itens('perfil')" matTooltip="Perfil">
 
                     <figure *ngIf="account.imageUrl">
                         <img [src]="account.imageUrl" alt="avatar do usuario" class="avatar">
@@ -13,17 +13,22 @@
                     <div *ngIf="!account.imageUrl" class="avatar"></div>
                     <div>{{account.login}}</div>
                 </div>
-                <div class="item inicio" (click)="itens('inicio')"><i class="bi bi-house icon-inicio"></i> <span
-                        class="text-icon">Inicio</span>
+                <div class="item inicio" (click)="itens('inicio')" matTooltip="Inicio"><i
+                        class="bi bi-house icon-inicio"></i> <span class="text-icon">Inicio</span>
                 </div>
-                <div class="item perfil" (click)="itens('perfil')"><i class="bi bi-person icon-perfil"></i> <span
-                        class="text-icon">Perfil</span>
+                <div class="item perfil" (click)="itens('perfil')" matTooltip="Perfil"><i
+                        class="bi bi-person icon-perfil"></i> <span class="text-icon">Perfil</span>
                 </div>
-                <div class="item configuracoes" (click)="itens('config')"><i class="bi bi-gear icon-configuracoes"></i>
+                <!-- <div class="item configuracoes" (click)="itens('config')" disabled matTooltip="Configurações"><i
+                        class="bi bi-gear icon-configuracoes"></i>
+                    <span class="text-icon">Config.</span>
+                </div> -->
+                <div class="item configuracoes" disabled matTooltip="Configurações"><i
+                        class="bi bi-gear icon-configuracoes"></i>
                     <span class="text-icon">Config.</span>
                 </div>
-                <div class="item sair" (click)="logout()"><i class="bi bi-door-open icon-sair"></i> <span
-                        class="text-icon">Sair</span>
+                <div class="item sair" (click)="logout()" matTooltip="Sair"><i class="bi bi-door-open icon-sair"></i>
+                    <span class="text-icon">Sair</span>
                 </div>
             </div>
         </div>
@@ -51,6 +56,11 @@
             <mat-tab-group (selectedTabChange)="carregar($event)">
                 <mat-tab label="Todos">
                     <div class="feed">
+                        <div *ngIf="feed.length == 0" class="mt-4">
+                            <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                                alt="Nada encontrado">
+                        </div>
                         <div *ngFor="let post of feed">
                             <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
                                 class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
@@ -104,6 +114,11 @@
                 </mat-tab>
                 <mat-tab label="Respostas">
                     <div class="feed">
+                        <div *ngIf="feed.length == 0" class="mt-4">
+                            <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                                alt="Nada encontrado">
+                        </div>
                         <div *ngFor="let post of feed">
                             <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
                                 class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
@@ -157,6 +172,11 @@
                 </mat-tab>
                 <mat-tab label="Videos">
                     <div class="feed">
+                        <div *ngIf="feed.length == 0" class="mt-4">
+                            <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                                alt="Nada encontrado">
+                        </div>
                         <div *ngFor="let post of feed">
                             <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
                                 class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
@@ -210,6 +230,11 @@
                 </mat-tab>
                 <mat-tab label="PDF">
                     <div class="feed">
+                        <div *ngIf="feed.length == 0" class="mt-4">
+                            <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                                alt="Nada encontrado">
+                        </div>
                         <div *ngFor="let post of feed">
                             <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
                                 class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
@@ -263,6 +288,11 @@
                 </mat-tab>
                 <mat-tab label="Artigos">
                     <div class="feed">
+                        <div *ngIf="feed.length == 0" class="mt-4">
+                            <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                                alt="Nada encontrado">
+                        </div>
                         <div *ngFor="let post of feed">
                             <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
                                 class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
@@ -316,6 +346,11 @@
                 </mat-tab>
                 <mat-tab label="Conferencia">
                     <div class="feed">
+                        <div *ngIf="feed.length == 0" class="mt-4">
+                            <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                                alt="Nada encontrado">
+                        </div>
                         <div *ngFor="let post of feed">
                             <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
                                 class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}

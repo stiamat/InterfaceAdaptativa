@@ -1,15 +1,17 @@
 <div>
     <div class="row">
-        <div class="col-md-4">
-            <span class="hipster img-fluid rounded"></span>
-        </div>
 
-        <div class="col-md-8">
-            <h1>Error Page!</h1>
+        <div class="mt-4 col-md-12 d-flex flex-column align-content-center align-items-center">
+            <h2 style="text-align: center; font-size: large !important;">Ops!</h2>
+            <p style="text-align: center; font-size: medium !important;">Algo deu errado</p>
 
-            <div *ngIf="errorMessage">
-                <div class="alert alert-danger">{{ errorMessage }}</div>
+            <div class="mt-4 d-flex flex-column align-content-center align-items-center">
+
+                <img src="../../../content/images/undraw_page_not_found_re_e9o6.svg" width="50%" alt="Nada encontrado">
             </div>
+
+            <button (click)="previousState()" class="mt-3 btn_feed"
+                style="width: auto; padding: 0.7rem 1.4rem;">Voltar</button>
         </div>
     </div>
 </div>

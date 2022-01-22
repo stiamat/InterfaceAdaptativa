@@ -22,6 +22,7 @@ function submitOnEnter(event: any) {
     // event.preventDefault(); // Prevents the addition of a new line in the text field (not needed in a lot of cases)
   }
 }
+
 @Component({
   selector: 'jhi-feed',
   templateUrl: './feed.component.html',
@@ -116,6 +117,35 @@ export class FeedComponent implements OnInit {
 
         console.log(res.body);
       });
+  }
+
+  async scrollFunction(event: any, scroll: string) {
+    if (scroll === 'top' && event.pageY >= 1000) {
+      for (let i = event.pageY - event.clientY; i >= 0; i = i - 20) {
+        document.body.scrollTop = i;
+        document.documentElement.scrollTop = i;
+        await delay(3);
+      }
+    }
+    if (scroll === 'up') {
+      for (
+        let i = event.pageY - event.clientY;
+        i >= event.pageY - event.clientY - 225;
+        i = i - 6
+      ) {
+        document.body.scrollTop = i;
+        document.documentElement.scrollTop = i;
+        await delay(5);
+      }
+    }
+    if (scroll === 'down') {
+      const cord = event.pageY - event.clientY;
+      for (let i = 0; i < 25; i++) {
+        document.body.scrollTop = cord + i * 9;
+        document.documentElement.scrollTop = cord + i * 9;
+        await delay(5);
+      }
+    }
   }
 
   private createFromForm(): IPost {
@@ -275,7 +305,7 @@ export class FeedComponent implements OnInit {
               if (!this.feed.find(pf => pf.id === i.id)) this.feed.push(i);
             });
 
-            if (this.feed.length > 0) this.isSearch = true;
+            this.isSearch = true;
           });
         });
     } else {
@@ -287,6 +317,7 @@ export class FeedComponent implements OnInit {
 
   clean() {
     this.feed = [];
+    this.inputSearch = '';
     this.isSearch = false;
     this.loadAll();
   }

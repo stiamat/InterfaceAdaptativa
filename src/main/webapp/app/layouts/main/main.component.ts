@@ -9,6 +9,7 @@ import {
 import { AccountService } from 'app/core/auth/account.service';
 import { PreferencesService } from 'app/entities/preferences/preferences.service';
 import { ProfileService } from 'app/entities/profile/profile.service';
+import { ExperienceLevelMode } from 'app/shared/model/enumerations/experience-level-mode.model';
 import { FontMode } from 'app/shared/model/enumerations/font-mode.model';
 import { StatusPreferences } from 'app/shared/model/enumerations/status-preferences.model';
 import { StatusProfile } from 'app/shared/model/enumerations/status-profile.model';
@@ -89,19 +90,31 @@ export class MainComponent implements OnInit {
           console.warn(pref.body);
           const preferences = pref.body;
 
-          if (preferences.darkMode === StatusPreferences.TRUE) {
-            element.classList.add('dark_mode');
-          } else if (
-            preferences.darkMode === StatusPreferences.AUTO &&
-            moment(moment.now()).get('hour') >= 18
-          ) {
-            element.classList.add('dark_mode');
-          }
-
           if (preferences.fontMode === FontMode.INCREASE) {
             element.classList.add('font_grande_1');
           } else if (preferences.fontMode === FontMode.DECREASE) {
             element.classList.add('font_pequena_1');
+          }
+
+          if (preferences.contrastMode) {
+            element.classList.add('contrast_mode');
+          } else {
+            if (preferences.darkMode === StatusPreferences.TRUE) {
+              element.classList.add('dark_mode');
+            } else if (
+              preferences.darkMode === StatusPreferences.AUTO &&
+              moment(moment.now()).get('hours') >= 18
+            ) {
+              element.classList.add('dark_mode');
+            } else if (preferences.colorVisionMode) {
+              element.classList.add('color_vision_mode');
+            }
+          }
+
+          if (
+            preferences.experienceLevelMode === ExperienceLevelMode.BASICMODE
+          ) {
+            element.classList.add('basic_experience_mode');
           }
         });
         // element.classList.add('dark_mode');

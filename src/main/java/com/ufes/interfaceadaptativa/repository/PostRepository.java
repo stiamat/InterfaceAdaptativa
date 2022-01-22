@@ -44,4 +44,26 @@ public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificat
 
     @Query(value = "select post.id, body, date, active, likes, link, tipo_post, user_id, comentario_de_id from post inner join jhi_user on user_id = jhi_user.id where jhi_user.login like '%:login%'", nativeQuery = true)
     Optional<List<Post>> findLikesID(@Param("login") String login);
+
+    @Query(value = "select body, count(1) totalPalavras from (" +
+        "  select id, body, count(1) as total from ( " +
+        "    select " +
+        "      id, " +
+        "      substring_index(" +
+        "        substring_index(body, ' ', n), " +
+        "        ' ', " +
+        "        -1" +
+        "      ) as body" +
+        "    from post" +
+        "    join numbers" +
+        "      on char_length(body) " +
+        "        - char_length(replace(body, ' ', '')) " +
+        "        >= n - 1 where date = '2022-01-05 11:59:15.537'" +
+        "  ) t1" +
+        "  group by id, body" +
+        ")t2" +
+        "group by body" +
+        "order by totalPalavras desc" +
+        "limit 11", nativeQuery = true)
+    Optional<List<Object>> findDestaques();
 }

@@ -266,7 +266,10 @@
     }
 
     .img {
-      background-color: $secondary;
+      background: url('../../../content/images/undraw_male_avatar_323b.svg')
+          no-repeat,
+        $secondary;
+      background-size: contain;
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -366,7 +369,8 @@
   margin-bottom: -40px;
   width: 50%;
   font-size: small;
-  background-color: grey;
+  background-color: white;
+  box-shadow: 1px 2px 5px #0000004a;
   border-radius: 0.75rem;
   padding: 10px;
   margin-left: 10px;
@@ -533,12 +537,23 @@
         display: none;
       }
 
-      .sair {
-        margin-top: 0px;
+      .item {
+        margin-bottom: 0px;
       }
 
-      .text-icon {
-        display: none;
+      .inicio,
+      .perfil,
+      .configuracoes,
+      .sair {
+        padding: 0.7rem;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+      }
+
+      .sair {
+        margin-top: 0px;
       }
     }
   }
@@ -635,6 +650,10 @@
       color: $base !important;
     }
 
+    .resposta-mini-card {
+      background-color: grey;
+    }
+
     .input-busca {
       background-color: $darkmode !important;
       color: $base !important;
@@ -674,5 +693,112 @@
     .mat-dialog-container {
       background-color: $darkmode !important;
     }
+  }
+
+  .contrast_mode {
+    background-color: black !important;
+    color: white !important;
+
+    a {
+      color: yellow !important;
+    }
+
+    button,
+    input[type='button'],
+    input[type='reset'],
+    input[type='submit'] {
+      background: black !important;
+      color: yellow !important;
+      border: 1px solid white !important;
+    }
+
+    img.on-contrast-force-gray {
+      filter: grayscale(100%) contrast(120%) !important;
+    }
+
+    img.on-contrast-force-white {
+      filter: brightness(0) invert(1) !important;
+    }
+
+    input[type='text'],
+    input[type='password'],
+    input[type='url'],
+    input[type='search'],
+    input[type='email'],
+    input[type='tel'],
+    input[type='date'],
+    input[type='month'],
+    input[type='week'],
+    input[type='datetime'],
+    input[type='datetime-local'],
+    textarea,
+    .input-post,
+    .input-busca,
+    .card-post,
+    .resposta-mini-card,
+    .menu,
+    .card-sidebar-right,
+    input[type='number'] {
+      background: black !important;
+      border: 1px solid white !important;
+      color: white !important;
+    }
+
+    .date,
+    .actions-info,
+    #input-busca {
+      background: black !important;
+      border: none !important;
+      color: white !important;
+    }
+
+    .logo {
+      background: black !important;
+      border: none !important;
+      color: white !important;
+      &:hover {
+        filter: unset !important;
+      }
+    }
+  }
+
+  .basic_experience_mode {
+    .menu .bi::before {
+      font-size: 25px;
+      @include responsive(s) {
+        font-size: unset;
+      }
+    }
+    .text-icon {
+      display: none;
+    }
+  }
+
+  .color_vision_mode {
+    $primary: #2a3780;
+    $secondary: #536dfe;
+    $success: #a1afff;
+    $danger: #4358cc;
+    $base: #e6e6e6;
+
+    $primary1: #806cf5;
+    $secondary1: #5d6bd4;
+    $success1: #73a1eb;
+    $danger1: #5daad4;
+    $base1: #e9e9e9;
+
+    // $primary2: #6f6e80;
+    // $secondary2: #7e92fe;
+    // $success2: #7abca4;
+    // $danger2: #ff8ca3;
+    // $base2: #ececec;
+
+    // $primary3: #9f9eab;
+    // $secondary3: #a9b6ff;
+    // $success3: #a7d3c2;
+    // $danger3: #ffb2c2;
+    // $base3: #f3f3f3;
+
+    $darkmode: #47464e;
   }
 }

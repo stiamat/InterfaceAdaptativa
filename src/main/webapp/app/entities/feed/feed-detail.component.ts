@@ -80,6 +80,10 @@ export class FeedDetailComponent implements OnInit {
     };
   }
 
+  perfilPost(login: string) {
+    this.router.navigate(['/perfil'], { queryParams: { login: '' + login } });
+  }
+
   timePublicacao(date: moment.Moment) {
     const atual = moment(moment.now());
     if (atual.diff(date, 'years') > 0)

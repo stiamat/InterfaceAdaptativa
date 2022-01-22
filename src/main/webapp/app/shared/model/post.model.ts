@@ -1,6 +1,6 @@
-import { Moment } from 'moment';
 import { IUser } from 'app/core/user/user.model';
 import { TipoPost } from 'app/shared/model/enumerations/tipo-post.model';
+import { Moment } from 'moment';
 
 export interface IPost {
   id?: number;
@@ -11,6 +11,7 @@ export interface IPost {
   link?: string;
   tipoPost?: TipoPost;
   userLogin?: string;
+  userImagem?: string;
   userId?: number;
   likeDes?: IUser[];
   comentarioDeId?: number;
@@ -26,6 +27,7 @@ export class Post implements IPost {
     public link?: string,
     public tipoPost?: TipoPost,
     public userLogin?: string,
+    public userImagem?: string,
     public userId?: number,
     public likeDes?: IUser[],
     public comentarioDeId?: number

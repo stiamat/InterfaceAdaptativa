@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'jhi-error',
   templateUrl: './error.component.html',
+  styleUrls: ['../../entities/feed/feed.component.scss'],
 })
 export class ErrorComponent implements OnInit {
   errorMessage?: string;
@@ -16,5 +17,9 @@ export class ErrorComponent implements OnInit {
         this.errorMessage = routeData.errorMessage;
       }
     });
+  }
+
+  previousState(): void {
+    window.history.back();
   }
 }

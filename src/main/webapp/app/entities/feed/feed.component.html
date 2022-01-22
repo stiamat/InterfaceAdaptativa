@@ -1,4 +1,10 @@
 <jhi-search></jhi-search>
+<button (click)="scrollFunction($event,'top')" class="btn_feed"
+    style="position: fixed; bottom: 155px; right: 10px; z-index: 1000; width: auto; padding: 0.6rem 1rem;">top</button>
+<button (click)="scrollFunction($event,'up')" class="btn_feed"
+    style="position: fixed; bottom: 105px; right: 10px; z-index: 1000;width: auto; padding: 0.6rem 1rem;">up</button>
+<button (click)="scrollFunction($event,'down')" class="btn_feed"
+    style="position: fixed; bottom: 55px; right: 10px; z-index: 1000;width: auto; padding: 0.6rem 1rem;">down</button>
 <div class="body-adapative">
     <div class="sidebar-left">
         <div class="util">
@@ -6,7 +12,7 @@
                 <img src="../../../content/images/Logo.svg" alt="logo">
             </div>
             <div class="menu">
-                <div class="item imagem_perfil" (click)="itens('perfil')">
+                <div class="item imagem_perfil" (click)="itens('perfil')" matTooltip="Perfil">
 
                     <figure *ngIf="account.imageUrl">
                         <img [src]="account.imageUrl" alt="avatar do usuario" class="avatar">
@@ -14,18 +20,22 @@
                     <div *ngIf="!account.imageUrl" class="avatar"></div>
                     <div>{{account.login}}</div>
                 </div>
-                <div class="item inicio" (click)="itens('inicio')"><i class="bi bi-house icon-inicio"></i> <span
-                        class="text-icon">Inicio</span>
+                <div class="item inicio" (click)="itens('inicio')" matTooltip="Inicio"><i
+                        class="bi bi-house icon-inicio"></i> <span class="text-icon">Inicio</span>
                 </div>
-                <div class="item perfil" (click)="itens('perfil')"><i class="bi bi-person icon-perfil"></i> <span
-                        class="text-icon">Perfil</span>
+                <div class="item perfil" (click)="itens('perfil')" matTooltip="Perfil"><i
+                        class="bi bi-person icon-perfil"></i> <span class="text-icon">Perfil</span>
                 </div>
-                <div class="item configuracoes" (click)="itens('config')" disabled><i
+                <!-- <div class="item configuracoes" (click)="itens('config')" disabled matTooltip="Configurações"><i
+                        class="bi bi-gear icon-configuracoes"></i>
+                    <span class="text-icon">Config.</span>
+                </div> -->
+                <div class="item configuracoes" disabled matTooltip="Configurações"><i
                         class="bi bi-gear icon-configuracoes"></i>
                     <span class="text-icon">Config.</span>
                 </div>
-                <div class="item sair" (click)="logout()"><i class="bi bi-door-open icon-sair"></i> <span
-                        class="text-icon">Sair</span>
+                <div class="item sair" (click)="logout()" matTooltip="Sair"><i class="bi bi-door-open icon-sair"></i>
+                    <span class="text-icon">Sair</span>
                 </div>
             </div>
         </div>
@@ -35,7 +45,7 @@
     <div class="item-principal main">
 
         <!-- Busca -->
-        <div class="input-busca" data-bs-toggle="tooltip" data-bs-placement="right" title="Tooltip on right">
+        <div class="input-busca" matTooltip="Busca">
             <input id="input-busca" class="input" type="text" placeholder="Busque aqui..." [(ngModel)]="inputSearch">
             <button class="btn_feed" (click)="search()"><i class="bi bi-search"></i></button>
         </div>
@@ -43,13 +53,13 @@
         <!-- Post -->
         <div class="input-post" [hidden]="isSearch">
             <textarea id="area-text" class="area-text" maxlength="200" placeholder=" Tudo bem com você?"
-                [(ngModel)]="input" (ngModelChange)="checkinput($event)"></textarea>
-            <button class="btn_feed btn_feed-cor-secondary" (click)="changeLink()"><i
+                [(ngModel)]="input" (ngModelChange)="checkinput($event)" matTooltip="Criar um post"></textarea>
+            <button class="btn_feed btn_feed-cor-secondary" (click)="changeLink()" matTooltip="Anexar um link"><i
                     class="bi bi-paperclip"></i></button>
-            <button class="btn_feed" (click)="createPost()"><i class="bi bi-send"></i></button>
+            <button class="btn_feed" (click)="createPost()" matTooltip="Enviar"><i class="bi bi-send"></i></button>
             <form class="link">
                 <div class="form-row" id="link">
-                    <div class="col-4">
+                    <div class="col-4" matTooltip="Tipo de postagem">
                         <div class="form-group">
                             <select class="form-control" [(ngModel)]="tipoPost" id="tipoPost"
                                 [ngModelOptions]="{standalone: true}">
@@ -61,7 +71,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-8" matTooltip="Link de anexo">
                         <input type="text" class="form-control" id="inputLink" placeholder="Insira um link aqui..."
                             [(ngModel)]="inputLink" [ngModelOptions]="{standalone: true}">
                     </div>
@@ -70,20 +80,26 @@
         </div>
 
         <div [hidden]="!isSearch">
-            <button class="btn_feed" (click)="clean()">Limpar</button>
+            <button class="btn_feed" (click)="clean()" matTooltip="Limpar busca">Limpar Busca</button>
         </div>
 
         <!-- Separarator -->
         <div class="separator"></div>
 
         <div class="feed">
+            <div *ngIf="feed.length == 0" class="mt-4">
+                <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
+                <img src="../../../content/images/undraw_searching_p-5-ux.svg" width="100%" alt="Nada encontrado">
+            </div>
             <div *ngFor="let post of feed">
                 <div *ngIf="post.comentarioDeId" (click)="comentar(post.comentarioDeId)"
-                    class="resposta-mini-card newItem">Em reposta a {{post.userComentario}}
+                    class="resposta-mini-card newItem" matTooltip="Ver postagem completa">Em reposta a
+                    {{post.userComentario}}
                 </div>
                 <div class="card-post newItem">
                     <div class="grid header">
-                        <div class="avatar" (click)="perfilPost(post.userLogin)">
+                        <div class="avatar" (click)="perfilPost(post.userLogin)"
+                            [matTooltip]="'Ver perfil de '+post.userLogin">
 
                             <img *ngIf="post.userImagem" [src]="post.userImagem" alt="avatar do usuario"
                                 class="avatar_img">
@@ -91,7 +107,7 @@
                             <div *ngIf="!post.userImagem" class="img"></div>
                         </div>
                         <div class="nick">{{post.userLogin}}</div>
-                        <div class="date">{{timePublicacao(post.date)}}</div>
+                        <div class="date" matTooltip="Tempo de publicação">{{timePublicacao(post.date)}}</div>
                     </div>
                     <div class="grid body">
                         <div class="corpo">{{post.body}}</div>
@@ -99,11 +115,11 @@
                     <div class="grid footer">
                         <div class="actions">
                             <button *ngIf="account.id == post.userId" (click)="deletePost(post)" mat-icon-button
-                                color="primary" aria-label="Example icon button with a heart icon">
+                                color="primary" aria-label="Deletar postagem" matTooltip="Deletar postagem">
                                 <i class="bi bi-trash"></i>
                             </button>
                             <button *ngIf="post.link?.length > 0" (click)="navegaWeb(post)" mat-icon-button
-                                color="primary" aria-label="Example icon button with a heart icon">
+                                color="primary" aria-label="Anexo de postagem" matTooltip="Anexo de postagem">
                                 <i class="bi bi-link-45deg"
                                     *ngIf="post.tipoPost == 'NORMAL' || post.tipoPost == null"></i>
                                 <i class="bi bi-file-pdf" *ngIf="post.tipoPost == 'RECOMENDACAO'"></i>
@@ -112,20 +128,22 @@
                                 <i class="bi bi-person-video3" *ngIf="post.tipoPost == 'CONFERENCIA'"></i>
                             </button>
                             <button *ngIf="!post.comentarioDeId" mat-icon-button color="primary"
-                                aria-label="Comentar esta publicação" (click)="comentar(post.id)">
+                                aria-label="Comentar esta publicação" (click)="comentar(post.id)"
+                                matTooltip="Comentar esta publicação">
                                 <i class="bi bi-chat-square-text"></i>
                             </button>
                             <button *ngIf="post.comentarioDeId" mat-icon-button color="primary"
-                                aria-label="Comentar esta publicação" (click)="comentar(post.comentarioDeId)">
+                                aria-label="Comentar esta publicação" (click)="comentar(post.comentarioDeId)"
+                                matTooltip="Comentar esta publicação">
                                 <i class="bi bi-chat-square-text"></i>
                             </button>
                             <button mat-icon-button color="primary" aria-label="Curti esta publicação"
-                                (click)="curti(post)">
+                                (click)="curti(post)" matTooltip="Curti esta publicação">
                                 <i *ngIf="!curtido(post)" class="bi bi-heart"></i>
                                 <i *ngIf="curtido(post)" class="bi bi-heart-fill" style="color: red;">
                                 </i>
                             </button>
-                            <span class="actions-info">{{post.likeDes.length}}</span>
+                            <span class="actions-info" matTooltip="Número de Curtidas">{{post.likeDes.length}}</span>
 
                         </div>
 
@@ -150,7 +168,7 @@
             </div>
             <div class="card-sidebar-right parcerias">
                 # Projeto
-                <div class="image">
+                <div class="image" matTooltip="Anexo para o site NEMO">
                     <a href="https://nemo.inf.ufes.br/" target="_blank">
                         <img src="http://intersep.nemo.inf.ufes.br/wp-content/themes/Nemo/assets/img/nemo-sobre.svg"
                             alt="Acessar link para página Nemo - UFES"
