@@ -282,7 +282,7 @@ export class FeedComponent implements OnInit {
       });
     }
     if (item === 'config') {
-      this.router.navigate(['/config']);
+      this.router.navigate(['/config/' + this.account.id + '/edit']);
     }
   }
 

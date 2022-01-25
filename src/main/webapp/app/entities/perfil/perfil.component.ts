@@ -75,7 +75,7 @@ export class PerfilComponent implements OnInit {
       this.router.navigate(['/perfil']);
     }
     if (item === 'config') {
-      this.router.navigate(['/config']);
+      this.router.navigate(['/config/' + this.account.id + '/edit']);
     }
   }
 

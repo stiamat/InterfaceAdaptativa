@@ -1,21 +1,27 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-
-import { IPreferences, Preferences } from 'app/shared/model/preferences.model';
-import { PreferencesService } from './preferences.service';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AccountService } from 'app/core/auth/account.service';
+import { LoginService } from 'app/core/login/login.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { StatusProfile } from 'app/shared/model/enumerations/status-profile.model';
+import { IPreferences, Preferences } from 'app/shared/model/preferences.model';
+import { IProfile, Profile } from 'app/shared/model/profile.model';
+import { Observable } from 'rxjs';
+import { ProfileService } from '../profile/profile.service';
+import { PreferencesService } from './preferences.service';
 
 @Component({
   selector: 'jhi-preferences-update',
   templateUrl: './preferences-update.component.html',
+  styleUrls: ['../feed/feed.component.scss'],
 })
 export class PreferencesUpdateComponent implements OnInit {
   isSaving = false;
+  account: any = null;
   users: IUser[] = [];
 
   editForm = this.fb.group({
@@ -29,6 +35,10 @@ export class PreferencesUpdateComponent implements OnInit {
   });
 
   constructor(
+    private loginService: LoginService,
+    private router: Router,
+    protected profileService: ProfileService,
+    private accountService: AccountService,
     protected preferencesService: PreferencesService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
@@ -36,14 +46,12 @@ export class PreferencesUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      this.account = account;
+    });
+
     this.activatedRoute.data.subscribe(({ preferences }) => {
       this.updateForm(preferences);
-
-      this.userService
-        .query()
-        .subscribe(
-          (res: HttpResponse<IUser[]>) => (this.users = res.body || [])
-        );
     });
   }
 
@@ -73,6 +81,14 @@ export class PreferencesUpdateComponent implements OnInit {
     }
   }
 
+  resetProfile(): void {
+    this.isSaving = true;
+    const profile = this.createFromFormProfile();
+    console.warn(profile);
+
+    this.subscribeToSaveResponse(this.profileService.update(profile));
+  }
+
   private createFromForm(): IPreferences {
     return {
       ...new Preferences(),
@@ -83,6 +99,14 @@ export class PreferencesUpdateComponent implements OnInit {
       contrastMode: this.editForm.get(['contrastMode'])!.value,
       colorVisionMode: this.editForm.get(['colorVisionMode'])!.value,
       userId: this.editForm.get(['userId'])!.value,
+    };
+  }
+
+  private createFromFormProfile(): IProfile {
+    return {
+      ...new Profile(),
+      id: this.account.id,
+      status: StatusProfile.NOVO,
     };
   }
 
@@ -97,7 +121,7 @@ export class PreferencesUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    location.assign('/feed');
   }
 
   protected onSaveError(): void {
@@ -106,5 +130,24 @@ export class PreferencesUpdateComponent implements OnInit {
 
   trackById(index: number, item: IUser): any {
     return item.id;
+  }
+
+  logout() {
+    this.loginService.logout();
+    this.router.navigate(['']);
+  }
+
+  itens(item: string) {
+    if (item === 'inicio') {
+      this.router.navigate(['/feed']);
+    }
+    if (item === 'perfil') {
+      this.router.navigate(['/perfil'], {
+        queryParams: { login: '' + this.account.login },
+      });
+    }
+    if (item === 'config') {
+      this.router.navigate(['/config/' + this.account.id + '/edit']);
+    }
   }
 }

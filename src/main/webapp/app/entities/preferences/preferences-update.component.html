@@ -1,73 +1,144 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-preferences-heading">Create or edit a Preferences</h2>
+<div class="body-adapative">
+    <div class="sidebar-left">
+        <div class="util">
+            <div class="logo" (click)="itens('inicio')">
+                <img src="../../../content/images/Logo.svg" alt="logo">
+            </div>
+            <div class="menu">
+                <div class="item imagem_perfil" (click)="itens('perfil')" matTooltip="Perfil">
 
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                    <figure *ngIf="account.imageUrl">
+                        <img [src]="account.imageUrl" alt="avatar do usuario" class="avatar">
+                    </figure>
+                    <div *ngIf="!account.imageUrl" class="avatar"></div>
+                    <div>{{account.login}}</div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_darkMode">Dark Mode</label>
-                    <select class="form-control" name="darkMode" formControlName="darkMode" id="field_darkMode">
-                        <option value="TRUE">TRUE</option>
-                        <option value="FALSE">FALSE</option>
-                        <option value="AUTO">AUTO</option>
-                    </select>
+                <div class="item inicio" (click)="itens('inicio')" matTooltip="Inicio"><i
+                        class="bi bi-house icon-inicio"></i> <span class="text-icon">Inicio</span>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_experienceLevelMode">Experience Level Mode</label>
-                    <select class="form-control" name="experienceLevelMode" formControlName="experienceLevelMode" id="field_experienceLevelMode">
-                        <option value="BASICMODE">BASICMODE</option>
-                        <option value="AVERAGEMODE">AVERAGEMODE</option>
-                        <option value="HIGHMODE">HIGHMODE</option>
-                    </select>
+                <div class="item perfil" (click)="itens('perfil')" matTooltip="Perfil"><i
+                        class="bi bi-person icon-perfil"></i> <span class="text-icon">Perfil</span>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_fontMode">Font Mode</label>
-                    <select class="form-control" name="fontMode" formControlName="fontMode" id="field_fontMode">
-                        <option value="DECREASE">DECREASE</option>
-                        <option value="NORMAL">NORMAL</option>
-                        <option value="INCREASE">INCREASE</option>
-                    </select>
+                <!-- <div class="item configuracoes" (click)="itens('config')" disabled matTooltip="Configurações"><i
+                        class="bi bi-gear icon-configuracoes"></i>
+                    <span class="text-icon">Config.</span>
+                </div> -->
+                <div class="item configuracoes" disabled matTooltip="Configurações"><i
+                        class="bi bi-gear icon-configuracoes"></i>
+                    <span class="text-icon">Config.</span>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_contrastMode">Contrast Mode</label>
-                    <input type="checkbox" class="form-control" name="contrastMode" id="field_contrastMode"
-                           formControlName="contrastMode"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_colorVisionMode">Color Vision Mode</label>
-                    <input type="checkbox" class="form-control" name="colorVisionMode" id="field_colorVisionMode"
-                           formControlName="colorVisionMode"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_user">User</label>
-                    <select class="form-control" id="field_user" name="user" formControlName="userId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
-                    </select>
+                <div class="item sair" (click)="logout()" matTooltip="Sair"><i class="bi bi-door-open icon-sair"></i>
+                    <span class="text-icon">Sair</span>
                 </div>
             </div>
+        </div>
 
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
+    </div>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
-                </button>
+    <div class="item-principal main">
+        <div class="card-post">
+            <h5>Imagem de Perfil</h5>
+        </div>
+        <div class="card-post">
+            <h5>Resetar Preferências </h5>
+            <p>Resetar preferências e utilizar ontologia para inferência</p>
+            <button type="button" class="mt-3 mb-3 btn btn_feed" (click)="resetProfile()">
+                Resetar
+            </button>
+        </div>
+        <div class="card-post">
+            <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                <h5 id="jhi-preferences-heading">Preferências</h5>
+
+                <div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="field_darkMode">Modo Escuro</label>
+                        <select class="form-control" name="darkMode" formControlName="darkMode"
+                            style="border: 1px solid;" id="field_darkMode">
+                            <option value="TRUE">
+                                <i class="bi bi-brightness-alt-high-fill"></i>
+                                Ativar
+                            </option>
+                            <option value="FALSE">
+                                <i class="bi bi-brightness-alt-high"></i>
+                                Desativado
+                            </option>
+                            <option value="AUTO">Automático</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="field_experienceLevelMode">Nível de Experiência</label>
+                        <select class="form-control" name="experienceLevelMode" formControlName="experienceLevelMode"
+                            style="border: 1px solid;" id="field_experienceLevelMode">
+                            <option value="BASICMODE">Baixo</option>
+                            <option value="AVERAGEMODE">Médio</option>
+                            <option value="HIGHMODE">Alto</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="field_fontMode">Tamanho da Fonte</label>
+                        <select class="form-control" name="fontMode" formControlName="fontMode"
+                            style="border: 1px solid;" id="field_fontMode">
+                            <option value="DECREASE">Pequena</option>
+                            <option value="NORMAL">Normal</option>
+                            <option value="INCREASE">Grande</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="field_contrastMode">Modo de Alto Contraste</label>
+                        <input type="checkbox" class="form-check-input" name="contrastMode" id="field_contrastMode"
+                            style="margin-left: 1rem;" formControlName="contrastMode" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="field_colorVisionMode">Color Vision Mode</label>
+                        <input type="checkbox" class="form-check-input" name="colorVisionMode"
+                            style="margin-left: 1rem;" id="field_colorVisionMode" formControlName="colorVisionMode" />
+                    </div>
+                </div>
+
+                <div>
+
+
+                    <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                        class="mt-3 mb-3 btn btn_feed">
+                        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <button type="button" id="cancel-save" class="mt-3 btn btn_feed btn_feed-cor-secondary"
+            (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+    </div>
+
+
+
+    <div class="sidebar-right">
+        <div class="util">
+            <div class="card-sidebar-right foco">
+
             </div>
-        </form>
+            <div class="card-sidebar-right destaques">
+                # Destaques
+            </div>
+            <div class="card-sidebar-right parcerias">
+                # Projeto
+                <div class="image">
+                    <a href="https://nemo.inf.ufes.br/" target="_blank">
+                        <img src="http://intersep.nemo.inf.ufes.br/wp-content/themes/Nemo/assets/img/nemo-sobre.svg"
+                            alt="Acessar link para página Nemo - UFES"
+                            style="width: 100px; height: 100px; object-fit: cover;">
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
     </div>
 </div>
