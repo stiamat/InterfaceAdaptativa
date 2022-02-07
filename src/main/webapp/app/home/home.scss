@@ -39,6 +39,7 @@ Main page styles
   left: -800px;
   z-index: -1;
   transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+  animation: fluidCircle 10s infinite ease-in-out;
 }
 
 .imageFloat {
@@ -102,6 +103,9 @@ Main page styles
     left: -800px;
     z-index: -1;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+    animation-name: unset;
+    animation-duration: unset;
+    animation-iteration-count: unset;
   }
 
   .imageFloat {
@@ -129,6 +133,9 @@ Main page styles
     left: -800px;
     z-index: -1;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+    animation-name: unset;
+    animation-duration: unset;
+    animation-iteration-count: unset;
   }
 
   .imageFloat {
@@ -146,6 +153,10 @@ Main page styles
 }
 
 @media screen and (max-width: 767px) {
+  .login {
+    margin-top: -5rem;
+  }
+
   .mobile {
     display: flex;
   }
@@ -195,6 +206,9 @@ Main page styles
     left: -700px;
     z-index: -1;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) 2s;
+    animation-name: unset;
+    animation-duration: unset;
+    animation-iteration-count: unset;
   }
 
   .addCircleFloat {
@@ -272,5 +286,45 @@ Main page styles
   }
   to {
     opacity: 0;
+  }
+}
+
+@keyframes fluidCircle {
+  0% {
+    left: -800px;
+    border-radius: 50%;
+    transform: rotate(0deg);
+  }
+  25% {
+    left: -780px;
+    border-radius: 47%;
+    transform: rotate(180deg);
+  }
+  50% {
+    left: -780px;
+    border-radius: 49%;
+    transform: rotate(360deg);
+  }
+  75% {
+    left: -780px;
+    border-radius: 47%;
+    transform: rotate(180deg);
+  }
+  100% {
+    left: -800px;
+    border-radius: 50%;
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fluidImg {
+  0% {
+    left: -6rem;
+  }
+  50% {
+    left: -6.5rem;
+  }
+  100% {
+    left: -6rem;
   }
 }

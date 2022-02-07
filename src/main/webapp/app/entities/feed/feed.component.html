@@ -1,16 +1,21 @@
 <jhi-search></jhi-search>
-<button (click)="scrollFunction($event,'top')" class="btn_feed" matTooltip="Voltar ao Topo"
-    style="position: fixed; bottom: 155px; right: 10px; z-index: 1000; width: auto; padding: 0.6rem 1rem;">
-    <i class="bi bi-arrow-bar-up"></i>
-</button>
-<button (click)="scrollFunction($event,'up')" class="btn_feed" matTooltip="Subir Página"
-    style="position: fixed; bottom: 105px; right: 10px; z-index: 1000;width: auto; padding: 0.6rem 1rem;">
-    <i class="bi bi-arrow-up"></i>
-</button>
-<button (click)="scrollFunction($event,'down')" class="btn_feed" matTooltip="Descer Página"
-    style="position: fixed; bottom: 55px; right: 10px; z-index: 1000;width: auto; padding: 0.6rem 1rem;">
-    <i class="bi bi-arrow-down"></i>
-</button>
+<div>
+    <button (click)="scrollFunction($event,'top')" class="btn_feed" matTooltip="Voltar ao Topo"
+        style="position: fixed; bottom: 55px; right: 10px; z-index: 1000; width: auto; padding: 0.6rem 1rem;">
+        <i class="bi bi-arrow-bar-up"></i>
+    </button>
+</div>
+<div [hidden]="!isBasicMode">
+    <button (click)="scrollFunction($event,'up')" class="btn_feed" matTooltip="Subir Página"
+        style="position: fixed; bottom: 155px; right: 10px; z-index: 1000;width: auto; padding: 0.6rem 1rem;">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+    <button (click)="scrollFunction($event,'down')" class="btn_feed" matTooltip="Descer Página"
+        style="position: fixed; bottom: 105px; right: 10px; z-index: 1000;width: auto; padding: 0.6rem 1rem;">
+        <i class="bi bi-arrow-down"></i>
+    </button>
+</div>
+
 <div class="body-adapative">
 
     <div class="sidebar-left">

@@ -11,6 +11,7 @@ import { StatusProfile } from 'app/shared/model/enumerations/status-profile.mode
 import { IPreferences, Preferences } from 'app/shared/model/preferences.model';
 import { IProfile, Profile } from 'app/shared/model/profile.model';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 import { ProfileService } from '../profile/profile.service';
 import { PreferencesService } from './preferences.service';
 
@@ -23,6 +24,7 @@ export class PreferencesUpdateComponent implements OnInit {
   isSaving = false;
   account: any = null;
   users: IUser[] = [];
+  inputImgUrl = '';
 
   editForm = this.fb.group({
     id: [],
@@ -48,6 +50,7 @@ export class PreferencesUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
+      this.inputImgUrl = account.imageUrl;
     });
 
     this.activatedRoute.data.subscribe(({ preferences }) => {
@@ -107,6 +110,7 @@ export class PreferencesUpdateComponent implements OnInit {
       ...new Profile(),
       id: this.account.id,
       status: StatusProfile.NOVO,
+      userId: this.account.id,
     };
   }
 
@@ -126,6 +130,22 @@ export class PreferencesUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  changeImgPerfil() {
+    this.userService.find(this.account.login).subscribe(s => {
+      const user = s;
+      user.imageUrl = this.inputImgUrl;
+      this.userService.update(user).subscribe(() => {
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Login Efetuado!',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      });
+    });
   }
 
   trackById(index: number, item: IUser): any {

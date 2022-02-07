@@ -58,12 +58,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             title: 'Sucesso!',
             text: 'Login Efetuado!',
             icon: 'success',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown',
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp',
-            },
             showConfirmButton: false,
             timer: 3000,
           });
@@ -74,12 +68,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             title: 'Ops!',
             text: 'Nome de Usuário ou Senha incorreta!',
             icon: 'error',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown',
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp',
-            },
             showConfirmButton: false,
             timer: 3000,
           });

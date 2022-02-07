@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountService } from 'app/core/auth/account.service';
+import { ExperienceLevelMode } from 'app/shared/model/enumerations/experience-level-mode.model';
 import { StatusProfile } from 'app/shared/model/enumerations/status-profile.model';
 import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
@@ -130,6 +131,15 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   onExp(event: any): void {
-    this.profile.experienceLevel = event.value;
+    if (
+      event.value === 'Experiência Básica' ||
+      event.value === 'Sem Experiência'
+    ) {
+      this.profile.experienceLevel = ExperienceLevelMode.BASICMODE;
+    } else if (event.value === 'Experiência Média') {
+      this.profile.experienceLevel = ExperienceLevelMode.AVERAGEMODE;
+    } else {
+      this.profile.experienceLevel = ExperienceLevelMode.HIGHMODE;
+    }
   }
 }

@@ -111,12 +111,6 @@ export class RegisterComponent implements AfterViewInit {
             title: 'Sucesso!',
             text: 'Login Efetuado!',
             icon: 'success',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown',
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp',
-            },
             showConfirmButton: false,
             timer: 3000,
           });

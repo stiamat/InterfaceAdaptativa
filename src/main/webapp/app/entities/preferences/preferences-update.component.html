@@ -38,12 +38,46 @@
     <div class="item-principal main">
         <div class="card-post">
             <h5>Imagem de Perfil</h5>
+            <div class="avatar" style="display: flex;
+                justify-content: center;
+                align-items: center;">
+                <figure *ngIf="inputImgUrl.length > 0">
+                    <img [src]="account.imageUrl" alt="avatar do usuario" class="avatar" style="border-radius: 50%;
+                    border: 2px solid;
+                    object-fit: cover;
+                    width: 150px;
+                    height: 150px;">
+                </figure>
+                <div *ngIf="inputImgUrl.length == 0" style="background: url('../../../content/images/undraw_male_avatar_323b.svg')
+                    no-repeat;
+                    background-repeat: no-repeat;
+                    background-origin: content-box;
+                    background-size: cover;
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    margin-bottom: 2rem;"></div>
+
+
+            </div>
+            <div style="width: 100%;">
+                Alterar imagem de perfil:
+                <input class="mt-1 mb-1" type="text" [(ngModel)]="inputImgUrl" style="width: 100%;
+                    padding: 6px;
+                    border-radius: 0.5rem;
+                    border: 1px solid;" />
+                <button type="button" class="mt-1 mb-1 btn btn_feed" (click)="changeImgPerfil()">
+                    Salvar Imagem de Perfil
+                </button>
+            </div>
+
+
         </div>
         <div class="card-post">
             <h5>Resetar Preferências </h5>
             <p>Resetar preferências e utilizar ontologia para inferência</p>
             <button type="button" class="mt-3 mb-3 btn btn_feed" (click)="resetProfile()">
-                Resetar
+                Resetar Perfil
             </button>
         </div>
         <div class="card-post">
@@ -106,14 +140,14 @@
 
                     <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
                         class="mt-3 mb-3 btn btn_feed">
-                        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                        <fa-icon icon="save"></fa-icon>&nbsp;<span>Salvar Preferências</span>
                     </button>
                 </div>
             </form>
         </div>
         <button type="button" id="cancel-save" class="mt-3 btn btn_feed btn_feed-cor-secondary"
             (click)="previousState()">
-            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+            <span>Voltar</span>
         </button>
     </div>
 

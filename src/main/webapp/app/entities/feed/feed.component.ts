@@ -1,11 +1,13 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
+import { ExperienceLevelMode } from 'app/shared/model/enumerations/experience-level-mode.model';
 import { TipoPost } from 'app/shared/model/enumerations/tipo-post.model';
 import { IPost, Post } from 'app/shared/model/post.model';
+import { IPreferences } from 'app/shared/model/preferences.model';
 import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
@@ -41,6 +43,8 @@ export class FeedComponent implements OnInit {
   link = false;
   profile: IProfile;
   tipoPost = 'NORMAL';
+  preferences: IPreferences;
+  isBasicMode = false;
 
   editForm = this.fb.group({
     id: [],
@@ -58,13 +62,16 @@ export class FeedComponent implements OnInit {
     private fb: FormBuilder,
     private accountService: AccountService,
     private profileService: ProfileService,
-    private preferencesService: PreferencesService
+    private preferencesService: PreferencesService,
+    private ref: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
+        this.loadPreferences();
+
         this.profileService.find(this.account.id).subscribe(p => {
           this.profile = p.body;
           this.loadAll();
@@ -114,8 +121,6 @@ export class FeedComponent implements OnInit {
             }
           });
         }
-
-        console.log(res.body);
       });
   }
 
@@ -176,6 +181,26 @@ export class FeedComponent implements OnInit {
       userId: this.account.id,
       link: this.inputLink.length > 0 ? this.inputLink : null,
     };
+  }
+
+  loadPreferences() {
+    this.preferencesService.find(this.account.id).subscribe((p: any) => {
+      this.preferences = p.body;
+      this.setIsBasicMode();
+    });
+  }
+
+  setIsBasicMode() {
+    if (
+      this.preferences &&
+      this.preferences.experienceLevelMode === ExperienceLevelMode.BASICMODE
+    ) {
+      this.isBasicMode = true;
+    } else {
+      this.isBasicMode = false;
+    }
+    this.ref.detectChanges();
+    console.warn('basicmode', this.isBasicMode);
   }
 
   createPost() {
