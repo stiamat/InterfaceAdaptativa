@@ -121,7 +121,8 @@
     "webpack:test": "npm run test",
     "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js",
-    "backend": "mvnw -P-webpack"
+    "backend": "mvnw -P-webpack",
+    "buildProd": "rmdir /S target && del package-lock.json && mvnw package -DskipTests=true -Pprod"
   },
   "jestSonar": {
     "reportPath": "target/test-results/jest",

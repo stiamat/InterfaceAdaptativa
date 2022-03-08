@@ -1,8 +1,8 @@
 package com.ufes.interfaceadaptativa.config;
 
-import com.ufes.interfaceadaptativa.security.*;
-import com.ufes.interfaceadaptativa.security.jwt.*;
-
+import com.ufes.interfaceadaptativa.security.AuthoritiesConstants;
+import com.ufes.interfaceadaptativa.security.jwt.JWTConfigurer;
+import com.ufes.interfaceadaptativa.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -23,37 +23,41 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+  private final TokenProvider tokenProvider;
 
-    private final TokenProvider tokenProvider;
+  private final CorsFilter corsFilter;
+  private final SecurityProblemSupport problemSupport;
 
-    private final CorsFilter corsFilter;
-    private final SecurityProblemSupport problemSupport;
+  public SecurityConfiguration(
+    TokenProvider tokenProvider,
+    CorsFilter corsFilter,
+    SecurityProblemSupport problemSupport
+  ) {
+    this.tokenProvider = tokenProvider;
+    this.corsFilter = corsFilter;
+    this.problemSupport = problemSupport;
+  }
 
-    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, SecurityProblemSupport problemSupport) {
-        this.tokenProvider = tokenProvider;
-        this.corsFilter = corsFilter;
-        this.problemSupport = problemSupport;
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Override
+  public void configure(WebSecurity web) {
+    web
+      .ignoring()
+      .antMatchers(HttpMethod.OPTIONS, "/**")
+      .antMatchers("/app/**/*.{js,html}")
+      .antMatchers("/i18n/**")
+      .antMatchers("/content/**")
+      .antMatchers("/swagger-ui/index.html")
+      .antMatchers("/test/**");
+  }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
-            .antMatchers("/i18n/**")
-            .antMatchers("/content/**")
-            .antMatchers("/swagger-ui/index.html")
-            .antMatchers("/test/**");
-    }
-
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+    // @formatter:off
         http
             .csrf()
             .disable()
@@ -63,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(problemSupport)
         .and()
             .headers()
-            .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
+            .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com https://cdn.jsdelivr.net/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/ https://cdn.jsdelivr.net/ https://cdnjs.cloudflare.com/;img-src * 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com/ https://cdn.jsdelivr.net/")
         .and()
             .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
         .and()
@@ -90,10 +94,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .httpBasic()
         .and()
             .apply(securityConfigurerAdapter());
-        // @formatter:on
-    }
+    // @formatter:on
+  }
 
-    private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
-    }
+  private JWTConfigurer securityConfigurerAdapter() {
+    return new JWTConfigurer(tokenProvider);
+  }
 }

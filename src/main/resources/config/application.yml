@@ -16,7 +16,7 @@
 
 eureka:
   client:
-    enabled: true
+    enabled: false
     healthcheck:
       enabled: true
     fetch-registry: true
@@ -45,7 +45,18 @@ management:
     web:
       base-path: /management
       exposure:
-        include: ['configprops', 'env', 'health', 'info', 'jhimetrics', 'logfile', 'loggers', 'prometheus', 'threaddump']
+        include:
+          [
+            'configprops',
+            'env',
+            'health',
+            'info',
+            'jhimetrics',
+            'logfile',
+            'loggers',
+            'prometheus',
+            'threaddump',
+          ]
   endpoint:
     health:
       show-details: when_authorized
