@@ -43,6 +43,10 @@
       margin-bottom: 15px;
       width: auto;
     }
+
+    @include responsive(s) {
+      width: 90%;
+    }
   }
 }
 

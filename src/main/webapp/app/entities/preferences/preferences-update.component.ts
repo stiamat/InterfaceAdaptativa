@@ -65,7 +65,7 @@ export class PreferencesUpdateComponent implements OnInit {
       experienceLevelMode: preferences.experienceLevelMode,
       fontMode: preferences.fontMode,
       contrastMode: preferences.contrastMode,
-      colorVisionMode: preferences.colorVisionMode,
+      colorVisionMode: true,
       userId: preferences.userId,
     });
   }

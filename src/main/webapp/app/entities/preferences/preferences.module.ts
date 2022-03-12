@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-
+import { MaterialModule } from 'app/material-module';
 import { InterfaceAdaptativaSharedModule } from 'app/shared/shared.module';
-import { PreferencesComponent } from './preferences.component';
+import { PreferencesDeleteDialogComponent } from './preferences-delete-dialog.component';
 import { PreferencesDetailComponent } from './preferences-detail.component';
 import { PreferencesUpdateComponent } from './preferences-update.component';
-import { PreferencesDeleteDialogComponent } from './preferences-delete-dialog.component';
+import { PreferencesComponent } from './preferences.component';
 import { preferencesRoute } from './preferences.route';
 
 @NgModule({
   imports: [
+    MaterialModule,
+    MatTooltipModule,
     InterfaceAdaptativaSharedModule,
     RouterModule.forChild(preferencesRoute),
   ],

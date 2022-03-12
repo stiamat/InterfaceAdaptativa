@@ -3,7 +3,6 @@ package com.ufes.interfaceadaptativa.service.impl;
 import com.ufes.interfaceadaptativa.domain.Post;
 import com.ufes.interfaceadaptativa.domain.Profile;
 import com.ufes.interfaceadaptativa.domain.User;
-import com.ufes.interfaceadaptativa.domain.enumeration.ExperienceLevelMode;
 import com.ufes.interfaceadaptativa.repository.PostRepository;
 import com.ufes.interfaceadaptativa.repository.ProfileRepository;
 import com.ufes.interfaceadaptativa.repository.UserRepository;
@@ -13,9 +12,7 @@ import com.ufes.interfaceadaptativa.service.dto.UserDTO;
 import com.ufes.interfaceadaptativa.service.mapper.PostMapper;
 import com.ufes.interfaceadaptativa.service.mapper.UserMapper;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -162,10 +159,6 @@ public class PostServiceImpl implements PostService {
       );
       OWLDataFactory factory = manager.getOWLDataFactory();
 
-      // Carregando classes de interesse
-      Map<String, OWLClass> ClassesOWL =
-        this.loadingClassOWL(manager, ontologyIRI);
-
       //Carregando Individuo para inferencia
       this.loadingIndividual(factory, ontologyIRI, ontology, manager, idUser);
 
@@ -185,25 +178,6 @@ public class PostServiceImpl implements PostService {
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }
-
-  public Map<String, OWLClass> loadingClassOWL(
-    OWLOntologyManager manager,
-    IRI ontologyIRI
-  ) {
-    Map<String, OWLClass> classesOWL = new HashMap<String, OWLClass>();
-
-    OWLClass font_Increase = manager
-      .getOWLDataFactory()
-      .getOWLClass(IRI.create(ontologyIRI + "#Font_Increase"));
-    classesOWL.put("Font_Increase", font_Increase);
-
-    OWLClass font_Decrease = manager
-      .getOWLDataFactory()
-      .getOWLClass(IRI.create(ontologyIRI + "#Font_Decrease"));
-    classesOWL.put("Font_Increase", font_Increase);
-
-    return classesOWL;
   }
 
   public void loadingIndividual(
@@ -367,9 +341,7 @@ public class PostServiceImpl implements PostService {
       );
       AddAxiom addAxiom = new AddAxiom(ontology, axiom);
       manager.applyChange(addAxiom);
-    } else if (
-      profile.getExperienceLevel().equals("AVERAGEMODE")
-    ) {
+    } else if (profile.getExperienceLevel().equals("AVERAGEMODE")) {
       // experiencia Media
       OWLObjectPropertyExpression has_Experience_Level = factory.getOWLObjectProperty(
         IRI.create(ontologyIRI + "#has_Experience_Level")
@@ -384,9 +356,7 @@ public class PostServiceImpl implements PostService {
       );
       AddAxiom addAxiom = new AddAxiom(ontology, axiom);
       manager.applyChange(addAxiom);
-    } else if (
-      profile.getExperienceLevel().equals("HIGHMODE")
-    ) {
+    } else if (profile.getExperienceLevel().equals("HIGHMODE")) {
       // experiencia Alta
       OWLObjectPropertyExpression has_Experience_Level = factory.getOWLObjectProperty(
         IRI.create(ontologyIRI + "#has_Experience_Level")

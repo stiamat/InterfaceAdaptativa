@@ -2,7 +2,7 @@
     <div class="sidebar-left">
         <div class="util">
             <div class="logo" (click)="itens('inicio')">
-                <img src="../../../content/images/Logo.svg" alt="logo">
+                <!-- <img src="../../../content/images/Logo.svg" alt="logo"> -->
             </div>
             <div class="menu">
                 <div class="item imagem_perfil" (click)="itens('perfil')" matTooltip="Perfil">
@@ -40,6 +40,10 @@
                 <div *ngIf="!user?.imageUrl" class="avatar"></div>
             </div>
             <div class="name">{{user?.login}}</div>
+            <div class="mt-1" matTooltip="Seguidores">
+                <i class="bi bi-people-fill"></i>
+                {{anotherUserProfile?.listFriends?.length}}
+            </div>
             <div class="seguir" *ngIf="user?.id != account?.id">
                 <button class="btn_feed btn_seguir" *ngIf="!isFriend" (click)="friends()">
                     <i class="bi bi-bookmark-heart"></i> Seguir</button>
@@ -50,7 +54,7 @@
         </div>
         <div id="body_perfil" class="body_perfil">
             <mat-tab-group (selectedTabChange)="carregar($event)">
-                <mat-tab label="Todos">
+                <mat-tab label="Geral">
                     <div class="feed">
                         <div *ngIf="feed.length == 0" class="mt-4">
                             <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>

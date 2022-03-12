@@ -20,6 +20,7 @@ export class PerfilComponent implements OnInit {
   account: any = null;
   user: IUser = null;
   profile: IProfile = null;
+  anotherUserProfile: IProfile = null;
   post: IPost[] = null;
   loading = false;
   feed: IPost[] = [];
@@ -58,6 +59,7 @@ export class PerfilComponent implements OnInit {
     this.userService.find(this.loginProfile).subscribe(
       suc => {
         this.user = suc;
+        this.loadAnotherUserProfile(this.user.id);
         this.loadProfile();
         this.loadAll();
       },
@@ -143,6 +145,12 @@ export class PerfilComponent implements OnInit {
       } else {
         this.isFriend = false;
       }
+    });
+  }
+
+  loadAnotherUserProfile(id: number): void {
+    this.profileService.find(id).subscribe(suc => {
+      this.anotherUserProfile = suc.body;
     });
   }
 

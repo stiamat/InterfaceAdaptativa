@@ -104,6 +104,7 @@ export class FeedComponent implements OnInit {
       .query({
         'active.equals': true,
         'userId.in': listUser,
+        'comentarioDeId.specified': false,
         page: 0,
         size: 999,
         sort: ['id,desc'],
@@ -207,6 +208,7 @@ export class FeedComponent implements OnInit {
     if (this.input.length === 0) return;
     this.isSaving = true;
     const post = this.createFromForm();
+    if (this.link) this.changeLink();
     this.subscribeToSaveResponse(this.postService.create(post));
   }
 
@@ -252,6 +254,7 @@ export class FeedComponent implements OnInit {
   }
 
   changeLink() {
+    this.tipoPost = 'NORMAL';
     this.link = !this.link;
     this.inputLink = '';
     const link = document.querySelector('#link');

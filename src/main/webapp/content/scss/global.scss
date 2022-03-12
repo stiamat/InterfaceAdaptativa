@@ -105,6 +105,13 @@ body {
   font-style: normal;
 }
 
+.container-fluid {
+  @include responsive(s) {
+    padding-left: unset;
+    padding-right: unset;
+  }
+}
+
 .body-adapative {
   display: grid;
   grid-template-columns: auto 40% auto;

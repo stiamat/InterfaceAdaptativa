@@ -21,7 +21,7 @@
     <div class="sidebar-left">
         <div class="util">
             <div class="logo" (click)="itens('inicio')">
-                <img src="../../../content/images/Logo.svg" alt="logo">
+                <!-- <img src="../../../content/images/Logo.svg" alt="logo"> -->
             </div>
             <div class="menu">
                 <div class="item imagem_perfil" (click)="itens('perfil')" matTooltip="Perfil">
@@ -115,7 +115,7 @@
                             <div *ngIf="!post.userImagem" class="img"></div>
                         </div>
                         <div class="nick">{{post.userLogin}}</div>
-                        <div class="date" matTooltip="Tempo de publicação">{{timePublicacao(post.date)}}</div>
+                        <div class="date">{{timePublicacao(post.date)}}</div>
                     </div>
                     <div class="grid body">
                         <div class="corpo">{{post.body}}</div>
@@ -136,17 +136,15 @@
                                 <i class="bi bi-person-video3" *ngIf="post.tipoPost == 'CONFERENCIA'"></i>
                             </button>
                             <button *ngIf="!post.comentarioDeId" mat-icon-button color="primary"
-                                aria-label="Comentar esta publicação" (click)="comentar(post.id)"
-                                matTooltip="Comentar esta publicação">
+                                aria-label="Comentar esta publicação" (click)="comentar(post.id)">
                                 <i class="bi bi-chat-square-text"></i>
                             </button>
                             <button *ngIf="post.comentarioDeId" mat-icon-button color="primary"
-                                aria-label="Comentar esta publicação" (click)="comentar(post.comentarioDeId)"
-                                matTooltip="Comentar esta publicação">
+                                aria-label="Comentar esta publicação" (click)="comentar(post.comentarioDeId)">
                                 <i class="bi bi-chat-square-text"></i>
                             </button>
                             <button mat-icon-button color="primary" aria-label="Curti esta publicação"
-                                (click)="curti(post)" matTooltip="Curti esta publicação">
+                                (click)="curti(post)">
                                 <i *ngIf="!curtido(post)" class="bi bi-heart"></i>
                                 <i *ngIf="curtido(post)" class="bi bi-heart-fill" style="color: red;">
                                 </i>
