@@ -45,6 +45,7 @@ export class FeedComponent implements OnInit {
   tipoPost = 'NORMAL';
   preferences: IPreferences;
   isBasicMode = false;
+  destaques: any[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -123,6 +124,10 @@ export class FeedComponent implements OnInit {
           });
         }
       });
+
+    this.postService.searchDestaques().subscribe(res => {
+      this.destaques = res.body;
+    });
   }
 
   async scrollFunction(event: any, scroll: string) {
@@ -321,6 +326,7 @@ export class FeedComponent implements OnInit {
   search() {
     if (this.inputSearch.length > 0) {
       this.feed = [];
+      this.isSearch = true;
       this.postService
         .query({
           'body.contains': [this.inputSearch],
@@ -332,8 +338,6 @@ export class FeedComponent implements OnInit {
             suc.body.map(i => {
               if (!this.feed.find(pf => pf.id === i.id)) this.feed.push(i);
             });
-
-            this.isSearch = true;
           });
         });
     } else {
@@ -341,6 +345,12 @@ export class FeedComponent implements OnInit {
       this.isSearch = false;
       this.loadAll();
     }
+  }
+
+  searchDestaques(destaque: string) {
+    this.inputSearch = destaque;
+    this.isSearch = true;
+    this.search();
   }
 
   clean() {

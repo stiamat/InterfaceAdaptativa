@@ -12,6 +12,7 @@ import { IPreferences, Preferences } from 'app/shared/model/preferences.model';
 import { IProfile, Profile } from 'app/shared/model/profile.model';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { PostService } from '../post/post.service';
 import { ProfileService } from '../profile/profile.service';
 import { PreferencesService } from './preferences.service';
 
@@ -25,6 +26,8 @@ export class PreferencesUpdateComponent implements OnInit {
   account: any = null;
   users: IUser[] = [];
   inputImgUrl = '';
+
+  destaques: any[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -44,6 +47,7 @@ export class PreferencesUpdateComponent implements OnInit {
     protected preferencesService: PreferencesService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
+    protected postService: PostService,
     private fb: FormBuilder
   ) {}
 
@@ -55,6 +59,10 @@ export class PreferencesUpdateComponent implements OnInit {
 
     this.activatedRoute.data.subscribe(({ preferences }) => {
       this.updateForm(preferences);
+    });
+
+    this.postService.searchDestaques().subscribe(res => {
+      this.destaques = res.body;
     });
   }
 

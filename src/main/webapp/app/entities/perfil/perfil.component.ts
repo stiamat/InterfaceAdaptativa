@@ -26,6 +26,7 @@ export class PerfilComponent implements OnInit {
   feed: IPost[] = [];
   loginProfile: string;
   isFriend = false;
+  destaques: any[] = [];
 
   constructor(
     private postService: PostService,
@@ -67,6 +68,10 @@ export class PerfilComponent implements OnInit {
         this.router.navigate(['404']);
       }
     );
+
+    this.postService.searchDestaques().subscribe(res => {
+      this.destaques = res.body;
+    });
   }
 
   itens(item: string) {

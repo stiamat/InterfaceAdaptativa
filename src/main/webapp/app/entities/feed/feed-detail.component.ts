@@ -25,6 +25,8 @@ export class FeedDetailComponent implements OnInit {
   link = false;
   isSaving = true;
 
+  destaques: any[] = [];
+
   constructor(
     private postService: PostService,
     private loginService: LoginService,
@@ -63,6 +65,10 @@ export class FeedDetailComponent implements OnInit {
         return 0;
       });
       this.isSaving = false;
+    });
+
+    this.postService.searchDestaques().subscribe(res => {
+      this.destaques = res.body;
     });
   }
 

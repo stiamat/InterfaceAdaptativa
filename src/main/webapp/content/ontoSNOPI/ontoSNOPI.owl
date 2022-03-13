@@ -1,0 +1,463 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/interface-adaptativa"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/interface-adaptativa">
+    <Prefix name="" IRI="http://www.semanticweb.org/interface-adaptativa"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="#Auditory_Disabilities"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Average_Experience"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Average_Experience_Mode"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Basic_Experience"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Basic_Experience_Mode"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Blindness"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Color_Vision"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Contrast_Sensitivity"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Customization"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Dark_Mode"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Desktop_Mode"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Fild_Of_Vision"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Font_Decrease"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Font_Increase"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#High_Experience"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#High_Experience_Mode"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Light_Mode"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Light_Sensitivy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Low_Vision"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Mobile_Mode"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User_Age"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User_Disabilities"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User_Education"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User_Experience_Level"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User_Gender"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User_Language"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User_Preferences_Profile"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User_Profile"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Vision_Disabilities"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Visual_Acuity"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#has_Disabilities"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#has_Experience_Level"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#has_Age"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#has_Genre"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#has_Language"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#has_Name"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Auditory_Disabilities"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Average_Experience"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Basic_Experience"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Blindness"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Color_Vision"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Contrast_Sensitivity"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Fild_Of_Vision"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#High_Experience"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Light_Sensitivy"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#User_Disabilities"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Visual_Acuity"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#01"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="#Average_Experience_Mode"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Customization"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#has_Experience_Level"/>
+                <Class IRI="#Average_Experience"/>
+            </ObjectSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Basic_Experience_Mode"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Customization"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#has_Experience_Level"/>
+                <Class IRI="#Basic_Experience"/>
+            </ObjectSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Dark_Mode"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Customization"/>
+            <ObjectUnionOf>
+                <ObjectSomeValuesFrom>
+                    <ObjectProperty IRI="#has_Disabilities"/>
+                    <Class IRI="#Color_Vision"/>
+                </ObjectSomeValuesFrom>
+                <ObjectSomeValuesFrom>
+                    <ObjectProperty IRI="#has_Disabilities"/>
+                    <Class IRI="#Contrast_Sensitivity"/>
+                </ObjectSomeValuesFrom>
+                <ObjectSomeValuesFrom>
+                    <ObjectProperty IRI="#has_Disabilities"/>
+                    <Class IRI="#Light_Sensitivy"/>
+                </ObjectSomeValuesFrom>
+            </ObjectUnionOf>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Font_Decrease"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Customization"/>
+            <DataSomeValuesFrom>
+                <DataProperty IRI="#has_Age"/>
+                <DatatypeRestriction>
+                    <Datatype abbreviatedIRI="xsd:integer"/>
+                    <FacetRestriction facet="http://www.w3.org/2001/XMLSchema#minInclusive">
+                        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">18</Literal>
+                    </FacetRestriction>
+                </DatatypeRestriction>
+            </DataSomeValuesFrom>
+            <DataSomeValuesFrom>
+                <DataProperty IRI="#has_Age"/>
+                <DatatypeRestriction>
+                    <Datatype abbreviatedIRI="xsd:integer"/>
+                    <FacetRestriction facet="http://www.w3.org/2001/XMLSchema#maxInclusive">
+                        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">25</Literal>
+                    </FacetRestriction>
+                </DatatypeRestriction>
+            </DataSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Font_Increase"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Customization"/>
+            <ObjectUnionOf>
+                <ObjectSomeValuesFrom>
+                    <ObjectProperty IRI="#has_Disabilities"/>
+                    <Class IRI="#Fild_Of_Vision"/>
+                </ObjectSomeValuesFrom>
+                <ObjectSomeValuesFrom>
+                    <ObjectProperty IRI="#has_Disabilities"/>
+                    <Class IRI="#Visual_Acuity"/>
+                </ObjectSomeValuesFrom>
+                <DataSomeValuesFrom>
+                    <DataProperty IRI="#has_Age"/>
+                    <DatatypeRestriction>
+                        <Datatype abbreviatedIRI="xsd:integer"/>
+                        <FacetRestriction facet="http://www.w3.org/2001/XMLSchema#minInclusive">
+                            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">40</Literal>
+                        </FacetRestriction>
+                    </DatatypeRestriction>
+                </DataSomeValuesFrom>
+            </ObjectUnionOf>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#High_Experience_Mode"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Customization"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#has_Experience_Level"/>
+                <Class IRI="#High_Experience"/>
+            </ObjectSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="#Auditory_Disabilities"/>
+        <Class IRI="#User_Disabilities"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Average_Experience"/>
+        <Class IRI="#User_Experience_Level"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Average_Experience_Mode"/>
+        <Class IRI="#Customization"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Basic_Experience"/>
+        <Class IRI="#User_Experience_Level"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Basic_Experience_Mode"/>
+        <Class IRI="#Customization"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Blindness"/>
+        <Class IRI="#Vision_Disabilities"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Color_Vision"/>
+        <Class IRI="#Low_Vision"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Contrast_Sensitivity"/>
+        <Class IRI="#Low_Vision"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Dark_Mode"/>
+        <Class IRI="#Customization"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Desktop_Mode"/>
+        <Class IRI="#Customization"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Fild_Of_Vision"/>
+        <Class IRI="#Low_Vision"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Font_Decrease"/>
+        <Class IRI="#Customization"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Font_Increase"/>
+        <Class IRI="#Customization"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#High_Experience"/>
+        <Class IRI="#User_Experience_Level"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#High_Experience_Mode"/>
+        <Class IRI="#Customization"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Light_Mode"/>
+        <Class IRI="#Customization"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Light_Sensitivy"/>
+        <Class IRI="#Low_Vision"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Low_Vision"/>
+        <Class IRI="#Vision_Disabilities"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Mobile_Mode"/>
+        <Class IRI="#Customization"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#User_Age"/>
+        <Class IRI="#User_Profile"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#User_Disabilities"/>
+        <Class IRI="#User_Profile"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#User_Education"/>
+        <Class IRI="#User_Profile"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#User_Experience_Level"/>
+        <Class IRI="#User_Profile"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#User_Gender"/>
+        <Class IRI="#User_Profile"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#User_Language"/>
+        <Class IRI="#User_Profile"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#User_Preferences_Profile"/>
+        <Class IRI="#User_Profile"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Vision_Disabilities"/>
+        <Class IRI="#User_Disabilities"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Visual_Acuity"/>
+        <Class IRI="#Low_Vision"/>
+    </SubClassOf>
+    <ClassAssertion>
+        <Class IRI="#Auditory_Disabilities"/>
+        <NamedIndividual IRI="#Auditory_Disabilities"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Average_Experience"/>
+        <NamedIndividual IRI="#Average_Experience"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Basic_Experience"/>
+        <NamedIndividual IRI="#Basic_Experience"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Blindness"/>
+        <NamedIndividual IRI="#Blindness"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Color_Vision"/>
+        <NamedIndividual IRI="#Color_Vision"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Contrast_Sensitivity"/>
+        <NamedIndividual IRI="#Contrast_Sensitivity"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Fild_Of_Vision"/>
+        <NamedIndividual IRI="#Fild_Of_Vision"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#High_Experience"/>
+        <NamedIndividual IRI="#High_Experience"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Light_Sensitivy"/>
+        <NamedIndividual IRI="#Light_Sensitivy"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#User_Disabilities"/>
+        <NamedIndividual IRI="#User_Disabilities"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Visual_Acuity"/>
+        <NamedIndividual IRI="#Visual_Acuity"/>
+    </ClassAssertion>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#has_Disabilities"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#has_Experience_Level"/>
+    </AsymmetricObjectProperty>
+    <IrreflexiveObjectProperty>
+        <ObjectProperty IRI="#has_Disabilities"/>
+    </IrreflexiveObjectProperty>
+    <IrreflexiveObjectProperty>
+        <ObjectProperty IRI="#has_Experience_Level"/>
+    </IrreflexiveObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#has_Experience_Level"/>
+        <Class IRI="#Customization"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#has_Experience_Level"/>
+        <Class IRI="#Basic_Experience"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#has_Experience_Level"/>
+        <Class IRI="#User_Experience_Level"/>
+    </ObjectPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#has_Age"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#has_Genre"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#has_Language"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#has_Name"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="#has_Age"/>
+        <Class IRI="#Customization"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="#has_Age"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

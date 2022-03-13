@@ -409,11 +409,18 @@
 
     <div class="sidebar-right">
         <div class="util">
-            <div class="card-sidebar-right foco">
+            <div class="foco">
 
             </div>
             <div class="card-sidebar-right destaques">
                 # Destaques
+                <div class="mt-1 mb-1">
+                    <div *ngIf="destaques.length == 0">Sem Destaques </div>
+                    <div *ngFor="let destaque of destaques; let i = index" class="destaques">
+                        {{i+1}}º - {{destaque[0]}}
+                    </div>
+                </div>
+
             </div>
             <div class="card-sidebar-right parcerias">
                 # Projeto

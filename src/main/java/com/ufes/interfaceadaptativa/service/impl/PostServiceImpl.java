@@ -12,6 +12,7 @@ import com.ufes.interfaceadaptativa.service.dto.UserDTO;
 import com.ufes.interfaceadaptativa.service.mapper.PostMapper;
 import com.ufes.interfaceadaptativa.service.mapper.UserMapper;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -146,9 +147,17 @@ public class PostServiceImpl implements PostService {
     try {
       // Gerenciador da ontologia - carrega funções e propriedade para podermos trabalhar com as ontologias
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-
+      boolean server = false;
       // Input do arquivo owl e criando OWLOntology
-      File ontologyFile = new File("D:\\HD-Downloads\\Ontoligia_Alexandre.owl");
+      String path = "";
+      if (server) {
+        path =
+          "./webapps/ROOT/WEB-INF/classes/static/content/ontoSNOPI/ontoSNOPI.owl";
+      } else {
+        path = "src/main/webapp/content/ontoSNOPI/ontoSNOPI.owl";
+      }
+
+      File ontologyFile = new File(Paths.get(path).toString());
       OWLOntology ontology = manager.loadOntologyFromOntologyDocument(
         ontologyFile
       );

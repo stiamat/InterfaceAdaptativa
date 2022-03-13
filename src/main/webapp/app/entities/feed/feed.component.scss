@@ -516,6 +516,8 @@
       left: 0;
       top: 0;
       align-items: center;
+      background: url(../../../content/images/logo.png) 45% no-repeat;
+      background-size: contain;
 
       img {
         height: 50px;
@@ -584,9 +586,23 @@
 
   .foco {
     height: 4rem;
+    border: 0px;
+    margin-top: 1rem;
+    padding: 1rem;
+    padding-bottom: 5px;
   }
   .destaques {
-    height: 12rem;
+    // height: 12rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .destaquesLink {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
   .parcerias {
     height: 10rem;
