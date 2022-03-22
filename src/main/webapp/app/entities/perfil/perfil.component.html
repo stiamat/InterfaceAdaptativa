@@ -40,7 +40,7 @@
                 <div *ngIf="!user?.imageUrl" class="avatar"></div>
             </div>
             <div class="name">{{user?.login}}</div>
-            <div class="mt-1" matTooltip="Seguidores">
+            <div class="mt-1" matTooltip="Seguindo">
                 <i class="bi bi-people-fill"></i>
                 {{anotherUserProfile?.listFriends?.length}}
             </div>
@@ -56,9 +56,10 @@
             <mat-tab-group (selectedTabChange)="carregar($event)">
                 <mat-tab label="Geral">
                     <div class="feed">
-                        <div *ngIf="feed.length == 0" class="mt-4">
+                        <div *ngIf="feed.length == 0" class="mt-4"
+                            style="display: flex; align-items: center; flex-direction: column;">
                             <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
-                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="60%"
                                 alt="Nada encontrado">
                         </div>
                         <div *ngFor="let post of feed">
@@ -114,9 +115,10 @@
                 </mat-tab>
                 <mat-tab label="Respostas">
                     <div class="feed">
-                        <div *ngIf="feed.length == 0" class="mt-4">
+                        <div *ngIf="feed.length == 0" class="mt-4"
+                            style="display: flex; align-items: center; flex-direction: column;">
                             <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
-                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="60%"
                                 alt="Nada encontrado">
                         </div>
                         <div *ngFor="let post of feed">
@@ -172,9 +174,10 @@
                 </mat-tab>
                 <mat-tab label="Videos">
                     <div class="feed">
-                        <div *ngIf="feed.length == 0" class="mt-4">
+                        <div *ngIf="feed.length == 0" class="mt-4"
+                            style="display: flex; align-items: center; flex-direction: column;">
                             <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
-                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="60%"
                                 alt="Nada encontrado">
                         </div>
                         <div *ngFor="let post of feed">
@@ -230,9 +233,10 @@
                 </mat-tab>
                 <mat-tab label="PDF">
                     <div class="feed">
-                        <div *ngIf="feed.length == 0" class="mt-4">
+                        <div *ngIf="feed.length == 0" class="mt-4"
+                            style="display: flex; align-items: center; flex-direction: column;">
                             <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
-                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="60%"
                                 alt="Nada encontrado">
                         </div>
                         <div *ngFor="let post of feed">
@@ -288,9 +292,10 @@
                 </mat-tab>
                 <mat-tab label="Artigos">
                     <div class="feed">
-                        <div *ngIf="feed.length == 0" class="mt-4">
+                        <div *ngIf="feed.length == 0" class="mt-4"
+                            style="display: flex; align-items: center; flex-direction: column;">
                             <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
-                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="60%"
                                 alt="Nada encontrado">
                         </div>
                         <div *ngFor="let post of feed">
@@ -346,9 +351,10 @@
                 </mat-tab>
                 <mat-tab label="Conferencia">
                     <div class="feed">
-                        <div *ngIf="feed.length == 0" class="mt-4">
+                        <div *ngIf="feed.length == 0" class="mt-4"
+                            style="display: flex; align-items: center; flex-direction: column;">
                             <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
-                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="100%"
+                            <img src="../../../content/images/undraw_empty_street_sfxm.svg" width="60%"
                                 alt="Nada encontrado">
                         </div>
                         <div *ngFor="let post of feed">
@@ -423,7 +429,7 @@
 
             </div>
             <div class="card-sidebar-right parcerias">
-                # Projeto
+                # Apoio
                 <div class="image">
                     <a href="https://nemo.inf.ufes.br/" target="_blank">
                         <img src="http://intersep.nemo.inf.ufes.br/wp-content/themes/Nemo/assets/img/nemo-sobre.svg"

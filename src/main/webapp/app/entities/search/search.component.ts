@@ -5,6 +5,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountService } from 'app/core/auth/account.service';
 import { ExperienceLevelMode } from 'app/shared/model/enumerations/experience-level-mode.model';
@@ -21,10 +22,26 @@ interface Lang {
   viewValue: string;
 }
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
+
 @Component({
   selector: 'jhi-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.scss'],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class SearchComponent implements OnInit, AfterViewInit {
   tabSelectedSearch: number;
@@ -69,6 +86,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
         this.profileService.find(this.account.id).subscribe(profile => {
           this.profile = profile.body;
+          this.cleanProfile();
 
           if (
             this.profile.status === StatusProfile.NOVO ||
@@ -81,14 +99,34 @@ export class SearchComponent implements OnInit, AfterViewInit {
     })();
   }
 
+  cleanProfile() {
+    this.profile.auditoryDisabilities = null;
+    this.profile.blindness = null;
+    this.profile.colorVision = null;
+    this.profile.contrastSensitivity = null;
+    this.profile.fildOfVision = null;
+    this.profile.lightSensitivity = null;
+    this.profile.visualAcuity = null;
+  }
+
   openModal(): void {
     this.dialog.closeAll();
-    const modal = this.dialog.open(this.modal, {
-      width: '80%',
-      data: { profile: this.profile, dataNascimento: this.dataNascimento },
-      disableClose: true,
-      closeOnNavigation: true,
-    });
+    let modal = null;
+    if (window.innerWidth < 1024) {
+      modal = this.dialog.open(this.modal, {
+        width: '100%',
+        data: { profile: this.profile, dataNascimento: this.dataNascimento },
+        disableClose: true,
+        closeOnNavigation: true,
+      });
+    } else {
+      modal = this.dialog.open(this.modal, {
+        width: '60%',
+        data: { profile: this.profile, dataNascimento: this.dataNascimento },
+        disableClose: true,
+        closeOnNavigation: true,
+      });
+    }
 
     modal.afterClosed().subscribe(result => {
       if (result) {
@@ -124,6 +162,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   onLanguage(event: any): void {
     this.profile.language = event.value;
+    console.warn(event.value);
   }
 
   onGender(event: any): void {

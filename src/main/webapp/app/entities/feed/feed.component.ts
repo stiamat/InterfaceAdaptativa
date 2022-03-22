@@ -11,6 +11,7 @@ import { IPreferences } from 'app/shared/model/preferences.model';
 import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 import { PostService } from '../post/post.service';
 import { PreferencesService } from '../preferences/preferences.service';
 import { ProfileService } from '../profile/profile.service';
@@ -104,7 +105,7 @@ export class FeedComponent implements OnInit {
     this.postService
       .query({
         'active.equals': true,
-        'userId.in': listUser,
+        // 'userId.in': listUser,
         'comentarioDeId.specified': false,
         page: 0,
         size: 999,
@@ -244,13 +245,26 @@ export class FeedComponent implements OnInit {
   }
 
   deletePost(post: IPost) {
-    if (this.account.id === post.userId) {
-      this.feed.splice(
-        this.feed.findIndex(p => p.id === post.id),
-        1
-      );
-      this.subscribeToSaveResponse(this.postService.delete(post.id));
-    }
+    Swal.fire({
+      text: 'Deseja realmente apagar a postagem?',
+      icon: 'warning',
+      showConfirmButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'Não',
+      confirmButtonText: 'Sim',
+      confirmButtonColor: '#3f3d56',
+      cancelButtonColor: '#536dfe',
+    }).then(res => {
+      if (res.isConfirmed) {
+        if (this.account.id === post.userId) {
+          this.feed.splice(
+            this.feed.findIndex(p => p.id === post.id),
+            1
+          );
+          this.subscribeToSaveResponse(this.postService.delete(post.id));
+        }
+      }
+    });
   }
 
   logout() {

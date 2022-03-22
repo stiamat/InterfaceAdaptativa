@@ -4,19 +4,20 @@
             <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="tabSelectedSearch">
                 <mat-tab disabled>
                     <div class="logo search_logo">
-                        <img src="../../../content/images/Logo.svg" alt="logo">
-                        <h4>Bem Vindo!</h4>
+                        <img src="../../../content/images/logoNome.png" alt="logo" width="200px">
+                        <h4 class="mt-2">Bem Vindo!</h4>
                     </div>
                     <div id='inicio'>
 
                         <p>
-                            Este trabalho tem como objetivo geral desenvolver um sistema de interface adaptativa baseado
-                            em ontologias de HCI-ON. O site deve se adaptar automaticamente para o seu usuário, apoiando
+                            Este prótotipo tem como objetivo geral se adaptar automaticamente para o seu usuário,
+                            apoiando
                             suas necessidades de uso de acordo com suas características. Em síntese, o sistema deve
                             alterar sua interface para melhorar sua usabilidade de acordo com informações fornecidas por
                             você.
                         </p>
-                        <p> Clique em CONTINUAR para responder algumas
+                        <p>
+                            Clique em CONTINUAR para responder algumas
                             perguntas.
                         </p>
                     </div>
@@ -44,7 +45,7 @@
                             <!-- <input type="date" id="dataNascimento" min="1950-01-01"> -->
                             <mat-form-field appearance="fill">
                                 <mat-label>Data de Nascimento</mat-label>
-                                <input matInput [matDatepicker]="picker" min="1950-01-01"
+                                <input matInput [matDatepicker]="picker" min="1950-12-30"
                                     [(ngModel)]="data.dataNascimento" [ngModelOptions]="{standalone: true}"
                                     (dateInput)="onDate($event.value)">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -148,7 +149,8 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="contrastSensitivity">Você possui algum grau de Déficit Visual?</label>
+                            <label for="contrastSensitivity">Você possui algum grau de sensibilidade ao
+                                Constraste?</label>
                             <div class="custom-control custom-radio">
                                 <input type="radio" id="contrastSensitivity1" name="contrastSensitivity"
                                     class="custom-control-input" [(ngModel)]="data.profile.contrastSensitivity"
@@ -224,7 +226,7 @@
 
             </mat-tab-group>
         </mat-dialog-content>
-        <mat-dialog-actions align="end">
+        <mat-dialog-actions align="center">
             <div *ngIf="tabSelectedSearch == 0">
                 <button class="buttonSearch" (click)="selectedNextTabSearch()">Continuar <span><i
                             class="bi bi-arrow-right"></i></span>
@@ -239,8 +241,12 @@
                 </button>
             </div>
             <div *ngIf="tabSelectedSearch ==  (totalTabSearch-1)">
+                <button class="buttonSearch" (click)="selectedPreviesTabSearch()"><span><i
+                            class="bi bi-arrow-left"></i></span>
+                    Voltar</button>
                 <button class="buttonSearch" [mat-dialog-close]="data"><span><i class="bi bi-x-lg"></i></span>
                     Rejeitar</button>
+
                 <button class="buttonSearch" [mat-dialog-close]="data"><span><i class="bi bi-check-lg"></i></span>
                     Finalizar</button>
             </div>

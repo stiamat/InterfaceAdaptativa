@@ -27,6 +27,8 @@ export class PreferencesUpdateComponent implements OnInit {
   users: IUser[] = [];
   inputImgUrl = '';
 
+  trocarImg = false;
+
   destaques: any[] = [];
 
   editForm = this.fb.group({
@@ -141,19 +143,24 @@ export class PreferencesUpdateComponent implements OnInit {
   }
 
   changeImgPerfil() {
-    this.userService.find(this.account.login).subscribe(s => {
-      const user = s;
-      user.imageUrl = this.inputImgUrl;
-      this.userService.update(user).subscribe(() => {
-        Swal.fire({
-          title: 'Sucesso!',
-          text: 'Login Efetuado!',
-          icon: 'success',
-          showConfirmButton: false,
-          timer: 3000,
+    if (!this.trocarImg) {
+      this.trocarImg = !this.trocarImg;
+    } else {
+      this.userService.find(this.account.login).subscribe(s => {
+        const user = s;
+        user.imageUrl = this.inputImgUrl;
+        this.trocarImg = !this.trocarImg;
+        this.userService.update(user).subscribe(() => {
+          Swal.fire({
+            title: 'Sucesso!',
+            text: 'Login Efetuado!',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 3000,
+          });
         });
       });
-    });
+    }
   }
 
   trackById(index: number, item: IUser): any {

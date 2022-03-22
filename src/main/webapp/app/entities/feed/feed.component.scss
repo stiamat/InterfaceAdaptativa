@@ -429,9 +429,9 @@
       background-size: contain;
     }
 
-    @include responsive(s) {
-      background-color: white;
-    }
+    // @include responsive(s) {
+    //   background-color: white;
+    // }
   }
 
   .menu {
@@ -515,9 +515,27 @@
       position: fixed;
       left: 0;
       top: 0;
+      height: 55px;
       align-items: center;
-      background: url(../../../content/images/logo.png) 45% no-repeat;
+      background: url(../../../content/images/logoNome.png) 50% no-repeat,
+        linear-gradient(
+          to right,
+          rgba(63, 61, 86, 0.4),
+          rgba(83, 109, 254, 0.4)
+        );
+      backdrop-filter: blur(5px);
       background-size: contain;
+
+      &:hover {
+        background: url(../../../content/images/logoNome.png) 50% no-repeat,
+          linear-gradient(
+            to right,
+            rgba(63, 61, 86, 0.4),
+            rgba(83, 109, 254, 0.4)
+          );
+        background-size: contain;
+        backdrop-filter: blur(5px);
+      }
 
       img {
         height: 50px;
@@ -613,6 +631,18 @@
     }
   }
 
+  @include responsive(lg) {
+    .util {
+      width: 35%;
+    }
+  }
+
+  @include responsive(m) {
+    .util {
+      width: 40%;
+    }
+  }
+
   @include responsive(s) {
     display: none;
   }
@@ -641,7 +671,41 @@
 ::ng-deep {
   .font_grande_1 {
     * {
-      font-size: 18px !important;
+      font-size: 22px !important;
+    }
+
+    .sidebar-left {
+      @include responsive(lg) {
+        .util {
+          width: 15% !important;
+        }
+      }
+
+      @include responsive(m) {
+        .util {
+          width: 15% !important;
+        }
+      }
+    }
+
+    .sidebar-right {
+      @include responsive(xl) {
+        .util {
+          width: 40% !important;
+        }
+      }
+
+      @include responsive(lg) {
+        .util {
+          width: 50% !important;
+        }
+      }
+
+      @include responsive(m) {
+        .util {
+          width: 60% !important;
+        }
+      }
     }
   }
   .font_grande_2 {

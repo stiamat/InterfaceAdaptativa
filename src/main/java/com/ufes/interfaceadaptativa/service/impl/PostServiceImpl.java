@@ -147,7 +147,7 @@ public class PostServiceImpl implements PostService {
     try {
       // Gerenciador da ontologia - carrega funções e propriedade para podermos trabalhar com as ontologias
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      boolean server = false;
+      boolean server = true;
       // Input do arquivo owl e criando OWLOntology
       String path = "";
       if (server) {
@@ -462,6 +462,20 @@ public class PostServiceImpl implements PostService {
           long id = Long.parseLong(i.getIRI().getShortForm().split("#")[1]);
           System.out.println(id + " - " + c.getIRI().getShortForm());
           preferencesServiceImpl.updatePreferencesByReasoner("Dark_Mode", id);
+        }
+      }
+
+      // find Contrast_Mode
+      if (c.getIRI().getShortForm().equals("Contrast_Mode")) {
+        NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
+
+        for (OWLNamedIndividual i : instances.getFlattened()) {
+          long id = Long.parseLong(i.getIRI().getShortForm().split("#")[1]);
+          System.out.println(id + " - " + c.getIRI().getShortForm());
+          preferencesServiceImpl.updatePreferencesByReasoner(
+            "Contrast_Mode",
+            id
+          );
         }
       }
     }

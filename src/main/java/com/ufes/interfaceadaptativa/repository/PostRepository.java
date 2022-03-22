@@ -57,7 +57,7 @@ public interface PostRepository
   Optional<List<Post>> findLikesID(@Param("login") String login);
 
   @Query(
-    value = "select body, totalPalavras from ( select body, count(1) totalPalavras from ( select id, body, count(1) as total from (   select  id,  substring_index(   substring_index(body, ' ', n), ' ', -1 ) as body  from post  join numbers on char_length(body) - char_length(replace(body, ' ', '')) >= n - 1 where date >= (current_timestamp - interval '23 hour')   ) t1   group by id, body )t2 group by body order by totalPalavras desc) t3 where body like '#%';",
+    value = "select body, totalPalavras from ( select body, count(1) totalPalavras from ( select id, body, count(1) as total from (   select  id,  substring_index(   substring_index(body, ' ', n), ' ', -1 ) as body  from post  join numbers on char_length(body) - char_length(replace(body, ' ', '')) >= n - 1 where date >= (current_timestamp - interval '720 hour')   ) t1   group by id, body )t2 group by body order by totalPalavras desc) t3 where body like '%#%';",
     nativeQuery = true
   )
   Optional<List<Object>> findDestaques();

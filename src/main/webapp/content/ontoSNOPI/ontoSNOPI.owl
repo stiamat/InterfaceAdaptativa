@@ -34,6 +34,9 @@
         <Class IRI="#Color_Vision"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Contrast_Mode"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Contrast_Sensitivity"/>
     </Declaration>
     <Declaration>
@@ -177,6 +180,16 @@
         </ObjectIntersectionOf>
     </EquivalentClasses>
     <EquivalentClasses>
+        <Class IRI="#Contrast_Mode"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Customization"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#has_Disabilities"/>
+                <Class IRI="#Contrast_Sensitivity"/>
+            </ObjectSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
         <Class IRI="#Dark_Mode"/>
         <ObjectIntersectionOf>
             <Class IRI="#Customization"/>
@@ -184,10 +197,6 @@
                 <ObjectSomeValuesFrom>
                     <ObjectProperty IRI="#has_Disabilities"/>
                     <Class IRI="#Color_Vision"/>
-                </ObjectSomeValuesFrom>
-                <ObjectSomeValuesFrom>
-                    <ObjectProperty IRI="#has_Disabilities"/>
-                    <Class IRI="#Contrast_Sensitivity"/>
                 </ObjectSomeValuesFrom>
                 <ObjectSomeValuesFrom>
                     <ObjectProperty IRI="#has_Disabilities"/>
@@ -282,6 +291,10 @@
     <SubClassOf>
         <Class IRI="#Color_Vision"/>
         <Class IRI="#Low_Vision"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Contrast_Mode"/>
+        <Class IRI="#Customization"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Contrast_Sensitivity"/>

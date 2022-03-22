@@ -42,14 +42,14 @@
             <div class="avatar" style="display: flex;
                 justify-content: center;
                 align-items: center;">
-                <figure *ngIf="inputImgUrl.length > 0">
+                <figure *ngIf="inputImgUrl?.length > 0">
                     <img [src]="account.imageUrl" alt="avatar do usuario" class="avatar" style="border-radius: 50%;
                     border: 2px solid;
                     object-fit: cover;
                     width: 150px;
                     height: 150px;">
                 </figure>
-                <div *ngIf="inputImgUrl.length == 0" style="background: url('../../../content/images/undraw_male_avatar_323b.svg')
+                <div *ngIf="inputImgUrl?.length == 0" style="background: url('../../../content/images/undraw_male_avatar_323b.svg')
                     no-repeat;
                     background-repeat: no-repeat;
                     background-origin: content-box;
@@ -58,18 +58,28 @@
                     height: 150px;
                     border-radius: 50%;
                     margin-bottom: 2rem;"></div>
-
-
             </div>
             <div style="width: 100%;">
                 Alterar imagem de perfil:
-                <input class="mt-1 mb-1" type="text" [(ngModel)]="inputImgUrl" style="width: 100%;
+                <div *ngIf="!trocarImg; else elseBlock">
+                    <button type="button" class="mt-1 mb-1 btn btn_feed" (click)="changeImgPerfil()">
+                        Alterar Imagem de Perfil
+                    </button>
+                </div>
+                <ng-template #elseBlock>
+                    <input class="mt-1 mb-1" type="text" [(ngModel)]="inputImgUrl" style="width: 100%;
                     padding: 6px;
                     border-radius: 0.5rem;
                     border: 1px solid;" />
-                <button type="button" class="mt-1 mb-1 btn btn_feed" (click)="changeImgPerfil()">
-                    Salvar Imagem de Perfil
-                </button>
+                    <button type="button" class="mt-1 mb-1 btn btn_feed" (click)="changeImgPerfil()">
+                        Salvar Imagem de Perfil
+                    </button>
+                    <button type="button" class="mt-1 mb-1 btn btn_feed btn_feed-cor-secondary"
+                        (click)="trocarImg = !trocarImg">
+                        Cancelar
+                    </button>
+                </ng-template>
+
             </div>
 
 
@@ -122,14 +132,14 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mt-3">
                         <label class="form-control-label" for="field_contrastMode">Modo de Alto Contraste</label>
                         <input type="checkbox" class="form-check-input" name="contrastMode" id="field_contrastMode"
                             style="margin-left: 1rem;" formControlName="contrastMode" />
                     </div>
 
 
-                    <div class="form-group" matTooltip="Modo Daltonismo - em teste">
+                    <div class="form-group" matTooltip="Modo Daltonismo - em teste" style="display: none">
                         <label class="form-control-label" for="field_colorVisionMode">Modo
                             Daltonismo</label>
                         <input type="checkbox" class="form-check-input" name="colorVisionMode"
@@ -172,7 +182,7 @@
 
             </div>
             <div class="card-sidebar-right parcerias">
-                # Projeto
+                # Apoio
                 <div class="image">
                     <a href="https://nemo.inf.ufes.br/" target="_blank">
                         <img src="http://intersep.nemo.inf.ufes.br/wp-content/themes/Nemo/assets/img/nemo-sobre.svg"

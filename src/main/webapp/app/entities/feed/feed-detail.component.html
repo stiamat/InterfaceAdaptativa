@@ -116,7 +116,11 @@
 
         <!-- Repostas -->
         <div class="post_principal">
-
+            <div *ngIf="respostas.length == 0" class="mt-4"
+                style="display: flex; align-items: center; flex-direction: column;">
+                <h2 style="text-align: center; font-size: large !important;">Ops! Nada Encontrado</h2>
+                <img src="../../../content/images/undraw_searching_p-5-ux.svg" width="60%" alt="Nada encontrado">
+            </div>
 
 
             <div class="card-post" *ngFor="let post of respostas">
@@ -182,7 +186,7 @@
 
             </div>
             <div class="card-sidebar-right parcerias">
-                # Projeto
+                # Apoio
                 <div class="image">
                     <a href="https://nemo.inf.ufes.br/" target="_blank">
                         <img src="http://intersep.nemo.inf.ufes.br/wp-content/themes/Nemo/assets/img/nemo-sobre.svg"
