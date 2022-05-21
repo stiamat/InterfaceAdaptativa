@@ -5,13 +5,18 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountService } from 'app/core/auth/account.service';
 import { ExperienceLevelMode } from 'app/shared/model/enumerations/experience-level-mode.model';
 import { StatusProfile } from 'app/shared/model/enumerations/status-profile.model';
 import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
+import Swal from 'sweetalert2';
 import { ProfileService } from '../profile/profile.service';
 
 function delay(ms: number) {
@@ -24,13 +29,13 @@ interface Lang {
 
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'LL',
+    dateInput: 'D/MM/YYYY',
   },
   display: {
-    dateInput: 'DD-MM-YYYY',
-    monthYearLabel: 'YYYY',
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
   },
 };
 
@@ -39,8 +44,8 @@ export const MY_FORMATS = {
   templateUrl: './search.component.html',
   styleUrls: ['./search.scss'],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: MAT_DATE_LOCALE, useValue: 'fr' },
   ],
 })
 export class SearchComponent implements OnInit, AfterViewInit {
@@ -70,12 +75,14 @@ export class SearchComponent implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private profileService: ProfileService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private _adapter: DateAdapter<any>
   ) {}
 
   ngOnInit(): void {
     this.totalTabSearch = 4;
     this.tabSelectedSearch = 0;
+    this._adapter.setLocale('pt-br');
   }
 
   ngAfterViewInit(): void {
@@ -133,7 +140,24 @@ export class SearchComponent implements OnInit, AfterViewInit {
         this.dataNascimento = result.dataNascimento;
         this.profile = result.profile;
         this.save();
+      } else {
+        this.close();
       }
+    });
+  }
+  close() {
+    this.profile.status = StatusProfile.LEGADO;
+    this.profile.ultimaModificacao = moment(moment.now());
+    this.profile.age = 0;
+
+    this.profileService.update(this.profile).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Está tudo bem!',
+        confirmButtonColor: '#536dfe',
+        text:
+          'Caso queira realizar a pesquisa depois, basta apenas ir nas configurações e redefinir o perfil.',
+      });
     });
   }
 
@@ -150,9 +174,20 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
     this.profile.age =
       this.profile.ultimaModificacao.year() - this.dataNascimento.getFullYear();
+    console.warn(this.profile.age);
 
     this.profileService.update(this.profile).subscribe(() => {
-      location.reload();
+      Swal.fire({
+        icon: 'success',
+        title: 'Espere por ai!',
+        text:
+          'Estamos analisando as modificações necessárias para sua interface!',
+        confirmButtonColor: '#536dfe',
+        showConfirmButton: false,
+        timer: 5000,
+      }).then(() => {
+        location.reload();
+      });
     });
   }
 

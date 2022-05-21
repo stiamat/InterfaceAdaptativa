@@ -147,7 +147,7 @@ public class PostServiceImpl implements PostService {
     try {
       // Gerenciador da ontologia - carrega funções e propriedade para podermos trabalhar com as ontologias
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      boolean server = true;
+      boolean server = false;
       // Input do arquivo owl e criando OWLOntology
       String path = "";
       if (server) {
@@ -381,7 +381,7 @@ public class PostServiceImpl implements PostService {
       AddAxiom addAxiom = new AddAxiom(ontology, axiom);
       manager.applyChange(addAxiom);
     }
-    // salvar individuo na ontologia (não é necessario necessario)
+    // salvar individuo na ontologia (não é necessário neste neste estudo)
     // manager.saveOntology(ontology);
   }
 

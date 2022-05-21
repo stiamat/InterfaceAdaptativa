@@ -270,6 +270,14 @@ export class FeedComponent implements OnInit {
   logout() {
     this.loginService.logout();
     this.router.navigate(['']);
+    Swal.fire({
+      title: 'Até logo!',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 2000,
+    }).then(() => {
+      location.assign('/');
+    });
   }
 
   changeLink() {

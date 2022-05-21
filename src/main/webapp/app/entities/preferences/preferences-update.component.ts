@@ -153,10 +153,12 @@ export class PreferencesUpdateComponent implements OnInit {
         this.userService.update(user).subscribe(() => {
           Swal.fire({
             title: 'Sucesso!',
-            text: 'Login Efetuado!',
+            text: 'Imagem alterada com sucesso!',
             icon: 'success',
             showConfirmButton: false,
             timer: 3000,
+          }).then(() => {
+            location.assign('/feed');
           });
         });
       });
@@ -170,6 +172,14 @@ export class PreferencesUpdateComponent implements OnInit {
   logout() {
     this.loginService.logout();
     this.router.navigate(['']);
+    Swal.fire({
+      title: 'Até logo!',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 2000,
+    }).then(() => {
+      location.assign('/');
+    });
   }
 
   itens(item: string) {

@@ -8,6 +8,7 @@ import { UserService } from 'app/core/user/user.service';
 import { IPost } from 'app/shared/model/post.model';
 import { IProfile } from 'app/shared/model/profile.model';
 import * as moment from 'moment';
+import Swal from 'sweetalert2';
 import { PostService } from '../post/post.service';
 import { ProfileService } from '../profile/profile.service';
 
@@ -89,6 +90,14 @@ export class PerfilComponent implements OnInit {
   logout() {
     this.loginService.logout();
     this.router.navigate(['']);
+    Swal.fire({
+      title: 'Até logo!',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 2000,
+    }).then(() => {
+      location.assign('/');
+    });
   }
 
   navegaWeb(post: IPost) {

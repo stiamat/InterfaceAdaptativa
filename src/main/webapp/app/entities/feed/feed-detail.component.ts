@@ -7,6 +7,7 @@ import { LoginService } from 'app/core/login/login.service';
 import { IPost, Post } from 'app/shared/model/post.model';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 import { PostService } from '../post/post.service';
 import { ProfileService } from '../profile/profile.service';
 
@@ -160,6 +161,14 @@ export class FeedDetailComponent implements OnInit {
   logout() {
     this.loginService.logout();
     this.router.navigate(['']);
+    Swal.fire({
+      title: 'Até logo!',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 2000,
+    }).then(() => {
+      location.assign('/');
+    });
   }
 
   changeLink() {
